@@ -1,0 +1,11 @@
+name: "Security Dashboard"
+description: "Improve your cybersecurity awareness"
+version: "1.0.0"
+slug: "security_dashboard"
+init: false
+arch:
+  - aarch64
+  - amd64
+  - armhf
+  - armv7
+  - i386
