@@ -1,8 +1,14 @@
 ARG BUILD_FROM
 FROM $BUILD_FROM
 
-# Copy data for add-on
-COPY run.sh /
-RUN chmod a+x /run.sh
+# Install NGINX
+RUN \
+  apk --no-cache add \
+    nginx \
+  \
+  && mkdir -p /run/nginx
 
-CMD [ "/run.sh" ]
+# Copy configuration
+COPY ingress.conf /etc/nginx/http.d/
+
+CMD [ "nginx", "-g", "daemon off; error_log /dev/stdout debug;" ]

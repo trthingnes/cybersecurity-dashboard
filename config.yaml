@@ -3,6 +3,7 @@ description: "Improve your cybersecurity awareness"
 version: "1.0.0"
 slug: "security_dashboard"
 init: false
+ingress: true
 arch:
   - aarch64
   - amd64
