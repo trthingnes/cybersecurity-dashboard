@@ -49,12 +49,13 @@ Or, if you don't have GraalVM installed, you can run the native executable build
 ./gradlew build -Dquarkus.native.enabled=true -Dquarkus.native.container-build=true
 ```
 
-You can then execute your native executable with: `./build/ha-security-addon-1.0.0-SNAPSHOT-runner`
+You can then execute your native executable with: `./build/ha-security-addon-1.0.0-runner`
 
 If you want to learn more about building native executables, please consult <https://quarkus.io/guides/gradle-tooling>.
 
 ## Related Guides
 
+- Kotlin ([guide](https://quarkus.io/guides/kotlin)): Write your services in Kotlin
 - Quinoa ([guide](https://quarkiverse.github.io/quarkiverse-docs/quarkus-quinoa/dev/index.html)): Develop, build, and serve your npm-compatible web applications such as React, Angular, Vue, Lit, Svelte, Astro, SolidJS, and others alongside Quarkus.
 
 ## Provided Code
