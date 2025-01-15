@@ -42,7 +42,6 @@ nb-configuration.xml
 
 # Quinoa
 node_modules/
-build/
 dist/
 .quinoa/
 dist-ssr
