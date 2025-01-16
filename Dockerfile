@@ -1,12 +1,14 @@
 ARG BUILD_FROM=alpine:3
 
-FROM eclipse-temurin:17 AS build
+FROM $BUILD_FROM AS base
+RUN apk add --no-cache openjdk17
+
+FROM base AS build
 WORKDIR /code
 COPY . .
 RUN ./gradlew build -x test
 
-FROM $BUILD_FROM AS package
-RUN apk add --no-cache openjdk17
+FROM base AS package
 WORKDIR /app
 COPY --from=build /code/build/quarkus-app .
 EXPOSE 8080
