@@ -18,4 +18,4 @@ jobs:
           args: |
             --test \
             --target . \
-            --all
+            --amd64

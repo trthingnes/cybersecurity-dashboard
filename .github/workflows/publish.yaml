@@ -27,6 +27,6 @@ jobs:
           args: |
             --target . \
             --docker-hub ghcr.io \
-            --image ${{ github.repository }}-{arch} \
+            --image ${{ github.repository }} \
             --version latest \
-            --all
+            --amd64
