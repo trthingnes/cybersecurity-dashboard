@@ -1,8 +1,8 @@
-ARG BUILD_FROM=alpine:3
+ARG BUILD_FROM=alpine:3.18
 
 
 FROM $BUILD_FROM AS base
-RUN apk add --no-cache openjdk21
+RUN apk add --no-cache openjdk17
 
 
 FROM base AS build
