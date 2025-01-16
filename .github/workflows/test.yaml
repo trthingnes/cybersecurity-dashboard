@@ -17,5 +17,5 @@ jobs:
         with:
           args: |
             --test \
-            --target . \
+            --target addon \
             --amd64

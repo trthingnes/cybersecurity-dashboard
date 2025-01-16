@@ -3,6 +3,7 @@ description: "Improve your cybersecurity awareness"
 version: "1.0.0"
 slug: "security_dashboard"
 startup: services
+image: "ghcr.io/trthingnes/ha-security-addon"
 init: false
 ingress: true
 ingress_port: 8080
