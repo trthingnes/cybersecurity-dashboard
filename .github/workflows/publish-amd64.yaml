@@ -26,5 +26,4 @@ jobs:
         with:
           args: |
             --target addon \
-            --amd64 \
-            --aarch64
+            --amd64
