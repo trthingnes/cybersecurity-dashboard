@@ -12,10 +12,11 @@ jobs:
     steps:
       - name: Checkout the repository from GitHub
         uses: actions/checkout@v3
-      - name: Build
+      - name: Build with Home Assistant builder
         uses: home-assistant/builder@master
         with:
           args: |
             --test \
             --target addon \
-            --amd64
+            --amd64 \
+            --aarch64
