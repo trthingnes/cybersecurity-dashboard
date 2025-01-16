@@ -1,7 +1,7 @@
 ARG BUILD_FROM=alpine:3
 
 FROM $BUILD_FROM AS base
-RUN apk add --no-cache openjdk8
+RUN apk add --no-cache openjdk17
 
 FROM base AS build
 RUN apk add --no-cache npm
