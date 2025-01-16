@@ -4,7 +4,7 @@ FROM $BUILD_FROM AS base
 RUN apk add --no-cache openjdk17
 
 FROM base AS build
-RUN apk add --no-cache nodejs
+RUN apk add --no-cache npm
 WORKDIR /code
 COPY . .
 RUN ./gradlew build -x test
