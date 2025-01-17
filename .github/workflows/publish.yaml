@@ -1,9 +1,11 @@
-name: "Publish"
+name: Build and publish
 
 on:
   push:
     branches:
-      - 'main'
+      - main
+    paths:
+      - addon/**
 
 jobs:
   publish-amd64:
