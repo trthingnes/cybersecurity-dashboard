@@ -7,7 +7,7 @@ on:
 
 jobs:
   publish-amd64:
-    name: Publish
+    name: Build and publish (amd64)
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -28,7 +28,7 @@ jobs:
             --target addon \
             --amd64
   publish-aarch64:
-    name: Publish
+    name: Build and publish (aarch64)
     runs-on: ubuntu-latest
     permissions:
       contents: read
