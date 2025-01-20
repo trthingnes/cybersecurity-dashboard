@@ -1,0 +1,13 @@
+name: "Security Dashboard"
+description: "Improve your cybersecurity awareness"
+
+slug: "security_dashboard"
+image: "ghcr.io/trthingnes/security-dashboard-{arch}"
+version: "1.0.2"
+arch:
+  - amd64
+  - aarch64
+  
+init: false
+ingress: true
+ingress_port: 8080
