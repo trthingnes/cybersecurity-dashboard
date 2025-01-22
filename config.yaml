@@ -1,13 +1,13 @@
 name: "Security Dashboard"
-description: "Improve your cybersecurity awareness"
-
-slug: "security_dashboard"
-image: "ghcr.io/trthingnes/security-dashboard-{arch}"
 version: "1.0.2"
+slug: "security_dashboard"
+description: "Improve your cybersecurity awareness"
 arch:
   - amd64
   - aarch64
-  
+image: "ghcr.io/trthingnes/security-dashboard-{arch}"
 init: false
 ingress: true
 ingress_port: 8080
+hassio_api: true
+homeassistant_api: true
