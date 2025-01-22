@@ -1,12 +1,14 @@
 package edu.ntnu.tobiasth.haos
 
+import edu.ntnu.tobiasth.haos.dto.CoreInfoDto
 import jakarta.ws.rs.GET
 import jakarta.ws.rs.Path
+import jakarta.ws.rs.core.Response
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient
 
 @RegisterRestClient(configKey = "haos-api")
 interface HaosClient {
     @GET
     @Path("/core/info")
-    fun getCoreInfo(): Any
+    fun getCoreInfo(): CoreInfoDto?
 }
