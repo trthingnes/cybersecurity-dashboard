@@ -1,12 +1,12 @@
 package edu.ntnu.tobiasth.haos
 
-import jakarta.inject.Inject
 import jakarta.ws.rs.GET
 import jakarta.ws.rs.Path
+import org.eclipse.microprofile.rest.client.inject.RestClient
 
 @Path("/homeassistant")
 class HomeAssistantResource {
-    @Inject
+    @RestClient
     lateinit var client: HaosClient
 
     @GET
