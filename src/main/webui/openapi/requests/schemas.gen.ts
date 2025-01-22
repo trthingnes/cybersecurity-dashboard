@@ -53,3 +53,16 @@ export const CoreInfoDtoSchema = {
         }
     }
 } as const;
+
+export const ResultDtoCoreInfoDtoSchema = {
+    type: 'object',
+    required: ['result'],
+    properties: {
+        result: {
+            type: 'string'
+        },
+        data: {
+            '$ref': '#/components/schemas/CoreInfoDto'
+        }
+    }
+} as const;

@@ -2,7 +2,7 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "./assets/vite.svg";
 import "./App.css";
 
-import { CoreInfoDto } from "../openapi/requests";
+import { ResultDtoCoreInfoDto } from "../openapi/requests";
 import { useQuery } from "@tanstack/react-query";
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
     window.location.host +
     window.location.pathname.substring(1);
 
-  const { data, isLoading, isError } = useQuery<CoreInfoDto>({
+  const { data, isLoading, isError } = useQuery<ResultDtoCoreInfoDto>({
     queryKey: ["core", "info"],
     queryFn: async () => {
       const response = await fetch(baseUrl + "/core/info");
@@ -22,6 +22,7 @@ function App() {
       return response.json();
     },
   });
+  const info = data?.data
 
   return (
     <>
@@ -37,18 +38,18 @@ function App() {
       <div className="card">
         {isLoading && <p>Loading...</p>}
         {isError && <p>Error!</p>}
-        {data && (
+        {info && (
           <div>
             <p>
-              Home Assistant {data.version} running on {data.machine}/
-              {data.arch}
+              Home Assistant {info.version} running on {info.machine}/
+              {info.arch}
             </p>
             <p>
-              IP: {data.ip_address}, Port: {data.port}, SSL:{" "}
-              {data.ssl ? "Yes" : "No"}
+              IP: {info.ip_address}, Port: {info.port}, SSL:{" "}
+              {info.ssl ? "Yes" : "No"}
             </p>
-            {data.update_available && (
-              <p>Update to {data.version_latest} is available!</p>
+            {info.update_available && (
+              <p>Update to {info.version_latest} is available!</p>
             )}
           </div>
         )}

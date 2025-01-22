@@ -18,6 +18,15 @@ export type CoreInfoDto = {
     backups_exclude_database?: boolean;
 };
 
-export type GetHomeassistantCoreInfoResponse = (CoreInfoDto);
+export type ResultDtoCoreInfoDto = {
+    result: string;
+    data?: CoreInfoDto;
+};
 
-export type GetHomeassistantCoreInfoError = unknown;
+export type GetApiHomeAssistantCoreInfoResponse = (ResultDtoCoreInfoDto);
+
+export type GetApiHomeAssistantCoreInfoError = unknown;
+
+export type GetApiHomeAssistantDumpEnvResponse = (unknown);
+
+export type GetApiHomeAssistantDumpEnvError = unknown;
