@@ -20,10 +20,12 @@ class HomeAssistantResource {
     fun getCoreInfo() = client.getCoreInfo()
 
     @GET
-    @Path("/log-token")
+    @Path("/dump-env")
     fun postLogToken(): Response {
-        Log.info("Token is $supervisorToken")
-        Log.info("SUPERVISOR_TOKEN is ${System.getenv("SUPERVISOR_TOKEN")}")
+        Log.info("Printing env:")
+        System.getenv().forEach {
+            Log.info("${it.key} = ${it.value}")
+        }
 
         return Response.noContent().build()
     }
