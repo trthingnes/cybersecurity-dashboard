@@ -5,7 +5,13 @@ import "./App.css";
 import { useGetHomeassistantCoreInfo } from "../openapi/queries";
 
 function App() {
-  const { data, isLoading, isError } = useGetHomeassistantCoreInfo();
+  const { data, isLoading, isError } = useGetHomeassistantCoreInfo({
+    baseUrl:
+      window.location.protocol +
+      "//" +
+      window.location.host +
+      window.location.pathname.substring(1),
+  });
 
   return (
     <>
@@ -28,7 +34,8 @@ function App() {
               {data.arch}
             </p>
             <p>
-              IP: {data.ip_address}, Port: {data.port}, SSL: {data.ssl ? "Yes" : "No"}
+              IP: {data.ip_address}, Port: {data.port}, SSL:{" "}
+              {data.ssl ? "Yes" : "No"}
             </p>
             {data.update_available && (
               <p>Update to {data.version_latest} is available!</p>
