@@ -2,15 +2,25 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "./assets/vite.svg";
 import "./App.css";
 
-import { useGetHomeassistantCoreInfo } from "../openapi/queries";
+import { CoreInfoDto } from "../openapi/requests";
+import { useQuery } from "@tanstack/react-query";
 
 function App() {
-  const { data, isLoading, isError } = useGetHomeassistantCoreInfo({
-    baseUrl:
-      window.location.protocol +
-      "//" +
-      window.location.host +
-      window.location.pathname.substring(1),
+  const baseUrl =
+    window.location.protocol +
+    "//" +
+    window.location.host +
+    window.location.pathname.substring(1);
+
+  const { data, isLoading, isError } = useQuery<CoreInfoDto>({
+    queryKey: ["core", "info"],
+    queryFn: async () => {
+      const response = await fetch(baseUrl + "/core/info");
+
+      if (!response.ok) throw new Error("Error while fetching core info");
+
+      return response.json();
+    },
   });
 
   return (
