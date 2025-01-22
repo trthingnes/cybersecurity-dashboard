@@ -4,13 +4,15 @@ FROM $BUILD_FROM AS base
 RUN apk add --no-cache openjdk17
 
 FROM base AS build
-RUN apk add --no-cache npm
 WORKDIR /code
+RUN apk add --no-cache npm
 COPY . .
 RUN ./gradlew build -x test
 
 FROM base AS package
 WORKDIR /app
 COPY --from=build /code/build/quarkus-app .
+COPY --from=build /code/run.sh .
+RUN chmod a+x run.sh
 EXPOSE 8080
-CMD ["java", "-jar", "./quarkus-run.jar"]
+CMD ["run.sh"]
