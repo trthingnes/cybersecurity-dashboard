@@ -23,10 +23,10 @@ export type ResultDtoCoreInfoDto = {
     data?: CoreInfoDto;
 };
 
-export type GetApiHomeAssistantCoreInfoResponse = (ResultDtoCoreInfoDto);
+export type GetHaCoreInfoResponse = (ResultDtoCoreInfoDto);
 
-export type GetApiHomeAssistantCoreInfoError = unknown;
+export type GetHaCoreInfoError = unknown;
 
-export type GetApiHomeAssistantDumpEnvResponse = (unknown);
+export type GetHaDumpEnvResponse = (unknown);
 
-export type GetApiHomeAssistantDumpEnvError = unknown;
+export type GetHaDumpEnvError = unknown;

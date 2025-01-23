@@ -7,7 +7,7 @@ import jakarta.ws.rs.core.Response
 import org.eclipse.microprofile.config.inject.ConfigProperty
 import org.eclipse.microprofile.rest.client.inject.RestClient
 
-@Path("/api/home-assistant")
+@Path("/ha")
 class HomeAssistantResource {
     @RestClient
     lateinit var client: HaosClient

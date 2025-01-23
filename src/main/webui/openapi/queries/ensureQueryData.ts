@@ -2,7 +2,7 @@
 
 import { type Options } from "@hey-api/client-fetch";
 import { type QueryClient } from "@tanstack/react-query";
-import { getApiHomeAssistantCoreInfo, getApiHomeAssistantDumpEnv } from "../requests/services.gen";
+import { getHaCoreInfo, getHaDumpEnv } from "../requests/services.gen";
 import * as Common from "./common";
-export const ensureUseGetApiHomeAssistantCoreInfoData = (queryClient: QueryClient, clientOptions: Options<unknown, true> = {}) => queryClient.ensureQueryData({ queryKey: Common.UseGetApiHomeAssistantCoreInfoKeyFn(clientOptions), queryFn: () => getApiHomeAssistantCoreInfo({ ...clientOptions }).then(response => response.data) });
-export const ensureUseGetApiHomeAssistantDumpEnvData = (queryClient: QueryClient, clientOptions: Options<unknown, true> = {}) => queryClient.ensureQueryData({ queryKey: Common.UseGetApiHomeAssistantDumpEnvKeyFn(clientOptions), queryFn: () => getApiHomeAssistantDumpEnv({ ...clientOptions }).then(response => response.data) });
+export const ensureUseGetHaCoreInfoData = (queryClient: QueryClient, clientOptions: Options<unknown, true> = {}) => queryClient.ensureQueryData({ queryKey: Common.UseGetHaCoreInfoKeyFn(clientOptions), queryFn: () => getHaCoreInfo({ ...clientOptions }).then(response => response.data) });
+export const ensureUseGetHaDumpEnvData = (queryClient: QueryClient, clientOptions: Options<unknown, true> = {}) => queryClient.ensureQueryData({ queryKey: Common.UseGetHaDumpEnvKeyFn(clientOptions), queryFn: () => getHaDumpEnv({ ...clientOptions }).then(response => response.data) });

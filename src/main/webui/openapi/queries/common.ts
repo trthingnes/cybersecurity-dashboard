@@ -2,12 +2,12 @@
 
 import { type Options } from "@hey-api/client-fetch";
 import { UseQueryResult } from "@tanstack/react-query";
-import { getApiHomeAssistantCoreInfo, getApiHomeAssistantDumpEnv } from "../requests/services.gen";
-export type GetApiHomeAssistantCoreInfoDefaultResponse = Awaited<ReturnType<typeof getApiHomeAssistantCoreInfo>>["data"];
-export type GetApiHomeAssistantCoreInfoQueryResult<TData = GetApiHomeAssistantCoreInfoDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
-export const useGetApiHomeAssistantCoreInfoKey = "GetApiHomeAssistantCoreInfo";
-export const UseGetApiHomeAssistantCoreInfoKeyFn = (clientOptions: Options<unknown, true> = {}, queryKey?: Array<unknown>) => [useGetApiHomeAssistantCoreInfoKey, ...(queryKey ?? [clientOptions])];
-export type GetApiHomeAssistantDumpEnvDefaultResponse = Awaited<ReturnType<typeof getApiHomeAssistantDumpEnv>>["data"];
-export type GetApiHomeAssistantDumpEnvQueryResult<TData = GetApiHomeAssistantDumpEnvDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
-export const useGetApiHomeAssistantDumpEnvKey = "GetApiHomeAssistantDumpEnv";
-export const UseGetApiHomeAssistantDumpEnvKeyFn = (clientOptions: Options<unknown, true> = {}, queryKey?: Array<unknown>) => [useGetApiHomeAssistantDumpEnvKey, ...(queryKey ?? [clientOptions])];
+import { getHaCoreInfo, getHaDumpEnv } from "../requests/services.gen";
+export type GetHaCoreInfoDefaultResponse = Awaited<ReturnType<typeof getHaCoreInfo>>["data"];
+export type GetHaCoreInfoQueryResult<TData = GetHaCoreInfoDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const useGetHaCoreInfoKey = "GetHaCoreInfo";
+export const UseGetHaCoreInfoKeyFn = (clientOptions: Options<unknown, true> = {}, queryKey?: Array<unknown>) => [useGetHaCoreInfoKey, ...(queryKey ?? [clientOptions])];
+export type GetHaDumpEnvDefaultResponse = Awaited<ReturnType<typeof getHaDumpEnv>>["data"];
+export type GetHaDumpEnvQueryResult<TData = GetHaDumpEnvDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const useGetHaDumpEnvKey = "GetHaDumpEnv";
+export const UseGetHaDumpEnvKeyFn = (clientOptions: Options<unknown, true> = {}, queryKey?: Array<unknown>) => [useGetHaDumpEnvKey, ...(queryKey ?? [clientOptions])];
