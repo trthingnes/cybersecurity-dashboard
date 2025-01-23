@@ -15,7 +15,9 @@ function App() {
   const { data, isLoading, isError } = useQuery<ResultDtoCoreInfoDto>({
     queryKey: ["core", "info"],
     queryFn: async () => {
-      const response = await fetch(baseUrl + "/api/home-assistant/core/info");
+      const url = baseUrl + "/api/home-assistant/core/info";
+      console.log("Attempting to fetch URL", url);
+      const response = await fetch(url);
 
       if (!response.ok) throw new Error("Error while fetching core info");
 
