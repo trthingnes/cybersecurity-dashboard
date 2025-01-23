@@ -21,7 +21,7 @@ jobs:
             destination-username: 'trthingnes'
             destination-repository: 'hassio-addons'
             destination-branch: 'main'
-            destination-directory: 'security-dashboard'
+            destination-directory: 'cybersecurity-awareness-dashboard'
             commit-username: 'GitHub Action'
             commit-email: 'support@github.com'
             commit-message: 'Update config.yaml'
