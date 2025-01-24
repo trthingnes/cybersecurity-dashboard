@@ -18,15 +18,4 @@ class HomeAssistantResource {
     @GET
     @Path("/core/info")
     fun getCoreInfo() = client.getCoreInfo()
-
-    @GET
-    @Path("/dump-env")
-    fun postLogToken(): Response {
-        Log.info("Printing env:")
-        System.getenv().forEach {
-            Log.info("${it.key} = ${it.value}")
-        }
-
-        return Response.noContent().build()
-    }
 }

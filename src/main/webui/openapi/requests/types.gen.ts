@@ -3,7 +3,7 @@
 export type CoreInfoDto = {
     version: string;
     version_latest: string;
-    update_available: string;
+    update_available?: boolean;
     arch: string;
     machine: string;
     ip_address: string;
@@ -26,7 +26,3 @@ export type ResultDtoCoreInfoDto = {
 export type GetHaCoreInfoResponse = (ResultDtoCoreInfoDto);
 
 export type GetHaCoreInfoError = unknown;
-
-export type GetHaDumpEnvResponse = (unknown);
-
-export type GetHaDumpEnvError = unknown;

@@ -2,7 +2,7 @@
 
 export const CoreInfoDtoSchema = {
     type: 'object',
-    required: ['version', 'version_latest', 'update_available', 'arch', 'machine', 'ip_address', 'image'],
+    required: ['version', 'version_latest', 'arch', 'machine', 'ip_address', 'image'],
     properties: {
         version: {
             type: 'string'
@@ -11,7 +11,7 @@ export const CoreInfoDtoSchema = {
             type: 'string'
         },
         update_available: {
-            type: 'string'
+            type: 'boolean'
         },
         arch: {
             type: 'string'

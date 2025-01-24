@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming
 data class CoreInfoDto(
     val version: String,
     val versionLatest: String,
-    val updateAvailable: String,
+    val updateAvailable: Boolean,
     val arch: String,
     val machine: String,
     val ipAddress: String,
