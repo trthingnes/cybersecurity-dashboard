@@ -2,8 +2,12 @@
 
 import { type Options } from "@hey-api/client-fetch";
 import { UseQueryResult } from "@tanstack/react-query";
-import { getHaCoreInfo } from "../requests/services.gen";
-export type GetHaCoreInfoDefaultResponse = Awaited<ReturnType<typeof getHaCoreInfo>>["data"];
-export type GetHaCoreInfoQueryResult<TData = GetHaCoreInfoDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
-export const useGetHaCoreInfoKey = "GetHaCoreInfo";
-export const UseGetHaCoreInfoKeyFn = (clientOptions: Options<unknown, true> = {}, queryKey?: Array<unknown>) => [useGetHaCoreInfoKey, ...(queryKey ?? [clientOptions])];
+import { getApiInfo, getApiPublicIp } from "../requests/services.gen";
+export type GetApiInfoDefaultResponse = Awaited<ReturnType<typeof getApiInfo>>["data"];
+export type GetApiInfoQueryResult<TData = GetApiInfoDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const useGetApiInfoKey = "GetApiInfo";
+export const UseGetApiInfoKeyFn = (clientOptions: Options<unknown, true> = {}, queryKey?: Array<unknown>) => [useGetApiInfoKey, ...(queryKey ?? [clientOptions])];
+export type GetApiPublicIpDefaultResponse = Awaited<ReturnType<typeof getApiPublicIp>>["data"];
+export type GetApiPublicIpQueryResult<TData = GetApiPublicIpDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const useGetApiPublicIpKey = "GetApiPublicIp";
+export const UseGetApiPublicIpKeyFn = (clientOptions: Options<unknown, true> = {}, queryKey?: Array<unknown>) => [useGetApiPublicIpKey, ...(queryKey ?? [clientOptions])];

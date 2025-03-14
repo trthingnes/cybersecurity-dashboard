@@ -23,6 +23,10 @@ export type ResultDtoCoreInfoDto = {
     data?: CoreInfoDto;
 };
 
-export type GetHaCoreInfoResponse = (ResultDtoCoreInfoDto);
+export type GetApiInfoResponse = (ResultDtoCoreInfoDto);
 
-export type GetHaCoreInfoError = unknown;
+export type GetApiInfoError = unknown;
+
+export type GetApiPublicIpResponse = (string);
+
+export type GetApiPublicIpError = unknown;

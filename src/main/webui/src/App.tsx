@@ -1,11 +1,11 @@
-import { useGetHaCoreInfo } from "../openapi/queries"
+import { useGetApiInfo, useGetApiPublicIp } from "../openapi/queries"
 import "./App.css"
 import reactLogo from "./assets/react.svg"
 import viteLogo from "./assets/vite.svg"
 
 function App() {
-    const { data, isLoading, isError } = useGetHaCoreInfo()
-    const info = data?.data
+    const infoQuery = useGetApiInfo()
+    const ipQuery = useGetApiPublicIp()
 
     return (
         <>
@@ -23,20 +23,20 @@ function App() {
             </div>
             <h1>Cybersecurity Dashboard</h1>
             <div className="card">
-                {isLoading && <p>Loading...</p>}
-                {isError && <p>Error!</p>}
-                {info && (
+                {[infoQuery, ipQuery].some(q => q.isLoading) && <p>Loading...</p>}
+                {[infoQuery, ipQuery].some(q => q.isError) && <p>Error!</p>}
+                {infoQuery && (
                     <div>
                         <p>
-                            Home Assistant {info.version} running on{" "}
-                            {info.machine}/{info.arch}
+                            Home Assistant {infoQuery.data?.data?.version} running on{" "}
+                            {infoQuery.data?.data?.machine}/{infoQuery.data?.data?.arch}
                         </p>
                         <p>
-                            IP: {info.ip_address}, Port: {info.port}, SSL:{" "}
-                            {info.ssl ? "Yes" : "No"}
+                            Public IP: {ipQuery.data}, Private IP: {infoQuery.data?.data?.ip_address}, Port: {infoQuery.data?.data?.port}, SSL:{" "}
+                            {infoQuery.data?.data?.ssl ? "Yes" : "No"}
                         </p>
-                        {info.update_available && (
-                            <p>Update to {info.version_latest} is available!</p>
+                        {infoQuery.data?.data?.update_available && (
+                            <p>Update to {infoQuery.data?.data?.version_latest} is available!</p>
                         )}
                     </div>
                 )}
