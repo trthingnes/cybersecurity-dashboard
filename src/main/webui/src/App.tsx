@@ -21,7 +21,7 @@ function App() {
                     />
                 </a>
             </div>
-            <h1>Cybersecurity Awareness Dashboard</h1>
+            <h1>Cybersecurity Dashboard</h1>
             <div className="card">
                 {isLoading && <p>Loading...</p>}
                 {isError && <p>Error!</p>}

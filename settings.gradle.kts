@@ -10,4 +10,4 @@ pluginManagement {
         id(quarkusPluginId) version quarkusPluginVersion
     }
 }
-rootProject.name="cybersecurity-awareness-dashboard"
+rootProject.name="cybersecurity-dashboard"
