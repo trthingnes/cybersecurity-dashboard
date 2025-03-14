@@ -1,1 +1,2 @@
-* text eol=lf
+# Force LF line endings to avoid errors in scripts. Docs: https://docs.github.com/en/get-started/git-basics/configuring-git-to-handle-line-endings
+* text=auto eol=lf
