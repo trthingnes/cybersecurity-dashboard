@@ -1,0 +1,3 @@
+# Force LF line endings to avoid errors in scripts. Docs: https://docs.github.com/en/get-started/git-basics/configuring-git-to-handle-line-endings
+# Follow this up with "find . -type f -exec dos2unix {} \" to convert all files from CRLF to LF.
+* text=auto eol=lf

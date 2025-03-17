@@ -1,0 +1,52 @@
+name: Release
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+jobs:
+  packages:
+    name: Build, Package, and Publish Packages
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      matrix:
+        arch: [amd64, aarch64]
+    steps:
+      - name: Checkout the GitHub repository
+        uses: actions/checkout@v3
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3.3.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run Home Assistant Builder
+        uses: home-assistant/builder@master
+        with:
+          args: |
+            --target . \
+            --docker-hub ghcr.io \
+            --image ${{ github.repository }}-{arch} \
+            --${{ matrix.arch }}
+  repository:
+    name: Update Addon Repository
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Copy config.yaml
+        uses: nkoppel/push-files-to-another-repository@v1.1.4
+        env:
+            API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+            source-files: 'config.yaml'
+            destination-username: 'trthingnes'
+            destination-repository: 'hassio-addons'
+            destination-branch: 'main'
+            destination-directory: 'cybersecurity-dashboard'
+            commit-message: 'Update cybersecurity-dashboard config.yaml'
+            commit-username: 'GitHub Action'
+            commit-email: 'support@github.com'
