@@ -2,12 +2,11 @@
 
 import { type Options } from "@hey-api/client-fetch";
 import { UseQueryResult } from "@tanstack/react-query";
-import { getApiInfo, getApiPublicIp } from "../requests/services.gen";
-export type GetApiInfoDefaultResponse = Awaited<ReturnType<typeof getApiInfo>>["data"];
-export type GetApiInfoQueryResult<TData = GetApiInfoDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
-export const useGetApiInfoKey = "GetApiInfo";
-export const UseGetApiInfoKeyFn = (clientOptions: Options<unknown, true> = {}, queryKey?: Array<unknown>) => [useGetApiInfoKey, ...(queryKey ?? [clientOptions])];
-export type GetApiPublicIpDefaultResponse = Awaited<ReturnType<typeof getApiPublicIp>>["data"];
-export type GetApiPublicIpQueryResult<TData = GetApiPublicIpDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
-export const useGetApiPublicIpKey = "GetApiPublicIp";
-export const UseGetApiPublicIpKeyFn = (clientOptions: Options<unknown, true> = {}, queryKey?: Array<unknown>) => [useGetApiPublicIpKey, ...(queryKey ?? [clientOptions])];
+import { getApiReport, postApiCheck } from "../requests/services.gen";
+export type GetApiReportDefaultResponse = Awaited<ReturnType<typeof getApiReport>>["data"];
+export type GetApiReportQueryResult<TData = GetApiReportDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const useGetApiReportKey = "GetApiReport";
+export const UseGetApiReportKeyFn = (clientOptions: Options<unknown, true> = {}, queryKey?: Array<unknown>) => [useGetApiReportKey, ...(queryKey ?? [clientOptions])];
+export type PostApiCheckMutationResult = Awaited<ReturnType<typeof postApiCheck>>;
+export const usePostApiCheckKey = "PostApiCheck";
+export const UsePostApiCheckKeyFn = (mutationKey?: Array<unknown>) => [usePostApiCheckKey, ...(mutationKey ?? [])];
