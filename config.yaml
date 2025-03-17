@@ -2,10 +2,11 @@ name: "Cybersecurity Dashboard"
 version: "0.0.1"
 slug: "cybersecurity_dashboard"
 description: "Improve your cybersecurity of your smart home"
+sidebar_icon: "mdi:security"
+# image: "ghcr.io/trthingnes/cybersecurity-dashboard-{arch}"
 arch:
   - amd64
   - aarch64
-image: "ghcr.io/trthingnes/cybersecurity-dashboard-{arch}"
 init: false
 ingress: true
 ingress_port: 8080
