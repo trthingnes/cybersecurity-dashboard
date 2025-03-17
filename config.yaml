@@ -3,7 +3,7 @@ version: "0.0.1"
 slug: "cybersecurity_dashboard"
 description: "Improve your cybersecurity of your smart home"
 panel_icon: "mdi:security"
-# image: "ghcr.io/trthingnes/cybersecurity-dashboard-{arch}"
+image: "ghcr.io/trthingnes/cybersecurity-dashboard-{arch}"
 arch:
   - amd64
   - aarch64
