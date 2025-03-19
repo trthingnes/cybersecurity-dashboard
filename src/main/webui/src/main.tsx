@@ -1,3 +1,4 @@
+import { CssBaseline, ThemeProvider, createTheme } from "@mui/material"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
@@ -12,15 +13,35 @@ const baseUrl =
     "//" +
     window.location.host +
     window.location.pathname.substring(0, window.location.pathname.length - 1)
-console.debug("Setting query client base to", baseUrl)
 client.setConfig({ baseUrl })
 
 const queryClient = new QueryClient()
 
+const theme = createTheme({
+    palette: {
+        mode: "dark",
+        primary: {
+            main: "#0aa9f0",
+        },
+        secondary: {
+            main: "#ff9800",
+        },
+    },
+    typography: {
+        h1: {
+            fontSize: "32px",
+            fontWeight: "400",
+        },
+    },
+})
+
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
         <QueryClientProvider client={queryClient}>
-            <App />
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <App />
+            </ThemeProvider>
         </QueryClientProvider>
     </StrictMode>
 )

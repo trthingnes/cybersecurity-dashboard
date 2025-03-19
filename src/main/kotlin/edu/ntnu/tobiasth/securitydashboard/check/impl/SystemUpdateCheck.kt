@@ -25,6 +25,6 @@ class SystemUpdateCheck(
                 "A Home Assistant update is available (${info.versionLatest})."
             )
         }
-        return CheckResult(this, Risk.NONE, "Home Assistant is up to date.")
+        return CheckResult(this, Risk.LOW, "Home Assistant is up to date.")
     }
 }
