@@ -2,8 +2,8 @@ name: Release
 on:
   workflow_dispatch:
   push:
-    branches:
-      - main
+    branches: ["main"]
+    paths: ["src/main", "config.yaml", "Dockerfile", "icon.png", "run.sh"]
 jobs:
   packages:
     name: Build, Package, and Publish Packages
