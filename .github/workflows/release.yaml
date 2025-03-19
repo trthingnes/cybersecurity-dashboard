@@ -30,6 +30,7 @@ jobs:
             --target . \
             --docker-hub ghcr.io \
             --image ${{ github.repository }}-{arch} \
+            --version 0.0.2
             --${{ matrix.arch }}
   repository:
     name: Update Addon Repository
