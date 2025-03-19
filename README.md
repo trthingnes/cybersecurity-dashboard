@@ -22,13 +22,16 @@ The UI in `src/webui` is served using Quinoa and Vite, making the add-on a singl
 To run the application in development mode, run `./gradlew quarkusDev`.
 This will run both the frontend and backend, as well as the [Quarkus Dev UI](http://localhost:8080/q/dev-ui).
 
+> **NOTE:** If you restart the Remote API Proxy add-on, you have to retrieve the API token from the logs again.
+> If you recreate the Home Assistant instance you will have to create the long-lived access token again.
+
 ## Local Installation
 
 If you are using the included **devcontainer** configuration, the project files should be available locally.
 Open the Home Assistant interface and install the add-on from the local file system.
 
-> **NOTE:** Ensure that the config.yaml file does not include the image key, or Home Assistant will attempt to download
-> the prebuild image on the GitHub Container Registry even when attempting a local install.
+> **NOTE:** Ensure that the version of the addon is `dev`. If this is not the case, the `config.yaml` file likely
+> includes an image URL, and Home Assistant will attempt to download the prebuild image from GitHub Package Registry.
 
 ## Building
 

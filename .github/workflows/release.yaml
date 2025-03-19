@@ -42,11 +42,11 @@ jobs:
         env:
             API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-            source-files: 'config.yaml'
+            source-files: 'repository/config.yaml repository/icon.png'
             destination-username: 'trthingnes'
             destination-repository: 'hassio-addons'
             destination-branch: 'main'
             destination-directory: 'cybersecurity-dashboard'
-            commit-message: 'Update cybersecurity-dashboard config.yaml'
+            commit-message: 'Update config and icon for cybersecurity-dashboard'
             commit-username: 'GitHub Action'
             commit-email: 'support@github.com'
