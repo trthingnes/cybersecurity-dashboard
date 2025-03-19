@@ -1,10 +1,12 @@
 package edu.ntnu.tobiasth.securitydashboard.client
 
 import jakarta.ws.rs.GET
+import jakarta.ws.rs.Path
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient
 
-@RegisterRestClient(configKey = "ipify-api")
-interface IpifyClient {
+@RegisterRestClient(configKey = "cf-cdn-api")
+interface CloudflareClient {
     @GET
-    fun getPublicIP(): String
+    @Path("/trace")
+    fun getTrace(): String
 }

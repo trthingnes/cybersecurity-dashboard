@@ -1,6 +1,6 @@
 package edu.ntnu.tobiasth.securitydashboard
 
-import edu.ntnu.tobiasth.securitydashboard.check.CheckRunner
+import edu.ntnu.tobiasth.securitydashboard.service.CheckService
 import edu.ntnu.tobiasth.securitydashboard.check.dto.CheckReport
 import io.quarkus.logging.Log
 import jakarta.inject.Inject
@@ -11,7 +11,7 @@ import jakarta.ws.rs.Path
 @Path("/api")
 class MainResource {
     @Inject
-    lateinit var runner: CheckRunner
+    lateinit var runner: CheckService
 
     @GET
     @Path("/report")

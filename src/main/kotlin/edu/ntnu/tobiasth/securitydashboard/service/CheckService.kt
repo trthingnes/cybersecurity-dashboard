@@ -1,5 +1,6 @@
-package edu.ntnu.tobiasth.securitydashboard.check
+package edu.ntnu.tobiasth.securitydashboard.service
 
+import edu.ntnu.tobiasth.securitydashboard.check.Check
 import edu.ntnu.tobiasth.securitydashboard.check.dto.CheckReport
 import io.quarkus.arc.All
 import io.quarkus.logging.Log
@@ -9,7 +10,7 @@ import jakarta.inject.Inject
 import java.time.Instant
 
 @ApplicationScoped
-class CheckRunner {
+class CheckService {
     @Inject
     @All
     @Suppress("CdiInjectionPointsInspection")
