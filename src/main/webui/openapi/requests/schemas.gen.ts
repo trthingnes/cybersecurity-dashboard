@@ -53,5 +53,5 @@ export const InstantSchema = {
 
 export const RiskSchema = {
     type: 'string',
-    enum: ['NONE', 'LOW', 'MODERATE', 'HIGH']
+    enum: ['LOW', 'MODERATE', 'HIGH']
 } as const;
