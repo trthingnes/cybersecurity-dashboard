@@ -12,7 +12,7 @@ import { CheckResultCard } from "./components/CheckResultCard.tsx"
 
 function App() {
     const { data, isFetching, isError, refetch } = useGetApiReport()
-    const { mutateAsync } = usePostApiCheck()
+    const { mutateAsync, isPending } = usePostApiCheck()
 
     return (
         <Grid2 container spacing={2} mt={5}>
@@ -47,7 +47,7 @@ function App() {
                         )}
                     </Stack>
                     <Stack spacing={2} m={1}>
-                        {isFetching && <CircularProgress />}
+                        {isPending || isFetching && <CircularProgress />}
                         {isError && (
                             <Alert severity="error">
                                 An error occured while fetching the

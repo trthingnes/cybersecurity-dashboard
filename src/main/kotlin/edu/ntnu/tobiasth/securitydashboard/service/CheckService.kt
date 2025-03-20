@@ -1,7 +1,7 @@
 package edu.ntnu.tobiasth.securitydashboard.service
 
 import edu.ntnu.tobiasth.securitydashboard.check.Check
-import edu.ntnu.tobiasth.securitydashboard.check.dto.CheckReport
+import edu.ntnu.tobiasth.securitydashboard.service.dto.CheckReport
 import io.quarkus.arc.All
 import io.quarkus.logging.Log
 import io.quarkus.scheduler.Scheduled
@@ -20,10 +20,9 @@ class CheckService {
 
     @Scheduled(every = "6h")
     fun run() {
-        Log.info("Running checks.")
-        val results = checks.map { it.run() }
+        Log.info("Running ${checks.size} checks...")
 
-        Log.info("Generating report.")
+        val results = checks.map { it.run() }
         report = CheckReport(
             Instant.now(),
             results

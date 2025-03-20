@@ -1,8 +1,7 @@
 package edu.ntnu.tobiasth.securitydashboard.check
 
-import edu.ntnu.tobiasth.securitydashboard.check.dto.CheckReport
-import edu.ntnu.tobiasth.securitydashboard.check.dto.CheckResult
-import edu.ntnu.tobiasth.securitydashboard.check.dto.Risk
+import edu.ntnu.tobiasth.securitydashboard.service.dto.CheckResult
+import edu.ntnu.tobiasth.securitydashboard.service.dto.Risk
 
 interface Check {
     val name: String

@@ -1,4 +1,4 @@
-package edu.ntnu.tobiasth.securitydashboard.check.dto
+package edu.ntnu.tobiasth.securitydashboard.service.dto
 
 data class CheckResult(
     val name: String,

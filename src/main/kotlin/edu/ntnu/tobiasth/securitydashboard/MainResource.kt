@@ -1,7 +1,7 @@
 package edu.ntnu.tobiasth.securitydashboard
 
 import edu.ntnu.tobiasth.securitydashboard.service.CheckService
-import edu.ntnu.tobiasth.securitydashboard.check.dto.CheckReport
+import edu.ntnu.tobiasth.securitydashboard.service.dto.CheckReport
 import io.quarkus.logging.Log
 import jakarta.inject.Inject
 import jakarta.ws.rs.GET
