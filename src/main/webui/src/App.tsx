@@ -15,10 +15,10 @@ function App() {
     const { mutateAsync } = usePostApiCheck()
 
     return (
-        <Grid2 container spacing={2} m={5}>
+        <Grid2 container spacing={2} mt={5}>
             <Grid2 size="grow"></Grid2>
-            <Grid2 size="auto" justifyItems="center">
-                <Stack spacing={6}>
+            <Grid2 size={{ xs: 12, sm: 8, md: 6, xl: 4 }} justifyItems="center">
+                <Stack spacing={6} m="auto">
                     <Typography variant="h1" align="center">
                         Cybersecurity Dashboard
                     </Typography>
@@ -27,6 +27,8 @@ function App() {
                         spacing={2}
                         alignItems="center"
                         justifyContent="center"
+                        useFlexGap
+                        sx={{ flexWrap: "wrap" }}
                     >
                         <Button
                             variant="contained"
@@ -44,7 +46,7 @@ function App() {
                             </Typography>
                         )}
                     </Stack>
-                    <Stack spacing={2} alignItems="center">
+                    <Stack spacing={2} m={1}>
                         {isFetching && <CircularProgress />}
                         {isError && (
                             <Alert severity="error">
@@ -69,6 +71,7 @@ function App() {
                                     <CheckResultCard
                                         key={r.check.name}
                                         result={r}
+                                        sx={{ flexGrow: "grow" }}
                                     />
                                 ))}
                     </Stack>

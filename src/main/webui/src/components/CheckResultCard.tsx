@@ -1,4 +1,4 @@
-import { Chip, Grid2, Paper, Typography } from "@mui/material"
+import { Chip, Grid2, Paper, PaperProps, Typography } from "@mui/material"
 
 import { CheckResult, Risk } from "../../openapi/requests/types.gen"
 
@@ -14,16 +14,15 @@ function getColor(risk: Risk) {
     if (risk === "HIGH") return "error"
 }
 
-export function CheckResultCard({ result }: { readonly result: CheckResult }) {
+export function CheckResultCard({
+    result,
+    ...props
+}: {
+    readonly result: CheckResult
+} & PaperProps) {
     return (
         <Paper>
-            <Grid2
-                m={2}
-                container
-                spacing={2}
-                alignItems="center"
-                minWidth="40rem"
-            >
+            <Grid2 m={2} container spacing={2} alignItems="center" {...props}>
                 <Grid2 size="grow">
                     <Typography variant="h6" component="h2">
                         {result.check.name}
