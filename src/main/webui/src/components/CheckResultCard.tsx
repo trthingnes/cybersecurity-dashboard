@@ -12,12 +12,14 @@ import {
 import { CheckResult, Risk } from "../../openapi/requests/types.gen"
 
 function getLabel(risk: Risk) {
+    if (risk === "UNKNOWN") return "Unknown"
     if (risk === "LOW") return "Low"
     if (risk === "MODERATE") return "Moderate"
     if (risk === "HIGH") return "High"
 }
 
 function getColor(risk: Risk) {
+    if (risk === "UNKNOWN") return ""
     if (risk === "LOW") return "success"
     if (risk === "MODERATE") return "warning"
     if (risk === "HIGH") return "error"

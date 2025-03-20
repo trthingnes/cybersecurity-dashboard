@@ -14,7 +14,7 @@ export type CheckResult = {
 
 export type Instant = string;
 
-export type Risk = 'LOW' | 'MODERATE' | 'HIGH';
+export type Risk = 'UNKNOWN' | 'LOW' | 'MODERATE' | 'HIGH';
 
 export type PostApiCheckResponse = (unknown);
 

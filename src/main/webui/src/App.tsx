@@ -47,7 +47,7 @@ function App() {
                         )}
                     </Stack>
                     <Stack spacing={2} m={1}>
-                        {isPending || isFetching && <CircularProgress />}
+                        {isPending || (isFetching && <CircularProgress />)}
                         {isError && (
                             <Alert severity="error">
                                 An error occured while fetching the
@@ -65,6 +65,11 @@ function App() {
                                         b.risk === "MODERATE"
                                     )
                                         return a.risk === "MODERATE" ? -1 : 1
+                                    if (
+                                        a.risk === "LOW" ||
+                                        b.risk === "LOW"
+                                    )
+                                        return a.risk === "LOW" ? -1 : 1
                                     return 0
                                 })
                                 .map((r) => (
