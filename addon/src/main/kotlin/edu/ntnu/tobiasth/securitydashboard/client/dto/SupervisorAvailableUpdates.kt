@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming
 data class SupervisorAvailableUpdates(
     val availableUpdates: List<Update>
 ) {
+    @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
     data class Update(
         val name: String?,
         val updateType: UpdateType,

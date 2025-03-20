@@ -22,6 +22,7 @@ data class SupervisorSupervisorInfo(
     val addonRepositories: List<AddonRepository>,
     val autoUpdate: Boolean,
 ) {
+    @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
     data class AddonRepository(
         val name: String,
         val slug: String,
