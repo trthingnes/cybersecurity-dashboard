@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches: ["main"]
-    paths: [".github/**", "src/main/**", "config.yaml", "Dockerfile", "icon.png", "run.sh"]
+    paths: [".github/**", "repository/**", "addon/src/main/**", "addon/Dockerfile", "addon/run.sh"]
 jobs:
   packages:
     name: Build, Package, and Publish Packages
@@ -27,11 +27,11 @@ jobs:
         uses: home-assistant/builder@master
         with:
           args: |
-            --target . \
+            --target addon \
             --docker-hub ghcr.io \
             --image ${{ github.repository }}-{arch} \
-            --version 0.0.2 \
-            --${{ matrix.arch }}
+            --${{ matrix.arch }} \
+            --version 0.0.3
   repository:
     name: Update Addon Repository
     runs-on: ubuntu-latest
