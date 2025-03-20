@@ -19,7 +19,7 @@ function getLabel(risk: Risk) {
 }
 
 function getColor(risk: Risk) {
-    if (risk === "UNKNOWN") return ""
+    if (risk === "UNKNOWN") return "default"
     if (risk === "LOW") return "success"
     if (risk === "MODERATE") return "warning"
     if (risk === "HIGH") return "error"
