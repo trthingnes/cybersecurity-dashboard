@@ -5,6 +5,7 @@ import edu.ntnu.tobiasth.securitydashboard.service.dto.CheckResult
 import edu.ntnu.tobiasth.securitydashboard.service.dto.Risk
 import edu.ntnu.tobiasth.securitydashboard.service.IpService
 import edu.ntnu.tobiasth.securitydashboard.service.OptionsService
+import io.quarkus.logging.Log
 import jakarta.enterprise.context.ApplicationScoped
 import java.net.InetAddress
 
@@ -30,7 +31,9 @@ class ProxyCheck(
         }
 
         val publicIp = ipService.getPublicIP()
-        return if (InetAddress.getAllByName(optionsService.instanceUrl).any { it.hostAddress == publicIp }) {
+        val instanceUrl = optionsService.instanceUrl
+        Log.info("Checking if $instanceUrl points to $publicIp")
+        return if (InetAddress.getAllByName(instanceUrl).any { it.hostAddress == publicIp }) {
             result(Risk.HIGH, "Home Assistant is accessed directly.")
         } else result(Risk.LOW, "Home Assistant is accessed through a proxy.")
     }

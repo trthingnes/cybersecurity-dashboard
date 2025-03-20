@@ -1,5 +1,6 @@
 import {
     Alert,
+    Box,
     Button,
     CircularProgress,
     Grid2,
@@ -47,7 +48,8 @@ function App() {
                         )}
                     </Stack>
                     <Stack spacing={2} m={1}>
-                        {isPending || (isFetching && <CircularProgress />)}
+                        {isPending || (isFetching && <Box sx={{margin: "auto !important"}}><CircularProgress /></Box>)}
+                        
                         {isError && (
                             <Alert severity="error">
                                 An error occured while fetching the

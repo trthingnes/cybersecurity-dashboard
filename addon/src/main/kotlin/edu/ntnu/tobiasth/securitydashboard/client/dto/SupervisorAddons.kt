@@ -21,7 +21,7 @@ data class SupervisorAddons(
         val state: String,
         val repository: String,
         val build: Boolean,
-        val url: String,
+        val url: String?,
         val icon: Boolean,
         val systemManaged: Boolean
     )
