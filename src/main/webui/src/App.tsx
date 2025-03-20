@@ -69,7 +69,7 @@ function App() {
                                 })
                                 .map((r) => (
                                     <CheckResultCard
-                                        key={r.check.name}
+                                        key={r.name}
                                         result={r}
                                         sx={{ flexGrow: "grow" }}
                                     />

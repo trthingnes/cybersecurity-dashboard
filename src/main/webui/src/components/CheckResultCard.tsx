@@ -1,4 +1,13 @@
-import { Chip, Grid2, Paper, PaperProps, Typography } from "@mui/material"
+import { HelpOutline } from "@mui/icons-material"
+import {
+    Chip,
+    Grid2,
+    Paper,
+    PaperProps,
+    Stack,
+    Tooltip,
+    Typography,
+} from "@mui/material"
 
 import { CheckResult, Risk } from "../../openapi/requests/types.gen"
 
@@ -24,10 +33,16 @@ export function CheckResultCard({
         <Paper>
             <Grid2 m={2} container spacing={2} alignItems="center" {...props}>
                 <Grid2 size="grow">
-                    <Typography variant="h6" component="h2">
-                        {result.check.name}
-                        <Typography>{result.message}</Typography>
-                    </Typography>
+                    <Stack direction="row" spacing={1} alignItems="center">
+                        <Typography variant="h6" component="h2">
+                            {result.name}{" "}
+                        </Typography>
+                        <Tooltip title={result.description}>
+                            <HelpOutline />
+                        </Tooltip>
+                    </Stack>
+
+                    <Typography>{result.message}</Typography>
                 </Grid2>
                 <Grid2 size="auto">
                     <Chip

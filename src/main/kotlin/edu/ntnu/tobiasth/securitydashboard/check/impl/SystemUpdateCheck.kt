@@ -19,12 +19,11 @@ class SystemUpdateCheck(
     override fun run(): CheckResult {
         val info = haClient.getCoreInfo().data
         if (info.updateAvailable) {
-            return CheckResult(
-                this,
+            return result(
                 Risk.MODERATE,
                 "A Home Assistant update is available (${info.versionLatest})."
             )
         }
-        return CheckResult(this, Risk.LOW, "Home Assistant is up to date.")
+        return result(Risk.LOW, "Home Assistant is up to date.")
     }
 }

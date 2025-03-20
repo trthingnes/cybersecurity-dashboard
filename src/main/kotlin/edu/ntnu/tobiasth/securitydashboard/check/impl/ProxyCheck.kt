@@ -16,8 +16,7 @@ class ProxyCheck(
         get() = "Check Home Assistant is behind a secure proxy"
 
     override fun run(): CheckResult {
-        return CheckResult(
-            this,
+        return result(
             Risk.MODERATE,
             "Public IP: ${ipService.getPublicIP()}"
         )
