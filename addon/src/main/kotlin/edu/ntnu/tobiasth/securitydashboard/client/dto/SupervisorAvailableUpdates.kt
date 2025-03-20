@@ -1,5 +1,6 @@
 package edu.ntnu.tobiasth.securitydashboard.client.dto
 
+import com.fasterxml.jackson.annotation.JsonValue
 import com.fasterxml.jackson.databind.PropertyNamingStrategies
 import com.fasterxml.jackson.databind.annotation.JsonNaming
 
@@ -14,11 +15,11 @@ data class SupervisorAvailableUpdates(
         val versionLatest: String
     )
 
-    enum class UpdateType {
-        OS,
-        SUPERVISOR,
-        CORE,
-        ADDON
+    enum class UpdateType(@JsonValue val value: String) {
+        OS("os"),
+        SUPERVISOR("supervisor"),
+        CORE("core"),
+        ADDON("addon")
     }
 }
 
