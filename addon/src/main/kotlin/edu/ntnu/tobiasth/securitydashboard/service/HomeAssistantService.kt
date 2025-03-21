@@ -13,6 +13,7 @@ class HomeAssistantService(
     fun getAvailableUpdates() = supervisor.getAvailableUpdates().data.availableUpdates
     fun getInfo() = supervisor.getInfo().data
     fun getAddons() = supervisor.getAddons().data.addons
+    fun getCoreInfo() = supervisor.getCoreInfo().data
     fun getSupervisorInfo() = supervisor.getSupervisorInfo().data
     fun getErrorLog() = core.getErrorLog()
 }

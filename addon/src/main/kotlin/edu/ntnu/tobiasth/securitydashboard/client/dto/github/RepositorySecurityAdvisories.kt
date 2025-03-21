@@ -42,6 +42,7 @@ data class RepositorySecurityAdvisories(
         LOW("low")
     }
 
+    @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
     data class Identifier(
         val value: String,
         val type: String
@@ -55,6 +56,7 @@ data class RepositorySecurityAdvisories(
         TRIAGE("triage")
     }
 
+    @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
     data class Vulnerability(
         @JsonAlias("package")
         val image: Image,
@@ -64,16 +66,19 @@ data class RepositorySecurityAdvisories(
         val vulnerableFunctions: List<String>,
     )
 
+    @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
     data class Image(
         val ecosystem: String,
         val name: String?,
     )
 
+    @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
     data class CvssSeverity(
         val vectorString: String?,
         val score: Float?,
     )
 
+    @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
     data class CWE(
         val cveId: String,
         val name: String,

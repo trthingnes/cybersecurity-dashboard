@@ -6,7 +6,7 @@ import jakarta.enterprise.context.ApplicationScoped
 import org.eclipse.microprofile.rest.client.inject.RestClient
 
 @ApplicationScoped
-class AdvisoriesService(
+class GitHubService(
     @RestClient val githubClient: GitHubClient
 ) {
     fun getSecurityAdvisories(owner: String, repository: String): List<RepositorySecurityAdvisories> =
