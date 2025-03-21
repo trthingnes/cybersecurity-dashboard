@@ -1,10 +1,12 @@
 package edu.ntnu.tobiasth.securitydashboard.util
 
-import jakarta.inject.Singleton
+import jakarta.enterprise.context.ApplicationScoped
 
-@Singleton
+@ApplicationScoped
 class VersionComparator : Comparator<String> {
-    fun isOlderThan(o1: String?, o2: String?) = compare(o1, o2) == -1
+    fun isOlderThan(o1: String?, o2: String?): Boolean {
+        return compare(o1, o2) == -1
+    }
 
     override fun compare(o1: String?, o2: String?): Int {
         if (o1 == null || o2 == null) return 0

@@ -8,11 +8,14 @@ import jakarta.inject.Singleton
 class AdvisoryUtil(
     private val versionComparator: VersionComparator
 ) {
-    fun getPatchedVersion(advisories: List<RepositorySecurityAdvisory>) = advisories
-        .flatMap { it.vulnerabilities }
-        .mapNotNull { it.patchedVersions }
-        .sortedWith(versionComparator)
-        .last()
+    fun getPatchedVersion(advisories: List<RepositorySecurityAdvisory>): String? {
+        val filteredAdvisories = advisories
+            .flatMap { it.vulnerabilities }
+            .mapNotNull { it.patchedVersions }
+            .sortedWith(versionComparator)
+
+        return if (filteredAdvisories.isNotEmpty()) filteredAdvisories.last() else null
+    }
 
     fun getRisk(advisories: List<RepositorySecurityAdvisory>) = if (advisories.any {
             it.severity == RepositorySecurityAdvisory.Severity.CRITICAL || it.severity == RepositorySecurityAdvisory.Severity.HIGH

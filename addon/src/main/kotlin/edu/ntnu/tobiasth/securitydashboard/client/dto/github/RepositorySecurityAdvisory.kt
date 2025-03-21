@@ -59,7 +59,7 @@ data class RepositorySecurityAdvisory(
     @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
     data class Vulnerability(
         @JsonAlias("package")
-        val image: Image,
+        val vulnerablePackage: VulnerablePackage,
         val vulnerableVersionRange: String?,
         val patchedVersions: String?,
         @JsonSetter(nulls = Nulls.AS_EMPTY)
@@ -67,7 +67,7 @@ data class RepositorySecurityAdvisory(
     )
 
     @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
-    data class Image(
+    data class VulnerablePackage(
         val ecosystem: String,
         val name: String?,
     )
