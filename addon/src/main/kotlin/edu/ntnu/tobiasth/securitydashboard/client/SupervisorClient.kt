@@ -1,6 +1,6 @@
 package edu.ntnu.tobiasth.securitydashboard.client
 
-import edu.ntnu.tobiasth.securitydashboard.client.dto.*
+import edu.ntnu.tobiasth.securitydashboard.client.dto.supervisor.*
 import jakarta.ws.rs.GET
 import jakarta.ws.rs.Path
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient
@@ -10,21 +10,21 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient
 interface SupervisorClient {
     @GET
     @Path("/info")
-    fun getInfo(): SupervisorResult<SupervisorInfo>
+    fun getInfo(): Result<Info>
 
     @GET
     @Path("/addons")
-    fun getAddons(): SupervisorResult<SupervisorAddons>
+    fun getAddons(): Result<Addons>
 
     @GET
     @Path("/available_updates")
-    fun getAvailableUpdates(): SupervisorResult<SupervisorAvailableUpdates>
+    fun getAvailableUpdates(): Result<AvailableUpdates>
 
     @GET
     @Path("/core/info")
-    fun getCoreInfo(): SupervisorResult<SupervisorCoreInfo>
+    fun getCoreInfo(): Result<CoreInfo>
 
     @GET
     @Path("/supervisor/info")
-    fun getSupervisorInfo(): SupervisorResult<SupervisorSupervisorInfo>
+    fun getSupervisorInfo(): Result<SupervisorInfo>
 }
