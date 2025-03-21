@@ -13,6 +13,8 @@ hassio_role: manager
 hassio_api: true
 homeassistant_api: true
 options:
-  instance_url: "localhost"
+  instance_url: ""
+  github_api_token: ""
 schema:
   instance_url: "str"
+  github_api_token: "str"

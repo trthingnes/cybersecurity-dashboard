@@ -3,6 +3,7 @@ package edu.ntnu.tobiasth.securitydashboard.client.dto.supervisor
 import com.fasterxml.jackson.databind.PropertyNamingStrategies
 import com.fasterxml.jackson.databind.annotation.JsonNaming
 
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
 data class Addons(
     val addons: List<SupervisorAddon>
 ) {
