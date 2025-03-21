@@ -12,6 +12,7 @@ class UpdateCheck(
 ): Check() {
     override val name = "System Updates"
     override val description = "Home Assistant components and add-ons are up-to-date."
+
     override fun check(): CheckResult {
         val updates = haService.getAvailableUpdates()
         if (updates.isEmpty()) return result(Risk.LOW, "Home Assistant is up-to-date.")

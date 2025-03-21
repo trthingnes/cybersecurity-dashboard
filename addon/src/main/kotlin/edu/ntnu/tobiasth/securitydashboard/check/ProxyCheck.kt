@@ -6,6 +6,8 @@ import edu.ntnu.tobiasth.securitydashboard.service.IpService
 import edu.ntnu.tobiasth.securitydashboard.service.OptionsService
 import jakarta.enterprise.context.ApplicationScoped
 import java.net.InetAddress
+import kotlin.jvm.optionals.getOrElse
+import kotlin.jvm.optionals.getOrNull
 
 @ApplicationScoped
 class ProxyCheck(
@@ -16,12 +18,16 @@ class ProxyCheck(
     override val description = "Home Assistant is accessed through a proxy."
 
     override fun check(): CheckResult {
-        if (optionsService.instanceUrl == "localhost") {
+        val instanceUrl = optionsService.instanceUrl.getOrElse { "" }
+
+        if (instanceUrl.isBlank()) return result(Risk.UNKNOWN, "Instance URL has not been configured.")
+
+        if (instanceUrl == "localhost") {
             return result(Risk.LOW, "Home Assistant is configured for local access only.")
         }
 
         val publicIp = ipService.getPublicIP()
-        val instanceUrl = optionsService.instanceUrl
+
         return if (InetAddress.getAllByName(instanceUrl).any { it.hostAddress == publicIp }) {
             result(Risk.HIGH, "Home Assistant is accessed directly.")
         } else result(Risk.LOW, "Home Assistant is accessed through a proxy.")

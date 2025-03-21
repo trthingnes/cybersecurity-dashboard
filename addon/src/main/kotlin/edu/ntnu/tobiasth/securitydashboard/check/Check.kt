@@ -15,6 +15,7 @@ abstract class Check {
     }
 
     protected abstract fun check(): CheckResult?
+    protected fun result(name: String, risk: Risk, message: String?) = CheckResult(name, description, risk, message)
     protected fun result(risk: Risk, message: String?) = CheckResult(name, description, risk, message)
     protected fun yield(result: CheckResult) {
         results.add(result)

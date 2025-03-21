@@ -17,6 +17,14 @@ interface SupervisorClient {
     fun getAddons(): Result<Addons>
 
     @GET
+    @Path("/store/addons")
+    fun getStoreAddons(): Result<Addons>
+
+    @GET
+    @Path("/store/repositories")
+    fun getStoreRepositories(): Result<List<StoreRepository>>
+
+    @GET
     @Path("/available_updates")
     fun getAvailableUpdates(): Result<AvailableUpdates>
 

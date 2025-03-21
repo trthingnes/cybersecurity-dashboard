@@ -11,7 +11,8 @@ class SupportCheck(
 ) : Check() {
     override val name = "Hardware Support"
     override val description = "Home Assistant is officially supported for this hardware configuration."
-    override fun check(): CheckResult = when (haService.getInfo().supported) {
+
+    override fun check(): CheckResult = when (haService.getSystemInfo().supported) {
         true -> result(Risk.LOW, "Hardware is officially supported.")
         false -> result(Risk.MODERATE, "Hardware is not officially supported.")
     }
