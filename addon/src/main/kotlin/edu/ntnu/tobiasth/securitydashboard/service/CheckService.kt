@@ -2,6 +2,7 @@ package edu.ntnu.tobiasth.securitydashboard.service
 
 import edu.ntnu.tobiasth.securitydashboard.check.Check
 import edu.ntnu.tobiasth.securitydashboard.service.dto.CheckReport
+import edu.ntnu.tobiasth.securitydashboard.service.dto.CheckResult
 import edu.ntnu.tobiasth.securitydashboard.service.dto.Risk
 import io.quarkus.arc.All
 import io.quarkus.logging.Log
@@ -23,14 +24,15 @@ class CheckService {
     fun run() {
         Log.info("Running ${checks.size} checks...")
 
-        val results = checks.map {
+        val results = checks.flatMap {
             try {
                 it.run()
             } catch (e: Exception) {
                 e.printStackTrace()
-                it.result(Risk.UNKNOWN, "Unable to complete check.")
+                listOf(CheckResult(it.name, it.description, Risk.UNKNOWN, "Unable to complete check."))
             }
         }
+
         report = CheckReport(
             Instant.now(),
             results

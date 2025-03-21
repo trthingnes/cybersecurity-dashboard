@@ -9,17 +9,12 @@ import jakarta.enterprise.context.ApplicationScoped
 @ApplicationScoped
 class UpdateCheck(
     val haService: HomeAssistantService
-): Check {
-    override val name: String
-        get() = "System Updates"
-    override val description: String
-        get() = "Home Assistant components and add-ons are up-to-date."
-
-    override fun run(): CheckResult {
+): Check() {
+    override val name = "System Updates"
+    override val description = "Home Assistant components and add-ons are up-to-date."
+    override fun check(): CheckResult {
         val updates = haService.getAvailableUpdates()
-
         if (updates.isEmpty()) return result(Risk.LOW, "Home Assistant is up-to-date.")
-
         return result(
             Risk.MODERATE, "System updates are available: ${
             updates.joinToString {

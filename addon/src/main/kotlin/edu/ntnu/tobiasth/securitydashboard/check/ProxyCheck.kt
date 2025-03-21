@@ -11,13 +11,11 @@ import java.net.InetAddress
 class ProxyCheck(
     val optionsService: OptionsService,
     val ipService: IpService
-) : Check {
-    override val name: String
-        get() = "Remote Access Proxy"
-    override val description: String
-        get() = "Home Assistant is accessed through a proxy."
+) : Check() {
+    override val name = "Remote Access Proxy"
+    override val description = "Home Assistant is accessed through a proxy."
 
-    override fun run(): CheckResult {
+    override fun check(): CheckResult {
         if (optionsService.instanceUrl == "localhost") {
             return result(Risk.LOW, "Home Assistant is configured for local access only.")
         }

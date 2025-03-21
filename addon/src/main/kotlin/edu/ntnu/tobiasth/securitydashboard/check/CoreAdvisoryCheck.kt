@@ -12,13 +12,13 @@ class CoreAdvisoryCheck(
     val homeAssistantService: HomeAssistantService,
     val githubService: GitHubService,
     val advisoryUtil: AdvisoryUtil
-) : Check {
+) : Check() {
     override val name: String
         get() = "Home Assistant Core Vulnerabilities"
     override val description: String
         get() = "Home Assistant Core does not have unpatched vulnerabilities reported in security advisories."
 
-    override fun run(): CheckResult {
+    override fun check(): CheckResult {
         val coreVersion = homeAssistantService.getCoreInfo().version
         val advisories = githubService.getActiveAdvisories(
             "home-assistant",

@@ -12,13 +12,13 @@ class SupervisorAdvisoryCheck(
     val homeAssistantService: HomeAssistantService,
     val githubService: GitHubService,
     val advisoryUtil: AdvisoryUtil
-) : Check {
+) : Check() {
     override val name: String
         get() = "Home Assistant Supervisor Vulnerabilities"
     override val description: String
         get() = "Home Assistant Supervisor does not have unpatched vulnerabilities reported in security advisories."
 
-    override fun run(): CheckResult {
+    override fun check(): CheckResult {
         val supervisorVersion = homeAssistantService.getSupervisorInfo().version
         val advisories = githubService.getActiveAdvisories(
             "home-assistant",
