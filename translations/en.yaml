@@ -1,0 +1,4 @@
+configuration:
+  instance_url:
+    name: Instance URL
+    description: The address used to access Home Assistant.

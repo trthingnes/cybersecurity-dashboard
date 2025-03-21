@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches: ["main"]
-    paths: [".github/**", "repository/**", "addon/src/main/**", "addon/Dockerfile", "addon/run.sh"]
+    paths: [".github/**", "addon/src/main/**", "addon/Dockerfile", "addon/run.sh", "config.yaml", "icon.yaml"]
 jobs:
   packages:
     name: Build, Package, and Publish Packages
@@ -33,6 +33,7 @@ jobs:
             --${{ matrix.arch }} \
             --version 0.0.3
   repository:
+    needs: packages
     name: Update Addon Repository
     runs-on: ubuntu-latest
     permissions:
@@ -43,7 +44,7 @@ jobs:
         env:
             API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-            source-files: 'repository/config.yaml repository/icon.png'
+            source-files: 'config.yaml icon.png README.md DOCS.md translations'
             destination-username: 'trthingnes'
             destination-repository: 'hassio-addons'
             destination-branch: 'main'
