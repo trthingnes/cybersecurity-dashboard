@@ -1,5 +1,7 @@
 package edu.ntnu.tobiasth.securitydashboard.client.dto.supervisor
 
+import com.fasterxml.jackson.annotation.JsonSetter
+import com.fasterxml.jackson.annotation.Nulls
 import com.fasterxml.jackson.databind.PropertyNamingStrategies
 import com.fasterxml.jackson.databind.annotation.JsonNaming
 
@@ -19,6 +21,7 @@ data class SupervisorInfo(
     val debug: Boolean,
     val debugBlock: Boolean,
     val diagnostics: Boolean?,
+    @JsonSetter(nulls = Nulls.AS_EMPTY)
     val addonRepositories: List<AddonRepository>,
     val autoUpdate: Boolean,
 ) {

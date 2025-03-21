@@ -10,7 +10,7 @@ import java.net.URI
 import java.time.Instant
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
-data class RepositorySecurityAdvisories(
+data class RepositorySecurityAdvisory(
     val ghsaId: String,
     val cveId: String?,
     val url: URI,

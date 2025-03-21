@@ -1,6 +1,5 @@
 package edu.ntnu.tobiasth.securitydashboard.check
 
-import edu.ntnu.tobiasth.securitydashboard.service.HomeAssistantService
 import edu.ntnu.tobiasth.securitydashboard.service.dto.CheckResult
 import edu.ntnu.tobiasth.securitydashboard.service.dto.Risk
 import edu.ntnu.tobiasth.securitydashboard.service.IpService
@@ -10,7 +9,6 @@ import java.net.InetAddress
 
 @ApplicationScoped
 class ProxyCheck(
-    val haService: HomeAssistantService,
     val optionsService: OptionsService,
     val ipService: IpService
 ) : Check {
@@ -22,11 +20,6 @@ class ProxyCheck(
     override fun run(): CheckResult {
         if (optionsService.instanceUrl == "localhost") {
             return result(Risk.LOW, "Home Assistant is configured for local access only.")
-        }
-
-        val addons = haService.getAddons()
-        if (addons.any { it.name == "Cloudflared" }) {
-            return result(Risk.LOW, "Home Assistant is accessed through Cloudflare.")
         }
 
         val publicIp = ipService.getPublicIP()

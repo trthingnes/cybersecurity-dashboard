@@ -5,7 +5,6 @@ import edu.ntnu.tobiasth.securitydashboard.service.dto.CheckReport
 import edu.ntnu.tobiasth.securitydashboard.service.dto.Risk
 import io.quarkus.arc.All
 import io.quarkus.logging.Log
-import io.quarkus.scheduler.Scheduled
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
 import java.time.Instant
@@ -19,7 +18,6 @@ class CheckService {
 
     var report: CheckReport? = null
 
-    @Scheduled(every = "6h")
     fun run() {
         Log.info("Running ${checks.size} checks...")
 
