@@ -16,9 +16,9 @@ function App() {
     const { mutateAsync, isPending } = usePostApiCheck()
 
     return (
-        <Grid2 container spacing={2} mt={5}>
+        <Grid2 container spacing={2} m={2} mt={5} mb={5}>
             <Grid2 size="grow"></Grid2>
-            <Grid2 size={{ xs: 12, sm: 8, md: 6, xl: 4 }} justifyItems="center">
+            <Grid2 size={{ xs: 12, sm: 10, md: 8, xl: 6 }} justifyItems="center">
                 <Stack spacing={6} m="auto">
                     <Typography variant="h1" align="center">
                         Cybersecurity Dashboard
@@ -57,8 +57,8 @@ function App() {
                             </Alert>
                         )}
                         {!isFetching &&
-                            data?.results
-                                ?.sort((a, b) => {
+                            data?.results?.sort((a, b) => a.name.localeCompare(b.name))
+                                .sort((a, b) => {
                                     if (a.risk == b.risk) return 0
                                     if (a.risk === "HIGH" || b.risk === "HIGH")
                                         return a.risk === "HIGH" ? -1 : 1

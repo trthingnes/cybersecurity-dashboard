@@ -1,11 +1,11 @@
-package edu.ntnu.tobiasth.securitydashboard.client.dto
+package edu.ntnu.tobiasth.securitydashboard.client.dto.supervisor
 
 import com.fasterxml.jackson.annotation.JsonValue
 import com.fasterxml.jackson.databind.PropertyNamingStrategies
 import com.fasterxml.jackson.databind.annotation.JsonNaming
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
-data class SupervisorAvailableUpdates(
+data class AvailableUpdates(
     val availableUpdates: List<Update>
 ) {
     @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)

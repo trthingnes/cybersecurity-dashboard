@@ -1,0 +1,7 @@
+configuration:
+  instance_url:
+    name: Instance URL
+    description: Address used check how Home Assistant is accessed.
+  github_api_token:
+    name: GitHub API Token
+    description: API Token used to fetch vulnerability information from GitHub.

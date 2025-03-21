@@ -1,10 +1,10 @@
-package edu.ntnu.tobiasth.securitydashboard.client.dto
+package edu.ntnu.tobiasth.securitydashboard.client.dto.supervisor
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies
 import com.fasterxml.jackson.databind.annotation.JsonNaming
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
-data class SupervisorInfo(
+data class Info(
     val supervisor: String,
     val homeassistant: String,
     val hassos: String?,
