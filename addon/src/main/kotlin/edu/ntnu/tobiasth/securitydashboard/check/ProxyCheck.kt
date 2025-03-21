@@ -7,7 +7,6 @@ import edu.ntnu.tobiasth.securitydashboard.service.OptionsService
 import jakarta.enterprise.context.ApplicationScoped
 import java.net.InetAddress
 import kotlin.jvm.optionals.getOrElse
-import kotlin.jvm.optionals.getOrNull
 
 @ApplicationScoped
 class ProxyCheck(

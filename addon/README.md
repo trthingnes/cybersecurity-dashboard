@@ -15,7 +15,7 @@ The UI in `src/webui` is served using Quinoa and Vite, making the add-on a singl
 2. In the development instance, enable advanced mode under general in account settings.
 3. In the development instance, create a long-lived access token under security in account settings.
 4. Paste the token in the add-on log as the value of `CORE_TOKEN` the `.env` file.
-5. Add the development add-on repository: "https://github.com/home-assistant/addons-development".
+5. Add the development add-on repository: https://github.com/home-assistant/addons-development.
 6. Install the Remote API Proxy add-on, set the configured port to 8124, and press start.
 7. Paste the token that appears in the add-on log as the value of `SUPERVISOR_TOKEN` the `.env` file.
 
