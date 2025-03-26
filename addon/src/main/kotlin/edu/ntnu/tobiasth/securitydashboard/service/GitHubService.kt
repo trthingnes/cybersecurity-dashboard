@@ -23,9 +23,8 @@ class GitHubService(
         getSecurityAdvisories(owner, repository)
             .filter { a ->
                 a.vulnerabilities.any { v ->
-                    Log.debug("Package name: $packageName, Vulnerable package name: ${v.vulnerablePackage.name}, Package version: $packageVersion, Patched versions: ${v.patchedVersions}")
-
                     if (v.vulnerablePackage.name == packageName && v.patchedVersions != null) {
+                        Log.debug("Checking for vulnerability in $packageName: Version=$packageVersion, Patched=${v.patchedVersions}")
                         try {
                             return@any versionComparator.isOlderThan(packageVersion, v.patchedVersions)
                         } catch (_: NumberFormatException) {}

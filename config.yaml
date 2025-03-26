@@ -14,8 +14,10 @@ hassio_role: manager
 hassio_api: true
 homeassistant_api: true
 options:
+  log_level: "INFO"
   instance_url: ""
   github_api_token: ""
 schema:
+  log_level: "str"
   instance_url: "str"
   github_api_token: "str"

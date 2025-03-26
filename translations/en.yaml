@@ -1,4 +1,7 @@
 configuration:
+  log_level:
+    name: Log Level
+    description: Level of detail that will used for logging (OFF, ERROR, WARN, INFO, DEBUG).
   instance_url:
     name: Instance URL
     description: Address used check how Home Assistant is accessed.
