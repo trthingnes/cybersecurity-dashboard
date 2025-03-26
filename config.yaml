@@ -6,7 +6,6 @@ panel_icon: "mdi:security"
 image: "ghcr.io/trthingnes/cybersecurity-dashboard-{arch}"
 arch:
   - amd64
-  - aarch64
 init: false
 ingress: true
 ingress_port: 8080

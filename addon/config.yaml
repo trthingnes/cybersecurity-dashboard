@@ -5,7 +5,6 @@ description: "Improve your cybersecurity of your smart home"
 panel_icon: "mdi:security"
 arch:
   - amd64
-  - aarch64
 init: false
 ingress: true
 ingress_port: 8080
