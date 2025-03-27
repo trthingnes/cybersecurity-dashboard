@@ -1,4 +1,4 @@
-import { ExpandMore, HelpOutline } from "@mui/icons-material"
+import { ExpandMore } from "@mui/icons-material"
 import {
     Accordion,
     AccordionDetails,
@@ -7,8 +7,6 @@ import {
     Grid2,
     Paper,
     PaperProps,
-    Stack,
-    Tooltip,
     Typography,
 } from "@mui/material"
 
