@@ -57,7 +57,7 @@ function App() {
                             </Alert>
                         )}
                         {!isFetching &&
-                            data?.results?.sort((a, b) => a.name.localeCompare(b.name))
+                            data?.results?.sort((a, b) => a.title.localeCompare(b.title))
                                 .sort((a, b) => {
                                     if (a.risk == b.risk) return 0
                                     if (a.risk === "HIGH" || b.risk === "HIGH")
@@ -76,7 +76,7 @@ function App() {
                                 })
                                 .map((r) => (
                                     <CheckResultCard
-                                        key={r.name}
+                                        key={r.title}
                                         result={r}
                                         sx={{ flexGrow: "grow" }}
                                     />
