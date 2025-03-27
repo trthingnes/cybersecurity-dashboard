@@ -1,5 +1,8 @@
-import { HelpOutline } from "@mui/icons-material"
+import { ExpandMore, HelpOutline } from "@mui/icons-material"
 import {
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
     Chip,
     Grid2,
     Paper,
@@ -33,26 +36,44 @@ export function CheckResultCard({
 } & PaperProps) {
     return (
         <Paper>
-            <Grid2 m={2} container spacing={2} alignItems="center" {...props}>
-                <Grid2 size="grow">
-                    <Stack direction="row" spacing={1} alignItems="center">
-                        <Typography variant="h6" component="h2">
-                            {result.name}{" "}
-                        </Typography>
-                        <Tooltip title={result.description}>
-                            <HelpOutline />
-                        </Tooltip>
-                    </Stack>
-
-                    <Typography>{result.message}</Typography>
-                </Grid2>
-                <Grid2 size="auto">
-                    <Chip
-                        label={getLabel(result.risk)}
-                        color={getColor(result.risk)}
-                    />
-                </Grid2>
-            </Grid2>
+            <Accordion>
+                <AccordionSummary expandIcon={<ExpandMore />}>
+                    <Grid2
+                        container
+                        alignItems="center"
+                        spacing={2}
+                        width="calc(100% - 1rem)"
+                        {...props}
+                    >
+                        <Grid2 size="grow">
+                            <Typography variant="h5" component="h2">
+                                {result.title}
+                            </Typography>
+                            <Typography>{result.summary}</Typography>
+                        </Grid2>
+                        <Grid2 size="auto">
+                            <Chip
+                                label={getLabel(result.risk)}
+                                color={getColor(result.risk)}
+                            />
+                        </Grid2>
+                    </Grid2>
+                </AccordionSummary>
+                <AccordionDetails>
+                    <Typography variant="h6" component="h3">
+                        Description
+                    </Typography>
+                    <Typography>{result.description}</Typography>
+                    {result.risk != "UNKNOWN" && result.risk != "LOW" && (
+                        <>
+                            <Typography variant="h6" component="h3" mt={2}>
+                                Mitigation
+                            </Typography>
+                            <Typography>{result.mitigation}</Typography>
+                        </>
+                    )}
+                </AccordionDetails>
+            </Accordion>
         </Paper>
     )
 }

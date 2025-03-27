@@ -14,10 +14,14 @@ class AdvisoryCheck(
     val advisoryUtil: AdvisoryUtil
 ) : Check() {
     override val name = "Security Advisories"
-    override val description = "Home Assistant is not running with unpatched vulnerabilities reported in security advisories."
+    override val description = "Home Assistant is not running components with unpatched vulnerabilities reported in security advisories."
+    override val mitigation = "The easiest way to avoid unpatched vulnerabilities is to keep components up-to-date. However, this is not always an option as it requires the maintainer of the component to release an update that patches the vulnerability. If there are no updates available, an alternative is to uninstall the component or look for workarounds for the vulnerability by searching for the vulnerability ID online."
 
-    override fun check(): CheckResult? {
-        if (!githubService.isAvailable()) return result(Risk.UNKNOWN, "Github API access has not been configured.")
+    override fun check() {
+        if (!githubService.isAvailable()) {
+            yield(result(Risk.UNKNOWN, "Github API access has not been configured."))
+            return
+        }
 
         // Check core supervisor advisories and yield result
         val coreVersion = homeAssistantService.getCoreInfo().version
@@ -28,9 +32,10 @@ class AdvisoryCheck(
             coreVersion
         )
         if (coreAdvisories.isEmpty()) {
-            yield(result(Risk.LOW, "Core $coreVersion has no reported vulnerabilities."))
+            yield(result("Advisories for Home Assistant Core", Risk.LOW, "Core $coreVersion has no reported vulnerabilities."))
         } else {
             yield(result(
+                "Advisories for Home Assistant Core",
                 advisoryUtil.getRisk(coreAdvisories),
                 "Found unpatched vulnerabilities (${coreAdvisories.joinToString { it.cveId ?: it.ghsaId }}). Please update to Core ${
                     advisoryUtil.getPatchedVersion(coreAdvisories)
@@ -47,9 +52,10 @@ class AdvisoryCheck(
             supervisorVersion
         )
         if (supervisorAdvisories.isEmpty()) {
-            yield(result(Risk.LOW, "Supervisor $supervisorVersion has no reported vulnerabilities."))
+            yield(result("Advisories for Home Assistant Supervisor", Risk.LOW, "Supervisor $supervisorVersion has no reported vulnerabilities."))
         } else {
             yield(result(
+                "Advisories for Home Assistant Supervisor",
                 advisoryUtil.getRisk(supervisorAdvisories),
                 "Found unpatched vulnerabilities (${supervisorAdvisories.joinToString { it.cveId ?: it.ghsaId }}). Please update to Supervisor ${
                     advisoryUtil.getPatchedVersion(supervisorAdvisories)
@@ -90,8 +96,6 @@ class AdvisoryCheck(
                 )
             }
         }
-
-        return null
     }
 
 }

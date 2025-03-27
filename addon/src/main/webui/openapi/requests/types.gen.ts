@@ -6,10 +6,11 @@ export type CheckReport = {
 };
 
 export type CheckResult = {
-    name: string;
-    description: string;
     risk: Risk;
-    message?: (string) | null;
+    title: string;
+    summary: string;
+    description: string;
+    mitigation: string;
 };
 
 export type Instant = string;

@@ -32,6 +32,16 @@ const theme = createTheme({
             fontSize: "32px",
             fontWeight: "400",
         },
+        h5: {
+            fontSize: "1.25rem",
+            fontWeight: "600",
+            lineHeight: "1.6",
+        },
+        h6: {
+            fontSize: "1.05rem",
+            fontWeight: "600",
+            lineHeight: "1.4",
+        },
     },
 })
 

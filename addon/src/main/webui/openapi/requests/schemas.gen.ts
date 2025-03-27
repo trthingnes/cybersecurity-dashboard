@@ -18,19 +18,22 @@ export const CheckReportSchema = {
 
 export const CheckResultSchema = {
     type: 'object',
-    required: ['name', 'description', 'risk'],
+    required: ['risk', 'title', 'summary', 'description', 'mitigation'],
     properties: {
-        name: {
+        risk: {
+            '$ref': '#/components/schemas/Risk'
+        },
+        title: {
+            type: 'string'
+        },
+        summary: {
             type: 'string'
         },
         description: {
             type: 'string'
         },
-        risk: {
-            '$ref': '#/components/schemas/Risk'
-        },
-        message: {
-            type: ['string', 'null']
+        mitigation: {
+            type: 'string'
         }
     }
 } as const;
