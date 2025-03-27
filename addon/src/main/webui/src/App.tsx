@@ -7,7 +7,7 @@ import {
     Stack,
     Typography,
 } from "@mui/material"
-import { useState } from "react"
+import { useMemo, useState } from "react"
 
 import { useGetApiReport, usePostApiCheck } from "../openapi/queries"
 import { CheckResultCard } from "./components/CheckResultCard.tsx"
@@ -15,8 +15,27 @@ import { CheckResultCard } from "./components/CheckResultCard.tsx"
 function App() {
     const { data, isFetching, isError, refetch } = useGetApiReport()
     const { mutateAsync, isPending } = usePostApiCheck()
-
     const [showLowRisk, setShowLowRisk] = useState(false)
+    const results = useMemo(() => {
+        return (
+            data?.results
+                ?.sort((a, b) => a.title.localeCompare(b.title))
+                .sort((a, b) => {
+                    if (a.risk == b.risk) return 0
+                    if (a.risk === "HIGH" || b.risk === "HIGH")
+                        return a.risk === "HIGH" ? -1 : 1
+                    if (a.risk === "MODERATE" || b.risk === "MODERATE")
+                        return a.risk === "MODERATE" ? -1 : 1
+                    if (a.risk === "LOW" || b.risk === "LOW")
+                        return a.risk === "LOW" ? -1 : 1
+                    return 0
+                }) ?? []
+        )
+    }, [data])
+    const allLowRisk = useMemo(
+        () => !results.some((r) => r.risk != "LOW"),
+        [results]
+    )
 
     return (
         <Grid2 container spacing={2} m={2} mt={5} mb={5}>
@@ -68,22 +87,13 @@ function App() {
                             </Alert>
                         )}
                         {!isFetching &&
-                            data?.results
-                                ?.sort((a, b) => a.title.localeCompare(b.title))
-                                .sort((a, b) => {
-                                    if (a.risk == b.risk) return 0
-                                    if (a.risk === "HIGH" || b.risk === "HIGH")
-                                        return a.risk === "HIGH" ? -1 : 1
-                                    if (
-                                        a.risk === "MODERATE" ||
-                                        b.risk === "MODERATE"
-                                    )
-                                        return a.risk === "MODERATE" ? -1 : 1
-                                    if (a.risk === "LOW" || b.risk === "LOW")
-                                        return a.risk === "LOW" ? -1 : 1
-                                    return 0
-                                })
-                                .filter((r) => r.risk != "LOW" || showLowRisk)
+                            results
+                                .filter(
+                                    (r) =>
+                                        allLowRisk ||
+                                        showLowRisk ||
+                                        r.risk != "LOW"
+                                )
                                 .map((r) => (
                                     <CheckResultCard
                                         key={r.title}
@@ -92,11 +102,13 @@ function App() {
                                     />
                                 ))}
                     </Stack>
-                    <Button onClick={() => setShowLowRisk(!showLowRisk)}>
-                        {showLowRisk
-                            ? "Hide low risk checks"
-                            : "Show all checks"}
-                    </Button>
+                    {!allLowRisk && (
+                        <Button onClick={() => setShowLowRisk(!showLowRisk)}>
+                            {showLowRisk
+                                ? "Hide low risk results"
+                                : "Show all results"}
+                        </Button>
+                    )}
                 </Stack>
             </Grid2>
             <Grid2 size="grow"></Grid2>
