@@ -29,7 +29,7 @@ class CheckService {
                 it.run()
             } catch (e: Exception) {
                 e.printStackTrace()
-                listOf(CheckResult(it.name, it.description, Risk.UNKNOWN, "Unable to complete check."))
+                listOf(CheckResult(Risk.UNKNOWN, it.name, "Unable to complete check.", it.description, it.mitigation))
             }
         }
 
