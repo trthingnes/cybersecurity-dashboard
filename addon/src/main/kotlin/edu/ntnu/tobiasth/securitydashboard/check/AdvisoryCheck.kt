@@ -32,9 +32,10 @@ class AdvisoryCheck(
             coreVersion
         )
         if (coreAdvisories.isEmpty()) {
-            yield(result(Risk.LOW, "Core $coreVersion has no reported vulnerabilities."))
+            yield(result("Advisories for Home Assistant Core", Risk.LOW, "Core $coreVersion has no reported vulnerabilities."))
         } else {
             yield(result(
+                "Advisories for Home Assistant Core",
                 advisoryUtil.getRisk(coreAdvisories),
                 "Found unpatched vulnerabilities (${coreAdvisories.joinToString { it.cveId ?: it.ghsaId }}). Please update to Core ${
                     advisoryUtil.getPatchedVersion(coreAdvisories)
@@ -51,9 +52,10 @@ class AdvisoryCheck(
             supervisorVersion
         )
         if (supervisorAdvisories.isEmpty()) {
-            yield(result(Risk.LOW, "Supervisor $supervisorVersion has no reported vulnerabilities."))
+            yield(result("Advisories for Home Assistant Supervisor", Risk.LOW, "Supervisor $supervisorVersion has no reported vulnerabilities."))
         } else {
             yield(result(
+                "Advisories for Home Assistant Supervisor",
                 advisoryUtil.getRisk(supervisorAdvisories),
                 "Found unpatched vulnerabilities (${supervisorAdvisories.joinToString { it.cveId ?: it.ghsaId }}). Please update to Supervisor ${
                     advisoryUtil.getPatchedVersion(supervisorAdvisories)
