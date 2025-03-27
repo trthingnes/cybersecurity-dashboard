@@ -1,5 +1,5 @@
 name: "Cybersecurity Dashboard"
-version: "0.0.4"
+version: "0.0.5"
 slug: "cybersecurity_dashboard"
 description: "Improve your cybersecurity of your smart home"
 panel_icon: "mdi:security"
