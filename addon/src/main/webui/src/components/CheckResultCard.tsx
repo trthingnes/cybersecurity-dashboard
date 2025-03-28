@@ -12,7 +12,7 @@ import {
     Stack,
     Typography,
 } from "@mui/material"
-import { useMemo, useState } from "react"
+import { useMemo } from "react"
 
 import {
     usePostApiChecksByIdDisable,
@@ -31,8 +31,8 @@ export function CheckResultCard({
     readonly refetch: () => void
     readonly isRefetching: boolean
 } & PaperProps) {
-    const { mutate: enable } = usePostApiChecksByIdEnable()
-    const { mutate: disable } = usePostApiChecksByIdDisable()
+    const { mutateAsync: enable } = usePostApiChecksByIdEnable()
+    const { mutateAsync: disable } = usePostApiChecksByIdDisable()
     const isDisabled = useMemo(() => result.risk === "DISABLED", [result])
     const mutateOptions = useMemo(() => {
         return { path: { id: result.id } }
@@ -82,9 +82,10 @@ export function CheckResultCard({
                             color={isDisabled ? "success" : "error"}
                             sx={{ minWidth: "max-content" }}
                             onClick={() => {
-                                if (isDisabled) enable(mutateOptions)
-                                else disable(mutateOptions)
-                                refetch()
+                                ;(isDisabled
+                                    ? enable(mutateOptions)
+                                    : disable(mutateOptions)
+                                ).then(() => refetch())
                             }}
                         >
                             {result.risk === "DISABLED"

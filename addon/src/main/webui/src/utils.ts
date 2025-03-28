@@ -7,6 +7,8 @@ export function sortResultsByRisk(a: CheckResult, b: CheckResult) {
     if (a.risk === "MODERATE" || b.risk === "MODERATE")
         return a.risk === "MODERATE" ? -1 : 1
     if (a.risk === "LOW" || b.risk === "LOW") return a.risk === "LOW" ? -1 : 1
+    if (a.risk === "UNKNOWN" || b.risk === "UNKNOWN")
+        return a.risk === "UNKNOWN" ? -1 : 1
     return 0
 }
 
