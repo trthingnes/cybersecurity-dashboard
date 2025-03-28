@@ -10,7 +10,8 @@ import jakarta.enterprise.context.ApplicationScoped
 class UpdateCheck(
     val haService: HomeAssistantService
 ) : Check() {
-    override val name = "System Updates"
+    override val id = "update-check"
+    override val name = "Software Updates"
     override val description = "Home Assistant components and add-ons are up-to-date."
     override val mitigation = "Ensure that Home Assistant and its components are up-to-date to ensure your system is avoiding any known vulnerabilities."
 

@@ -18,8 +18,11 @@ export const CheckReportSchema = {
 
 export const CheckResultSchema = {
     type: 'object',
-    required: ['risk', 'title', 'summary', 'description', 'mitigation'],
+    required: ['id', 'risk', 'title', 'summary', 'description', 'mitigation'],
     properties: {
+        id: {
+            type: 'string'
+        },
         risk: {
             '$ref': '#/components/schemas/Risk'
         },
@@ -46,5 +49,5 @@ export const InstantSchema = {
 
 export const RiskSchema = {
     type: 'string',
-    enum: ['UNKNOWN', 'LOW', 'MODERATE', 'HIGH']
+    enum: ['DISABLED', 'UNKNOWN', 'LOW', 'MODERATE', 'HIGH']
 } as const;

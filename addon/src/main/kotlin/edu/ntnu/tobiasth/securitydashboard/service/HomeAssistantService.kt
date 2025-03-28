@@ -15,7 +15,6 @@ class HomeAssistantService(
     fun getCoreInfo() = supervisor.getCoreInfo().data
     fun getSupervisorInfo() = supervisor.getSupervisorInfo().data
     fun getInstalledAddons() = supervisor.getAddons().data.addons
-    fun getAvailableAddons() = supervisor.getStoreAddons().data.addons
     fun getAddonRepositories() = supervisor.getStoreRepositories().data
-    fun getErrorLog() = core.getErrorLog()
+    fun getComponentNames() = core.getComponents()
 }

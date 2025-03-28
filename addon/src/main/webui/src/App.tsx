@@ -9,33 +9,22 @@ import {
 } from "@mui/material"
 import { useMemo, useState } from "react"
 
-import { useGetApiReport, usePostApiCheck } from "../openapi/queries"
+import { useGetApiReport } from "../openapi/queries"
 import { CheckResultCard } from "./components/CheckResultCard.tsx"
+import { sortResultsByRisk } from "./utils.ts"
 
 function App() {
-    const { data, isFetching, isError, refetch } = useGetApiReport()
-    const { mutateAsync, isPending } = usePostApiCheck()
-    const [showLowRisk, setShowLowRisk] = useState(false)
+    const { data, isPending, isError, isRefetching, refetch } =
+        useGetApiReport()
+
+    const [showMore, setShowMore] = useState(false)
     const results = useMemo(() => {
         return (
             data?.results
                 ?.sort((a, b) => a.title.localeCompare(b.title))
-                .sort((a, b) => {
-                    if (a.risk == b.risk) return 0
-                    if (a.risk === "HIGH" || b.risk === "HIGH")
-                        return a.risk === "HIGH" ? -1 : 1
-                    if (a.risk === "MODERATE" || b.risk === "MODERATE")
-                        return a.risk === "MODERATE" ? -1 : 1
-                    if (a.risk === "LOW" || b.risk === "LOW")
-                        return a.risk === "LOW" ? -1 : 1
-                    return 0
-                }) ?? []
+                .sort(sortResultsByRisk) ?? []
         )
     }, [data])
-    const allLowRisk = useMemo(
-        () => !results.some((r) => r.risk != "LOW"),
-        [results]
-    )
 
     return (
         <Grid2 container spacing={2} m={2} mt={5} mb={5}>
@@ -58,8 +47,8 @@ function App() {
                     >
                         <Button
                             variant="contained"
+                            loading={isRefetching}
                             onClick={async () => {
-                                await mutateAsync({})
                                 refetch()
                             }}
                         >
@@ -73,12 +62,11 @@ function App() {
                         )}
                     </Stack>
                     <Stack spacing={2} m={1}>
-                        {isPending ||
-                            (isFetching && (
-                                <Box sx={{ margin: "auto !important" }}>
-                                    <CircularProgress />
-                                </Box>
-                            ))}
+                        {isPending && (
+                            <Box sx={{ margin: "auto !important" }}>
+                                <CircularProgress />
+                            </Box>
+                        )}
 
                         {isError && (
                             <Alert severity="error">
@@ -86,13 +74,12 @@ function App() {
                                 cybersecurity report.
                             </Alert>
                         )}
-                        {!isFetching &&
+                        {!isPending &&
                             results
                                 .filter(
                                     (r) =>
-                                        allLowRisk ||
-                                        showLowRisk ||
-                                        r.risk != "LOW"
+                                        ["HIGH", "MODERATE"].includes(r.risk) ||
+                                        showMore
                                 )
                                 .map((r) => (
                                     <CheckResultCard
@@ -101,14 +88,12 @@ function App() {
                                         sx={{ flexGrow: "grow" }}
                                     />
                                 ))}
+                        {!isPending && (
+                            <Button onClick={() => setShowMore(!showMore)}>
+                                {showMore ? "Show less" : "Show more"}
+                            </Button>
+                        )}
                     </Stack>
-                    {!allLowRisk && (
-                        <Button onClick={() => setShowLowRisk(!showLowRisk)}>
-                            {showLowRisk
-                                ? "Hide low risk results"
-                                : "Show all results"}
-                        </Button>
-                    )}
                 </Stack>
             </Grid2>
             <Grid2 size="grow"></Grid2>
