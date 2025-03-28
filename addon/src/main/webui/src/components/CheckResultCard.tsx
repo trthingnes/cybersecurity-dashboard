@@ -12,9 +12,9 @@ import {
     Stack,
     Typography,
 } from "@mui/material"
+import { useMemo, useState } from "react"
 
 import {
-    useGetApiReport,
     usePostApiChecksByIdDisable,
     usePostApiChecksByIdEnable,
 } from "../../openapi/queries"
@@ -23,17 +23,20 @@ import { getColorByRisk, getLabelByRisk } from "../utils"
 
 export function CheckResultCard({
     result,
+    refetch,
+    isRefetching,
     ...props
 }: {
     readonly result: CheckResult
+    readonly refetch: () => void
+    readonly isRefetching: boolean
 } & PaperProps) {
-    const { refetch: refetchReport, isRefetching: isRefetchingReport } =
-        useGetApiReport()
-    const { mutateAsync: enableAsync } = usePostApiChecksByIdEnable()
-    const { mutateAsync: disableAsync } = usePostApiChecksByIdDisable()
-
-    const mutateOptions = { path: { id: result.id } }
-    const isDisabled = result.risk === "DISABLED"
+    const { mutate: enable } = usePostApiChecksByIdEnable()
+    const { mutate: disable } = usePostApiChecksByIdDisable()
+    const isDisabled = useMemo(() => result.risk === "DISABLED", [result])
+    const mutateOptions = useMemo(() => {
+        return { path: { id: result.id } }
+    }, [result])
 
     return (
         <Paper>
@@ -75,13 +78,13 @@ export function CheckResultCard({
                         </Box>
                         <Button
                             variant="outlined"
-                            loading={isRefetchingReport}
+                            loading={isRefetching}
                             color={isDisabled ? "success" : "error"}
                             sx={{ minWidth: "max-content" }}
                             onClick={() => {
-                                if (isDisabled) enableAsync(mutateOptions)
-                                else disableAsync(mutateOptions)
-                                refetchReport()
+                                if (isDisabled) enable(mutateOptions)
+                                else disable(mutateOptions)
+                                refetch()
                             }}
                         >
                             {result.risk === "DISABLED"

@@ -15,7 +15,7 @@ class UpdateCheck(
     override val description = "Home Assistant components and add-ons are up-to-date."
     override val mitigation = "Ensure that Home Assistant and its components are up-to-date to ensure your system is avoiding any known vulnerabilities."
 
-    override fun check() {
+    override suspend fun check() {
         val updates = haService.getAvailableUpdates()
         if (updates.isEmpty()) {
             yield(result(Risk.LOW, "Home Assistant is up-to-date."))

@@ -14,17 +14,29 @@ import { CheckResultCard } from "./components/CheckResultCard.tsx"
 import { sortResultsByRisk } from "./utils.ts"
 
 function App() {
-    const { data, isPending, isError, isRefetching, refetch } =
+    const { data, isError, isPending, isRefetching, refetch } =
         useGetApiReport()
 
     const [showMore, setShowMore] = useState(false)
+
+    const updated = useMemo(
+        () => (data?.timestamp ? new Date(data.timestamp) : null),
+        [data]
+    )
     const results = useMemo(() => {
-        return (
-            data?.results
-                ?.sort((a, b) => a.title.localeCompare(b.title))
-                .sort(sortResultsByRisk) ?? []
-        )
+        if (!data) return []
+        else
+            return data.results
+                .sort((a, b) => a.title.localeCompare(b.title))
+                .sort(sortResultsByRisk)
     }, [data])
+    const displayedResults = useMemo(
+        () =>
+            results.filter(
+                (r) => ["HIGH", "MODERATE"].includes(r.risk) || showMore
+            ),
+        [results, showMore]
+    )
 
     return (
         <Grid2 container spacing={2} m={2} mt={5} mb={5}>
@@ -48,46 +60,39 @@ function App() {
                         <Button
                             variant="contained"
                             loading={isRefetching}
-                            onClick={async () => {
+                            onClick={() => {
                                 refetch()
                             }}
                         >
                             Check Now
                         </Button>
-                        {data?.results && (
+                        {updated && (
                             <Typography>
-                                Last updated{" "}
-                                {new Date(data.timestamp).toLocaleString()}
+                                Last updated {updated.toLocaleString()}
                             </Typography>
                         )}
                     </Stack>
                     <Stack spacing={2} m={1}>
-                        {isPending && (
-                            <Box sx={{ margin: "auto !important" }}>
-                                <CircularProgress />
-                            </Box>
-                        )}
-
                         {isError && (
                             <Alert severity="error">
                                 An error occured while fetching the
                                 cybersecurity report.
                             </Alert>
                         )}
-                        {!isPending &&
-                            results
-                                .filter(
-                                    (r) =>
-                                        ["HIGH", "MODERATE"].includes(r.risk) ||
-                                        showMore
-                                )
-                                .map((r) => (
-                                    <CheckResultCard
-                                        key={r.title}
-                                        result={r}
-                                        sx={{ flexGrow: "grow" }}
-                                    />
-                                ))}
+                        {isPending && (
+                            <Box sx={{ margin: "auto !important" }}>
+                                <CircularProgress />
+                            </Box>
+                        )}
+                        {displayedResults.map((r) => (
+                            <CheckResultCard
+                                key={r.title}
+                                result={r}
+                                refetch={() => refetch()}
+                                isRefetching={isRefetching}
+                                sx={{ flexGrow: "grow" }}
+                            />
+                        ))}
                         {!isPending && (
                             <Button onClick={() => setShowMore(!showMore)}>
                                 {showMore ? "Show less" : "Show more"}

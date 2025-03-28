@@ -10,13 +10,13 @@ abstract class Check {
     abstract val mitigation: String
     private val results: MutableList<CheckResult> = mutableListOf()
 
-    fun run(): List<CheckResult> {
+    suspend fun run(): List<CheckResult> {
         results.clear()
         check()
         return results
     }
 
-    protected abstract fun check()
+    protected abstract suspend fun check()
     protected fun result(title: String, risk: Risk, message: String) = CheckResult(id, risk, title, message, description, mitigation)
     protected fun result(risk: Risk, message: String) = result(name, risk, message)
     protected fun yield(result: CheckResult) {
