@@ -9,11 +9,12 @@ import jakarta.enterprise.context.ApplicationScoped
 class SupportCheck(
     val haService: HomeAssistantService
 ) : Check() {
+    override val id = "support-check"
     override val name = "Hardware Support"
     override val description = "Home Assistant is officially supported for this hardware configuration."
     override val mitigation = "Ensure that your hardware is supported by Home Assistant by visiting the installation page."
 
-    override fun check() = when (haService.getSystemInfo().supported) {
+    override suspend fun check() = when (haService.getSystemInfo().supported) {
         true -> yield(result(Risk.LOW, "Hardware is officially supported."))
         false -> yield(result(Risk.MODERATE, "Hardware is not officially supported."))
     }

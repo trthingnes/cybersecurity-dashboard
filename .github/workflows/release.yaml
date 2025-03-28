@@ -31,7 +31,7 @@ jobs:
             --docker-hub ghcr.io \
             --image ${{ github.repository }}-{arch} \
             --${{ matrix.arch }} \
-            --version 0.0.5
+            --version 0.0.6
   repository:
     needs: packages
     name: Update Addon Repository

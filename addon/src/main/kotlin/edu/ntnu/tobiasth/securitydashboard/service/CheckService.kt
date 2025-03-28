@@ -1,14 +1,17 @@
 package edu.ntnu.tobiasth.securitydashboard.service
 
 import edu.ntnu.tobiasth.securitydashboard.check.Check
+import edu.ntnu.tobiasth.securitydashboard.persistence.DisabledCheck
 import edu.ntnu.tobiasth.securitydashboard.service.dto.CheckReport
 import edu.ntnu.tobiasth.securitydashboard.service.dto.CheckResult
 import edu.ntnu.tobiasth.securitydashboard.service.dto.Risk
 import io.quarkus.arc.All
 import io.quarkus.logging.Log
-import io.quarkus.runtime.Startup
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.runBlocking
 import java.time.Instant
 
 @ApplicationScoped
@@ -18,22 +21,40 @@ class CheckService {
     @Suppress("CdiInjectionPointsInspection")
     private lateinit var checks: MutableList<Check>
 
-    var report: CheckReport? = null
+    fun run(): CheckReport {
+        val disabledCheckIds = DisabledCheck.listAll().map { it.checkId }
+        val enabledChecks = checks.filter { !disabledCheckIds.contains(it.id) }
+        val disabledCheck = checks.filter { disabledCheckIds.contains(it.id) }
 
-    @Startup
-    fun run() {
-        Log.info("Running ${checks.size} checks...")
+        Log.info("Running ${enabledChecks.size}/${checks.size} checks...")
 
-        val results = checks.flatMap {
-            try {
-                it.run()
-            } catch (e: Exception) {
-                e.printStackTrace()
-                listOf(CheckResult(Risk.UNKNOWN, it.name, "Unable to complete check.", it.description, it.mitigation))
+        val results = runBlocking {
+            enabledChecks.associateWith { check ->
+                async { check.run() } // Associate every check with a Kotlin Coroutine running it.
+            }.flatMapTo(mutableListOf()) { (check, coroutine) ->
+                try {
+                    coroutine.await()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    listOf(
+                        CheckResult(
+                            check.id,
+                            Risk.UNKNOWN,
+                            check.name,
+                            "Unable to complete check.",
+                            check.description,
+                            check.mitigation
+                        )
+                    )
+                }
             }
         }
 
-        report = CheckReport(
+        results.addAll(disabledCheck.map {
+            CheckResult(it.id, Risk.DISABLED, it.name, "Check is manually disabled.", it.description, it.mitigation)
+        })
+
+        return CheckReport(
             Instant.now(),
             results
         )

@@ -8,6 +8,6 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient
 @RegisterRestClient(configKey = "core-api")
 interface CoreClient {
     @GET
-    @Path("/error_log")
-    fun getErrorLog(): String
+    @Path("/components")
+    fun getComponents(): List<String>
 }

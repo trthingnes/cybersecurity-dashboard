@@ -6,6 +6,7 @@ export type CheckReport = {
 };
 
 export type CheckResult = {
+    id: string;
     risk: Risk;
     title: string;
     summary: string;
@@ -15,11 +16,27 @@ export type CheckResult = {
 
 export type Instant = string;
 
-export type Risk = 'UNKNOWN' | 'LOW' | 'MODERATE' | 'HIGH';
+export type Risk = 'DISABLED' | 'UNKNOWN' | 'LOW' | 'MODERATE' | 'HIGH';
 
-export type PostApiCheckResponse = (unknown);
+export type PostApiChecksByIdDisableData = {
+    path: {
+        id: string;
+    };
+};
 
-export type PostApiCheckError = unknown;
+export type PostApiChecksByIdDisableResponse = (unknown);
+
+export type PostApiChecksByIdDisableError = unknown;
+
+export type PostApiChecksByIdEnableData = {
+    path: {
+        id: string;
+    };
+};
+
+export type PostApiChecksByIdEnableResponse = (number);
+
+export type PostApiChecksByIdEnableError = unknown;
 
 export type GetApiReportResponse = (CheckReport);
 

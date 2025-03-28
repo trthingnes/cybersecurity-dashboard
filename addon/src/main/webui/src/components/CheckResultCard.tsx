@@ -3,35 +3,41 @@ import {
     Accordion,
     AccordionDetails,
     AccordionSummary,
+    Box,
+    Button,
     Chip,
     Grid2,
     Paper,
     PaperProps,
+    Stack,
     Typography,
 } from "@mui/material"
+import { useMemo } from "react"
 
-import { CheckResult, Risk } from "../../openapi/requests/types.gen"
-
-function getLabel(risk: Risk) {
-    if (risk === "UNKNOWN") return "Unknown"
-    if (risk === "LOW") return "Low"
-    if (risk === "MODERATE") return "Moderate"
-    if (risk === "HIGH") return "High"
-}
-
-function getColor(risk: Risk) {
-    if (risk === "UNKNOWN") return "default"
-    if (risk === "LOW") return "success"
-    if (risk === "MODERATE") return "warning"
-    if (risk === "HIGH") return "error"
-}
+import {
+    usePostApiChecksByIdDisable,
+    usePostApiChecksByIdEnable,
+} from "../../openapi/queries"
+import { CheckResult } from "../../openapi/requests/types.gen"
+import { getColorByRisk, getLabelByRisk } from "../utils"
 
 export function CheckResultCard({
     result,
+    refetch,
+    isRefetching,
     ...props
 }: {
     readonly result: CheckResult
+    readonly refetch: () => void
+    readonly isRefetching: boolean
 } & PaperProps) {
+    const { mutateAsync: enable } = usePostApiChecksByIdEnable()
+    const { mutateAsync: disable } = usePostApiChecksByIdDisable()
+    const isDisabled = useMemo(() => result.risk === "DISABLED", [result])
+    const mutateOptions = useMemo(() => {
+        return { path: { id: result.id } }
+    }, [result])
+
     return (
         <Paper>
             <Accordion>
@@ -51,18 +57,44 @@ export function CheckResultCard({
                         </Grid2>
                         <Grid2 size="auto">
                             <Chip
-                                label={getLabel(result.risk)}
-                                color={getColor(result.risk)}
+                                label={getLabelByRisk(result.risk)}
+                                color={getColorByRisk(result.risk)}
                             />
                         </Grid2>
                     </Grid2>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <Typography variant="h6" component="h3">
-                        Description
-                    </Typography>
-                    <Typography>{result.description}</Typography>
-                    {result.risk != "UNKNOWN" && result.risk != "LOW" && (
+                    <Stack
+                        direction="row"
+                        spacing={1}
+                        alignItems="center"
+                        justifyContent="space-between"
+                    >
+                        <Box>
+                            <Typography variant="h6" component="h3">
+                                Description
+                            </Typography>
+                            <Typography>{result.description}</Typography>
+                        </Box>
+                        <Button
+                            variant="outlined"
+                            loading={isRefetching}
+                            color={isDisabled ? "success" : "error"}
+                            sx={{ minWidth: "max-content" }}
+                            onClick={() => {
+                                ;(isDisabled
+                                    ? enable(mutateOptions)
+                                    : disable(mutateOptions)
+                                ).then(() => refetch())
+                            }}
+                        >
+                            {result.risk === "DISABLED"
+                                ? "Enable check"
+                                : "Disable check"}
+                        </Button>
+                    </Stack>
+
+                    {["HIGH", "MODERATE"].includes(result.risk) && (
                         <>
                             <Typography variant="h6" component="h3" mt={2}>
                                 Mitigation
