@@ -12,6 +12,17 @@ export function sortResultsByRisk(a: CheckResult, b: CheckResult) {
     return 0
 }
 
+export function splitResultsByRisk(results: CheckResult[]) {
+    return {
+        significantResults: results.filter((r) =>
+            ["HIGH", "MODERATE"].includes(r.risk)
+        ),
+        otherResults: results.filter(
+            (r) => !["HIGH", "MODERATE"].includes(r.risk)
+        ),
+    }
+}
+
 export function getLabelByRisk(risk: Risk) {
     return risk.toLowerCase().replace(/^./, risk[0].toUpperCase())
 }

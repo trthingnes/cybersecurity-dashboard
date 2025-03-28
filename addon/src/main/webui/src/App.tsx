@@ -1,3 +1,4 @@
+import { Celebration } from "@mui/icons-material"
 import {
     Alert,
     Box,
@@ -11,7 +12,7 @@ import { useMemo, useState } from "react"
 
 import { useGetApiReport } from "../openapi/queries"
 import { CheckResultCard } from "./components/CheckResultCard.tsx"
-import { sortResultsByRisk } from "./utils.ts"
+import { sortResultsByRisk, splitResultsByRisk } from "./utils.ts"
 
 function App() {
     const { data, isError, isPending, isRefetching, refetch } =
@@ -30,12 +31,9 @@ function App() {
                 .sort((a, b) => a.title.localeCompare(b.title))
                 .sort(sortResultsByRisk)
     }, [data])
-    const displayedResults = useMemo(
-        () =>
-            results.filter(
-                (r) => ["HIGH", "MODERATE"].includes(r.risk) || showMore
-            ),
-        [results, showMore]
+    const { significantResults, otherResults } = useMemo(
+        () => splitResultsByRisk(results),
+        [results]
     )
 
     return (
@@ -72,7 +70,7 @@ function App() {
                             </Typography>
                         )}
                     </Stack>
-                    <Stack spacing={2} m={1}>
+                    <Stack spacing={5} m={1}>
                         {isError && (
                             <Alert severity="error">
                                 An error occured while fetching the
@@ -84,15 +82,44 @@ function App() {
                                 <CircularProgress />
                             </Box>
                         )}
-                        {displayedResults.map((r) => (
-                            <CheckResultCard
-                                key={r.title}
-                                result={r}
-                                refetch={() => refetch()}
-                                isRefetching={isRefetching}
-                                sx={{ flexGrow: "grow" }}
-                            />
-                        ))}
+                        {!isPending && significantResults.length == 0 && (
+                            <Typography variant="h5" textAlign="center">
+                                Congrats! No significant risks were discovered{" "}
+                                <Celebration />
+                            </Typography>
+                        )}
+                        {significantResults.length > 0 && (
+                            <>
+                                <Typography variant="h5" textAlign="center">
+                                    We found risks that require your attention!
+                                </Typography>
+                                <Box>
+                                    {significantResults.map((r) => (
+                                        <CheckResultCard
+                                            key={r.title}
+                                            result={r}
+                                            refetch={() => refetch()}
+                                            isRefetching={isRefetching}
+                                            sx={{ flexGrow: "grow" }}
+                                        />
+                                    ))}
+                                </Box>
+                            </>
+                        )}
+
+                        {showMore && (
+                            <Box>
+                                {otherResults.map((r) => (
+                                    <CheckResultCard
+                                        key={r.title}
+                                        result={r}
+                                        refetch={() => refetch()}
+                                        isRefetching={isRefetching}
+                                        sx={{ flexGrow: "grow" }}
+                                    />
+                                ))}
+                            </Box>
+                        )}
                         {!isPending && (
                             <Button onClick={() => setShowMore(!showMore)}>
                                 {showMore ? "Show less" : "Show more"}
