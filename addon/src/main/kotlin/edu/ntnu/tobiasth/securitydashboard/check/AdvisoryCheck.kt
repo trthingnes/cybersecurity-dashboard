@@ -77,7 +77,7 @@ class AdvisoryCheck(
             if (advisories.isEmpty()) {
                 yield(
                     result(
-                        "Advisories for add-on '${it.name}'",
+                        "Advisories for '${it.name}' add-on",
                         Risk.LOW,
                         "${it.name} ${it.version} has no reported vulnerabilities."
                     )
