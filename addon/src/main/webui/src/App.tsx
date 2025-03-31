@@ -1,4 +1,3 @@
-import { Celebration } from "@mui/icons-material"
 import {
     Alert,
     Box,
@@ -14,7 +13,6 @@ import { useGetApiReport } from "../openapi/queries"
 import { CheckResultCard } from "./components/CheckResultCard.tsx"
 import { CircularProgressWithTier } from "./components/CircularProgressWithTier.tsx"
 import {
-    capitalize,
     lowercase,
     sortResultsByRisk,
     splitResultsByRisk,
