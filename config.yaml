@@ -17,6 +17,6 @@ options:
   instance_url: ""
   github_api_token: ""
 schema:
-  log_level: "str"
-  instance_url: "str"
-  github_api_token: "str"
+  log_level: "str?"
+  instance_url: "url?"
+  github_api_token: "str?"

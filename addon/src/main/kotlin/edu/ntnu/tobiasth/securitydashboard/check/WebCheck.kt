@@ -27,5 +27,7 @@ class WebCheck(
         } else {
             yield(result("Web Interface HTTPS", Risk.HIGH, "Web interface is not secured with HTTPS."))
         }
+
+        response.close()
     }
 }
