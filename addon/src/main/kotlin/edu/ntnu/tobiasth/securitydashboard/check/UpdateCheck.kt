@@ -1,6 +1,5 @@
 package edu.ntnu.tobiasth.securitydashboard.check
 
-import edu.ntnu.tobiasth.securitydashboard.service.dto.CheckResult
 import edu.ntnu.tobiasth.securitydashboard.service.dto.Risk
 import edu.ntnu.tobiasth.securitydashboard.client.dto.supervisor.AvailableUpdates
 import edu.ntnu.tobiasth.securitydashboard.service.HomeAssistantService
@@ -15,7 +14,7 @@ class UpdateCheck(
     override val description = "Home Assistant components and add-ons are up-to-date."
     override val mitigation = "Ensure that Home Assistant and its components are up-to-date to ensure your system is avoiding any known vulnerabilities."
 
-    override suspend fun check() {
+    override fun check() {
         val updates = haService.getAvailableUpdates()
         if (updates.isEmpty()) {
             yield(result(Risk.LOW, "Home Assistant is up-to-date."))

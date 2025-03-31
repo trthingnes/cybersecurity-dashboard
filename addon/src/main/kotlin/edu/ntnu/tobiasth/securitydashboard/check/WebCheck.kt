@@ -17,7 +17,7 @@ class WebCheck(
 
     val client = OkHttpClient()
 
-    override suspend fun check() {
+    override fun check() {
         val request = Request.Builder()
             .url(optionsService.instanceUrl.orElseThrow { IllegalArgumentException("No URL provided") }).build()
         val response = client.newCall(request).execute()

@@ -17,7 +17,7 @@ class ProxyCheck(
     override val description = "Home Assistant is accessed through a proxy."
     override val mitigation = "The safest way to run Home Assistant is to only allow connections from the local network, however this eliminates a lot of the convenience by forcing you to be at home to access Home Assistant. The second best option is to expose Home Assistant to the internet through a proxy. This is possible using both paid services like Home Assistant Cloud, or other (sometimes) free third-party services."
 
-    override suspend fun check() {
+    override fun check() {
         val instanceUrl = optionsService.instanceUrl.getOrElse { "" }
 
         if (instanceUrl.isBlank()) {
