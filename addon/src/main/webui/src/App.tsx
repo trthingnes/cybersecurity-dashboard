@@ -4,7 +4,7 @@ import {
     Box,
     Button,
     CircularProgress,
-    Grid2,
+    Grid,
     Stack,
     Typography,
 } from "@mui/material"
@@ -37,12 +37,9 @@ function App() {
     )
 
     return (
-        <Grid2 container spacing={2} m={2} mt={5} mb={5}>
-            <Grid2 size="grow"></Grid2>
-            <Grid2
-                size={{ xs: 12, sm: 10, md: 8, xl: 6 }}
-                justifyItems="center"
-            >
+        <Grid container spacing={2} m={2} mt={5} mb={5}>
+            <Grid size="grow"></Grid>
+            <Grid size={{ xs: 12, sm: 10, md: 8, xl: 6 }} justifyItems="center">
                 <Stack spacing={6} m="auto">
                     <Typography variant="h1" align="center">
                         Cybersecurity Dashboard
@@ -126,9 +123,9 @@ function App() {
                         )}
                     </Stack>
                 </Stack>
-            </Grid2>
-            <Grid2 size="grow"></Grid2>
-        </Grid2>
+            </Grid>
+            <Grid size="grow"></Grid>
+        </Grid>
     )
 }
 

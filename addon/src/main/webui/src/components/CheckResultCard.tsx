@@ -6,7 +6,7 @@ import {
     Box,
     Button,
     Chip,
-    Grid2,
+    Grid,
     Paper,
     PaperProps,
     Stack,
@@ -42,26 +42,26 @@ export function CheckResultCard({
         <Paper>
             <Accordion>
                 <AccordionSummary expandIcon={<ExpandMore />}>
-                    <Grid2
+                    <Grid
                         container
                         alignItems="center"
                         spacing={2}
                         width="calc(100% - 1rem)"
                         {...props}
                     >
-                        <Grid2 size="grow">
+                        <Grid size="grow">
                             <Typography variant="h5" component="h2">
                                 {result.title}
                             </Typography>
                             <Typography>{result.summary}</Typography>
-                        </Grid2>
-                        <Grid2 size="auto">
+                        </Grid>
+                        <Grid size="auto">
                             <Chip
                                 label={getLabelByRisk(result.risk)}
                                 color={getColorByRisk(result.risk)}
                             />
-                        </Grid2>
-                    </Grid2>
+                        </Grid>
+                    </Grid>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Stack
