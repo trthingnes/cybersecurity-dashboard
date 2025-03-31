@@ -5,6 +5,7 @@ import edu.ntnu.tobiasth.securitydashboard.persistence.DisabledCheck
 import edu.ntnu.tobiasth.securitydashboard.service.dto.CheckReport
 import edu.ntnu.tobiasth.securitydashboard.service.dto.CheckResult
 import edu.ntnu.tobiasth.securitydashboard.service.dto.Risk
+import edu.ntnu.tobiasth.securitydashboard.service.dto.Tier
 import io.quarkus.arc.All
 import io.quarkus.logging.Log
 import jakarta.enterprise.context.ApplicationScoped
@@ -49,9 +50,30 @@ class CheckService {
             CheckResult(it.id, Risk.DISABLED, it.name, "Check is manually disabled.", it.description, it.mitigation)
         })
 
+        val tier =
+            if (results.any { it.risk == Risk.HIGH }) Tier.BRONZE
+            else if (results.any { it.risk == Risk.MODERATE }) Tier.SILVER
+            else Tier.GOLD
+        val completion: Pair<Float, Int> = when (tier) {
+            Tier.BRONZE -> {
+                val completed = results.count { it.risk == Risk.LOW }
+                val required = completed + results.count { it.risk == Risk.HIGH }
+                Pair(completed / required.toFloat(), required - completed)
+            }
+            Tier.SILVER -> {
+                val completed = results.count { it.risk == Risk.LOW }
+                val required = completed + results.count { it.risk == Risk.MODERATE }
+                Pair(completed / required.toFloat(), required - completed)
+            }
+            Tier.GOLD -> Pair(1.0F, 0)
+        }
+
         return CheckReport(
             Instant.now(),
-            results
+            results,
+            tier,
+            completion.first,
+            completion.second
         )
     }
 }

@@ -3,6 +3,9 @@
 export type CheckReport = {
     timestamp: Instant;
     results: Array<CheckResult>;
+    tier: Tier;
+    tierCompletion?: number;
+    tierAdvanceIn?: number;
 };
 
 export type CheckResult = {
@@ -17,6 +20,8 @@ export type CheckResult = {
 export type Instant = string;
 
 export type Risk = 'DISABLED' | 'UNKNOWN' | 'LOW' | 'MODERATE' | 'HIGH';
+
+export type Tier = 'GOLD' | 'SILVER' | 'BRONZE';
 
 export type PostApiChecksByIdDisableData = {
     path: {

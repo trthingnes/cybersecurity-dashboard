@@ -6,7 +6,7 @@ import type { PostApiChecksByIdDisableData, PostApiChecksByIdDisableError, PostA
 export const client = createClient(createConfig());
 
 /**
- * Post Checks Deactivate
+ * Post Checks Disable
  */
 export const postApiChecksByIdDisable = <ThrowOnError extends boolean = false>(options: Options<PostApiChecksByIdDisableData, ThrowOnError>) => { return (options?.client ?? client).post<PostApiChecksByIdDisableResponse, PostApiChecksByIdDisableError, ThrowOnError>({
     ...options,
@@ -14,7 +14,7 @@ export const postApiChecksByIdDisable = <ThrowOnError extends boolean = false>(o
 }); };
 
 /**
- * Post Checks Activate
+ * Post Checks Enable
  */
 export const postApiChecksByIdEnable = <ThrowOnError extends boolean = false>(options: Options<PostApiChecksByIdEnableData, ThrowOnError>) => { return (options?.client ?? client).post<PostApiChecksByIdEnableResponse, PostApiChecksByIdEnableError, ThrowOnError>({
     ...options,

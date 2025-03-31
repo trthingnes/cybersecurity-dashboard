@@ -2,7 +2,7 @@
 
 export const CheckReportSchema = {
     type: 'object',
-    required: ['timestamp', 'results'],
+    required: ['timestamp', 'results', 'tier'],
     properties: {
         timestamp: {
             '$ref': '#/components/schemas/Instant'
@@ -12,6 +12,17 @@ export const CheckReportSchema = {
             items: {
                 '$ref': '#/components/schemas/CheckResult'
             }
+        },
+        tier: {
+            '$ref': '#/components/schemas/Tier'
+        },
+        tierCompletion: {
+            type: 'number',
+            format: 'float'
+        },
+        tierAdvanceIn: {
+            type: 'integer',
+            format: 'int32'
         }
     }
 } as const;
@@ -50,4 +61,9 @@ export const InstantSchema = {
 export const RiskSchema = {
     type: 'string',
     enum: ['DISABLED', 'UNKNOWN', 'LOW', 'MODERATE', 'HIGH']
+} as const;
+
+export const TierSchema = {
+    type: 'string',
+    enum: ['GOLD', 'SILVER', 'BRONZE']
 } as const;

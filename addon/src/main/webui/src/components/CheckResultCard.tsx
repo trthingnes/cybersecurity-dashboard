@@ -19,7 +19,7 @@ import {
     usePostApiChecksByIdEnable,
 } from "../../openapi/queries"
 import { CheckResult } from "../../openapi/requests/types.gen"
-import { getColorByRisk, getLabelByRisk } from "../utils"
+import { capitalize, getColorByRisk } from "../utils"
 
 export function CheckResultCard({
     result,
@@ -57,7 +57,7 @@ export function CheckResultCard({
                         </Grid>
                         <Grid size="auto">
                             <Chip
-                                label={getLabelByRisk(result.risk)}
+                                label={capitalize(result.risk)}
                                 color={getColorByRisk(result.risk)}
                             />
                         </Grid>
