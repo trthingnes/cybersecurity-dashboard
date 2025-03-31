@@ -5,6 +5,7 @@ import edu.ntnu.tobiasth.securitydashboard.service.dto.Risk
 import jakarta.enterprise.context.ApplicationScoped
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.Response
 import java.net.ConnectException
 import java.net.URI
 
@@ -28,9 +29,10 @@ class HttpsCheck(
         }
 
         val request = Request.Builder().url(instanceUrl).build()
+        var response: Response? = null
 
         try {
-            val response = client.newCall(request).execute()
+            response = client.newCall(request).execute()
             response.close()
         } catch (_: ConnectException) {
             yield(result(Risk.UNKNOWN, "Unable to connect to Home Assistant."))
@@ -41,10 +43,10 @@ class HttpsCheck(
             return
         }
 
-        when (instanceUrl.protocol) {
-            "https" -> yield(result(Risk.LOW, "Home Assistant is secured with HTTPS."))
-            "http" -> yield(result(Risk.HIGH, "Home Assistant is not secured with HTTPS."))
-            else -> yield(result(Risk.UNKNOWN, "Home Assistant is using an unexpected protocol."))
+        if (response?.handshake == null) {
+            yield(result(Risk.HIGH, "Home Assistant is not secured with HTTPS."))
+        } else {
+            yield(result(Risk.LOW, "Home Assistant is secured with HTTPS."))
         }
     }
 }

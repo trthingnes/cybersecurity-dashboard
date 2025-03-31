@@ -7,8 +7,6 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.net.ConnectException
 import java.net.URI
-import java.security.GeneralSecurityException
-import java.security.SignatureException
 import java.security.cert.*
 
 @ApplicationScoped
@@ -67,11 +65,6 @@ class CertificateCheck(
             return
         }
 
-        try {
-            cert.verify(cert.publicKey)
-        } catch (_: GeneralSecurityException) {
-            yield(result(Risk.MODERATE, "Home Assistant certificate could not be verified."))
-            return
-        }
+        yield(result(Risk.LOW, "Home Assistant certificate is valid and signed by CA."))
     }
 }
