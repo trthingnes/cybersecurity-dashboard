@@ -106,7 +106,11 @@ function App() {
                                 </Box>
                             </>
                         )}
-
+                        {!isPending && (
+                            <Button onClick={() => setShowMore(!showMore)}>
+                                {showMore ? "Show less" : "Show more"}
+                            </Button>
+                        )}
                         {showMore && (
                             <Box>
                                 {otherResults.map((r) => (
@@ -119,11 +123,6 @@ function App() {
                                     />
                                 ))}
                             </Box>
-                        )}
-                        {!isPending && (
-                            <Button onClick={() => setShowMore(!showMore)}>
-                                {showMore ? "Show less" : "Show more"}
-                            </Button>
                         )}
                     </Stack>
                 </Stack>

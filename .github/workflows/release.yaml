@@ -3,7 +3,15 @@ on:
   workflow_dispatch:
   push:
     branches: ["main"]
-    paths: [".github/**", "addon/src/main/**", "addon/Dockerfile", "addon/run.sh", "config.yaml", "icon.yaml"]
+    paths:
+      [
+        ".github/**",
+        "addon/src/main/**",
+        "addon/Dockerfile",
+        "addon/run.sh",
+        "config.yaml",
+        "icon.yaml",
+      ]
 jobs:
   packages:
     name: Build, Package, and Publish Packages
@@ -31,7 +39,7 @@ jobs:
             --docker-hub ghcr.io \
             --image ${{ github.repository }}-{arch} \
             --${{ matrix.arch }} \
-            --version 0.0.6
+            --version 0.0.7
   repository:
     needs: packages
     name: Update Addon Repository
@@ -42,13 +50,13 @@ jobs:
       - name: Copy config.yaml
         uses: nkoppel/push-files-to-another-repository@v1.1.4
         env:
-            API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-            source-files: 'config.yaml icon.png README.md DOCS.md translations'
-            destination-username: 'trthingnes'
-            destination-repository: 'hassio-addons'
-            destination-branch: 'main'
-            destination-directory: 'cybersecurity-dashboard'
-            commit-message: 'Update config and icon for cybersecurity-dashboard'
-            commit-username: 'GitHub Action'
-            commit-email: 'support@github.com'
+          source-files: "config.yaml icon.png README.md DOCS.md translations"
+          destination-username: "trthingnes"
+          destination-repository: "hassio-addons"
+          destination-branch: "main"
+          destination-directory: "cybersecurity-dashboard"
+          commit-message: "Update config and icon for cybersecurity-dashboard"
+          commit-username: "GitHub Action"
+          commit-email: "support@github.com"

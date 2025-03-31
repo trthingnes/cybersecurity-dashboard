@@ -1,5 +1,5 @@
 name: "Cybersecurity Dashboard"
-version: "0.0.6"
+version: "0.0.7"
 slug: "cybersecurity_dashboard"
 description: "Improve your cybersecurity of your smart home"
 panel_icon: "mdi:security"
@@ -17,6 +17,6 @@ options:
   instance_url: ""
   github_api_token: ""
 schema:
-  log_level: "str"
-  instance_url: "str"
-  github_api_token: "str"
+  log_level: "str?"
+  instance_url: "url?"
+  github_api_token: "str?"

@@ -27,6 +27,7 @@ dependencies {
     implementation("io.quarkus:quarkus-jdbc-h2")
     implementation("io.quarkus:quarkus-hibernate-orm-panache-kotlin")
     implementation("io.quarkiverse.quinoa:quarkus-quinoa:2.5.1")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
     testImplementation("io.quarkus:quarkus-junit5")
     testImplementation("io.rest-assured:rest-assured")
 }
