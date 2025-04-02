@@ -23,13 +23,13 @@ import { capitalize, getColorByRisk } from "../utils"
 
 export function CheckResultCard({
     result,
-    refetch,
-    isRefetching,
+    onChange,
+    isLoading,
     ...props
 }: {
     readonly result: CheckResult
-    readonly refetch: () => void
-    readonly isRefetching: boolean
+    readonly onChange: () => void
+    readonly isLoading: boolean
 } & PaperProps) {
     const { mutateAsync: enable } = usePostApiChecksByIdEnable()
     const { mutateAsync: disable } = usePostApiChecksByIdDisable()
@@ -78,14 +78,14 @@ export function CheckResultCard({
                         </Box>
                         <Button
                             variant="outlined"
-                            loading={isRefetching}
+                            loading={isLoading}
                             color={isDisabled ? "success" : "error"}
                             sx={{ minWidth: "max-content" }}
                             onClick={() => {
                                 ;(isDisabled
                                     ? enable(mutateOptions)
                                     : disable(mutateOptions)
-                                ).then(() => refetch())
+                                ).then(() => onChange())
                             }}
                         >
                             {result.risk === "DISABLED"

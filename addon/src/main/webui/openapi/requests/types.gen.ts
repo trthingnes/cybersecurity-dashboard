@@ -46,3 +46,7 @@ export type PostApiChecksByIdEnableError = unknown;
 export type GetApiReportResponse = (CheckReport);
 
 export type GetApiReportError = unknown;
+
+export type PostApiReportGenerateResponse = (unknown);
+
+export type PostApiReportGenerateError = unknown;

@@ -13,13 +13,13 @@ import jakarta.inject.Inject
 import java.time.Instant
 
 @ApplicationScoped
-class CheckService {
+class ReportService {
     @Inject
     @All
     @Suppress("CdiInjectionPointsInspection")
     private lateinit var checks: MutableList<Check>
 
-    fun run(): CheckReport {
+    fun generate(): CheckReport {
         val disabledCheckIds = DisabledCheck.listAll().map { it.checkId }
         val enabledChecks = checks.filter { !disabledCheckIds.contains(it.id) }
         val disabledCheck = checks.filter { disabledCheckIds.contains(it.id) }
