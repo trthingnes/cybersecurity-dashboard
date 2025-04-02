@@ -14,9 +14,11 @@ hassio_api: true
 homeassistant_api: true
 options:
   log_level: "INFO"
+  schedule_interval: "7d"
   instance_url: ""
   github_api_token: ""
 schema:
   log_level: "str?"
+  schedule_interval: "str?"
   instance_url: "url?"
   github_api_token: "str?"
