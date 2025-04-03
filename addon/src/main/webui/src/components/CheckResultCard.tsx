@@ -15,8 +15,8 @@ import {
 import { useMemo } from "react"
 
 import {
-    usePostApiChecksByIdDisable,
-    usePostApiChecksByIdEnable,
+    usePostApiCheckByIdDisable,
+    usePostApiCheckByIdEnable,
 } from "../../openapi/queries"
 import { CheckResult } from "../../openapi/requests/types.gen"
 import { capitalize, getColorByRisk } from "../utils"
@@ -31,8 +31,8 @@ export function CheckResultCard({
     readonly onChange: () => void
     readonly isLoading: boolean
 } & PaperProps) {
-    const { mutateAsync: enable } = usePostApiChecksByIdEnable()
-    const { mutateAsync: disable } = usePostApiChecksByIdDisable()
+    const { mutateAsync: enable } = usePostApiCheckByIdEnable()
+    const { mutateAsync: disable } = usePostApiCheckByIdDisable()
     const isDisabled = useMemo(() => result.risk === "DISABLED", [result])
     const mutateOptions = useMemo(() => {
         return { path: { id: result.id } }

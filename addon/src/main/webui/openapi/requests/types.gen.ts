@@ -23,25 +23,25 @@ export type Risk = 'DISABLED' | 'UNKNOWN' | 'LOW' | 'MODERATE' | 'HIGH';
 
 export type Tier = 'GOLD' | 'SILVER' | 'BRONZE';
 
-export type PostApiChecksByIdDisableData = {
+export type PostApiCheckByIdDisableData = {
     path: {
         id: string;
     };
 };
 
-export type PostApiChecksByIdDisableResponse = (unknown);
+export type PostApiCheckByIdDisableResponse = (unknown);
 
-export type PostApiChecksByIdDisableError = unknown;
+export type PostApiCheckByIdDisableError = unknown;
 
-export type PostApiChecksByIdEnableData = {
+export type PostApiCheckByIdEnableData = {
     path: {
         id: string;
     };
 };
 
-export type PostApiChecksByIdEnableResponse = (number);
+export type PostApiCheckByIdEnableResponse = (number);
 
-export type PostApiChecksByIdEnableError = unknown;
+export type PostApiCheckByIdEnableError = unknown;
 
 export type GetApiReportResponse = (CheckReport);
 

@@ -48,6 +48,11 @@ class CertificateCheck(
             return
         }
 
+        if (certificates.isEmpty()) {
+            yield(result(Risk.UNKNOWN, "No certificates to check."))
+            return
+        }
+
         val cert = certificates.first()
 
         try {

@@ -18,5 +18,5 @@ class HomeAssistantService(
     fun getInstalledAddons() = supervisor.getAddons().data.addons
     fun getAddonRepositories() = supervisor.getStoreRepositories().data
     fun getComponentNames() = core.getComponents()
-    fun createNotification(title: String?, message: String) = core.createNotification(Notification(title, message))
+    fun createNotification(message: String, title: String = "Cybersecurity Dashboard") = core.createNotification(Notification(title, message))
 }
