@@ -1,16 +1,18 @@
-package edu.ntnu.tobiasth.securitydashboard.check
+package edu.ntnu.tobiasth.securitydashboard.check.impl
 
+import edu.ntnu.tobiasth.securitydashboard.check.Check
+import edu.ntnu.tobiasth.securitydashboard.check.Risk
+import edu.ntnu.tobiasth.securitydashboard.client.dto.github.RepositorySecurityAdvisory
 import edu.ntnu.tobiasth.securitydashboard.service.GitHubService
 import edu.ntnu.tobiasth.securitydashboard.service.HomeAssistantService
-import edu.ntnu.tobiasth.securitydashboard.service.dto.Risk
-import edu.ntnu.tobiasth.securitydashboard.util.AdvisoryUtil
+import edu.ntnu.tobiasth.securitydashboard.util.VersionComparator
 import jakarta.enterprise.context.ApplicationScoped
 
 @ApplicationScoped
 class AdvisoryCheck(
-    val homeAssistantService: HomeAssistantService,
-    val githubService: GitHubService,
-    val advisoryUtil: AdvisoryUtil
+    private val homeAssistantService: HomeAssistantService,
+    private val githubService: GitHubService,
+    private val versionComparator: VersionComparator
 ) : Check() {
     override val id = "advisory-check"
     override val name = "Security Advisories"
@@ -36,9 +38,9 @@ class AdvisoryCheck(
         } else {
             yield(result(
                 "Advisories for Home Assistant Core",
-                advisoryUtil.getRisk(coreAdvisories),
+                getRisk(coreAdvisories),
                 "Found unpatched vulnerabilities (${coreAdvisories.joinToString { it.cveId ?: it.ghsaId }}). Please update to Core ${
-                    advisoryUtil.getPatchedVersion(coreAdvisories)
+                    getPatchedVersion(coreAdvisories)
                 }."
             ))
         }
@@ -56,9 +58,9 @@ class AdvisoryCheck(
         } else {
             yield(result(
                 "Advisories for Home Assistant Supervisor",
-                advisoryUtil.getRisk(supervisorAdvisories),
+                getRisk(supervisorAdvisories),
                 "Found unpatched vulnerabilities (${supervisorAdvisories.joinToString { it.cveId ?: it.ghsaId }}). Please update to Supervisor ${
-                    advisoryUtil.getPatchedVersion(supervisorAdvisories)
+                    getPatchedVersion(supervisorAdvisories)
                 }."
             ))
         }
@@ -86,9 +88,9 @@ class AdvisoryCheck(
                 yield(
                     result(
                         "Advisories for add-on '${it.name}'",
-                        advisoryUtil.getRisk(advisories),
+                        getRisk(advisories),
                         "Found unpatched vulnerabilities (${advisories.joinToString { a -> a.cveId ?: a.ghsaId }}). Please update to ${
-                            advisoryUtil.getPatchedVersion(
+                            getPatchedVersion(
                                 advisories
                             )
                         }"
@@ -98,4 +100,16 @@ class AdvisoryCheck(
         }
     }
 
+    fun getPatchedVersion(advisories: List<RepositorySecurityAdvisory>): String? {
+        val filteredAdvisories = advisories
+            .flatMap { it.vulnerabilities }
+            .mapNotNull { it.patchedVersions }
+            .sortedWith(versionComparator)
+
+        return if (filteredAdvisories.isNotEmpty()) filteredAdvisories.last() else null
+    }
+
+    fun getRisk(advisories: List<RepositorySecurityAdvisory>) = if (advisories.any {
+            it.severity == RepositorySecurityAdvisory.Severity.CRITICAL || it.severity == RepositorySecurityAdvisory.Severity.HIGH
+        }) Risk.HIGH else Risk.MODERATE
 }

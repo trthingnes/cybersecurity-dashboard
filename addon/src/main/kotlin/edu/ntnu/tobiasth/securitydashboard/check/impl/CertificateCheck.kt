@@ -1,7 +1,8 @@
-package edu.ntnu.tobiasth.securitydashboard.check
+package edu.ntnu.tobiasth.securitydashboard.check.impl
 
+import edu.ntnu.tobiasth.securitydashboard.check.Check
+import edu.ntnu.tobiasth.securitydashboard.check.Risk
 import edu.ntnu.tobiasth.securitydashboard.service.OptionsService
-import edu.ntnu.tobiasth.securitydashboard.service.dto.Risk
 import jakarta.enterprise.context.ApplicationScoped
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -45,6 +46,11 @@ class CertificateCheck(
             response.close()
         } catch (_: ConnectException) {
             yield(result(Risk.UNKNOWN, "Unable to connect to Home Assistant."))
+            return
+        }
+
+        if (certificates.isEmpty()) {
+            yield(result(Risk.UNKNOWN, "No certificates to check."))
             return
         }
 

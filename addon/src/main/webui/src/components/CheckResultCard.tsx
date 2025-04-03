@@ -15,24 +15,24 @@ import {
 import { useMemo } from "react"
 
 import {
-    usePostApiChecksByIdDisable,
-    usePostApiChecksByIdEnable,
+    usePostApiCheckByIdDisable,
+    usePostApiCheckByIdEnable,
 } from "../../openapi/queries"
 import { CheckResult } from "../../openapi/requests/types.gen"
 import { capitalize, getColorByRisk } from "../utils"
 
 export function CheckResultCard({
     result,
-    refetch,
-    isRefetching,
+    onChange,
+    isLoading,
     ...props
 }: {
     readonly result: CheckResult
-    readonly refetch: () => void
-    readonly isRefetching: boolean
+    readonly onChange: () => void
+    readonly isLoading: boolean
 } & PaperProps) {
-    const { mutateAsync: enable } = usePostApiChecksByIdEnable()
-    const { mutateAsync: disable } = usePostApiChecksByIdDisable()
+    const { mutateAsync: enable } = usePostApiCheckByIdEnable()
+    const { mutateAsync: disable } = usePostApiCheckByIdDisable()
     const isDisabled = useMemo(() => result.risk === "DISABLED", [result])
     const mutateOptions = useMemo(() => {
         return { path: { id: result.id } }
@@ -78,14 +78,14 @@ export function CheckResultCard({
                         </Box>
                         <Button
                             variant="outlined"
-                            loading={isRefetching}
+                            loading={isLoading}
                             color={isDisabled ? "success" : "error"}
                             sx={{ minWidth: "max-content" }}
                             onClick={() => {
                                 ;(isDisabled
                                     ? enable(mutateOptions)
                                     : disable(mutateOptions)
-                                ).then(() => refetch())
+                                ).then(() => onChange())
                             }}
                         >
                             {result.risk === "DISABLED"

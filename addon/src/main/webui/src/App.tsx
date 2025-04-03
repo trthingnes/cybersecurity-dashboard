@@ -9,21 +9,17 @@ import {
 } from "@mui/material"
 import { useMemo, useState } from "react"
 
-import { useGetApiReport } from "../openapi/queries"
+import { useGetApiReport, usePostApiReportGenerate } from "../openapi/queries"
 import { CheckResultCard } from "./components/CheckResultCard.tsx"
 import { CircularProgressWithTier } from "./components/CircularProgressWithTier.tsx"
-import {
-    lowercase,
-    sortResultsByRisk,
-    splitResultsByRisk,
-} from "./utils.ts"
+import { lowercase, sortResultsByRisk, splitResultsByRisk } from "./utils.ts"
 
 function App() {
-    const { data, isError, isPending, isRefetching, refetch } =
-        useGetApiReport()
-
+    const { data, isError, isPending, refetch } = useGetApiReport()
+    const { mutateAsync: generate, isPending: isGenerating } =
+        usePostApiReportGenerate()
+    const update = () => generate({}).then(() => refetch())
     const [showMore, setShowMore] = useState(false)
-
     const updated = useMemo(
         () => (data?.timestamp ? new Date(data.timestamp) : null),
         [data]
@@ -80,9 +76,13 @@ function App() {
                             <Stack spacing={1}>
                                 {data.tier != "GOLD" && (
                                     <Typography textAlign="center">
-                                        Address {data.tierAdvanceIn} more risk
+                                        Address {data.tierAdvanceIn}{" "}
+                                        {data.tier == "SILVER"
+                                            ? "moderate"
+                                            : "high"}{" "}
+                                        risk
                                         {data.tierAdvanceIn! > 1 ? "s" : ""} to
-                                        advance to the next tier.
+                                        reach the next tier.
                                     </Typography>
                                 )}
                                 <Stack
@@ -95,10 +95,8 @@ function App() {
                                 >
                                     <Button
                                         variant="contained"
-                                        loading={isRefetching}
-                                        onClick={() => {
-                                            refetch()
-                                        }}
+                                        loading={isGenerating}
+                                        onClick={update}
                                     >
                                         Check Now
                                     </Button>
@@ -126,8 +124,8 @@ function App() {
                                         <CheckResultCard
                                             key={r.title}
                                             result={r}
-                                            refetch={() => refetch()}
-                                            isRefetching={isRefetching}
+                                            onChange={update}
+                                            isLoading={isGenerating}
                                             sx={{ flexGrow: "grow" }}
                                         />
                                     ))}
@@ -142,8 +140,8 @@ function App() {
                                         <CheckResultCard
                                             key={r.title}
                                             result={r}
-                                            refetch={() => refetch()}
-                                            isRefetching={isRefetching}
+                                            onChange={update}
+                                            isLoading={isGenerating}
                                             sx={{ flexGrow: "grow" }}
                                         />
                                     ))}
