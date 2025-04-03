@@ -2,8 +2,6 @@ package edu.ntnu.tobiasth.securitydashboard
 
 import edu.ntnu.tobiasth.securitydashboard.persistence.DisabledCheck
 import edu.ntnu.tobiasth.securitydashboard.service.ReportService
-import edu.ntnu.tobiasth.securitydashboard.service.HomeAssistantService
-import edu.ntnu.tobiasth.securitydashboard.service.OptionsService
 import edu.ntnu.tobiasth.securitydashboard.service.dto.CheckReport
 import edu.ntnu.tobiasth.securitydashboard.util.LimitedSizeList
 import io.quarkus.logging.Log
