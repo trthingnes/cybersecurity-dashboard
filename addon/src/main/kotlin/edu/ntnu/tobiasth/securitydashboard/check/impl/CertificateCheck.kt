@@ -1,7 +1,8 @@
-package edu.ntnu.tobiasth.securitydashboard.check
+package edu.ntnu.tobiasth.securitydashboard.check.impl
 
+import edu.ntnu.tobiasth.securitydashboard.check.Check
+import edu.ntnu.tobiasth.securitydashboard.check.Risk
 import edu.ntnu.tobiasth.securitydashboard.service.OptionsService
-import edu.ntnu.tobiasth.securitydashboard.service.dto.Risk
 import jakarta.enterprise.context.ApplicationScoped
 import okhttp3.OkHttpClient
 import okhttp3.Request

@@ -2,10 +2,9 @@ package edu.ntnu.tobiasth.securitydashboard.service
 
 import edu.ntnu.tobiasth.securitydashboard.check.Check
 import edu.ntnu.tobiasth.securitydashboard.persistence.DisabledCheck
-import edu.ntnu.tobiasth.securitydashboard.service.dto.CheckReport
-import edu.ntnu.tobiasth.securitydashboard.service.dto.CheckResult
-import edu.ntnu.tobiasth.securitydashboard.service.dto.Risk
-import edu.ntnu.tobiasth.securitydashboard.service.dto.Tier
+import edu.ntnu.tobiasth.securitydashboard.persistence.Report
+import edu.ntnu.tobiasth.securitydashboard.check.CheckResult
+import edu.ntnu.tobiasth.securitydashboard.check.Risk
 import io.quarkus.arc.All
 import io.quarkus.logging.Log
 import jakarta.enterprise.context.ApplicationScoped
@@ -19,7 +18,7 @@ class ReportService {
     @Suppress("CdiInjectionPointsInspection")
     private lateinit var checks: MutableList<Check>
 
-    fun generate(): CheckReport {
+    fun generate(): Report {
         val disabledCheckIds = DisabledCheck.listAll().map { it.checkId }
         val enabledChecks = checks.filter { !disabledCheckIds.contains(it.id) }
         val disabledCheck = checks.filter { disabledCheckIds.contains(it.id) }
@@ -51,7 +50,7 @@ class ReportService {
         val tier = getTier(results)
         val completion = getTierCompletion(tier, results)
 
-        return CheckReport(
+        return Report(
             Instant.now(),
             results,
             tier,
@@ -60,25 +59,25 @@ class ReportService {
         )
     }
 
-    fun getTier(results: List<CheckResult>): Tier {
-        return if (results.any { it.risk == Risk.HIGH }) Tier.BRONZE
-        else if (results.any { it.risk == Risk.MODERATE }) Tier.SILVER
-        else Tier.GOLD
+    fun getTier(results: List<CheckResult>): Report.Tier {
+        return if (results.any { it.risk == Risk.HIGH }) Report.Tier.BRONZE
+        else if (results.any { it.risk == Risk.MODERATE }) Report.Tier.SILVER
+        else Report.Tier.GOLD
     }
 
-    fun getTierCompletion(tier: Tier, results: List<CheckResult>) = when (tier) {
-        Tier.BRONZE -> {
+    fun getTierCompletion(tier: Report.Tier, results: List<CheckResult>) = when (tier) {
+        Report.Tier.BRONZE -> {
             val completed = results.count { it.risk == Risk.LOW }
             val required = completed + results.count { it.risk == Risk.HIGH }
             Pair(completed / required.toFloat(), required - completed)
         }
 
-        Tier.SILVER -> {
+        Report.Tier.SILVER -> {
             val completed = results.count { it.risk == Risk.LOW }
             val required = completed + results.count { it.risk == Risk.MODERATE }
             Pair(completed / required.toFloat(), required - completed)
         }
 
-        Tier.GOLD -> Pair(1.0F, 0)
+        Report.Tier.GOLD -> Pair(1.0F, 0)
     }
 }

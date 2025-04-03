@@ -1,8 +1,5 @@
 package edu.ntnu.tobiasth.securitydashboard.check
 
-import edu.ntnu.tobiasth.securitydashboard.service.dto.CheckResult
-import edu.ntnu.tobiasth.securitydashboard.service.dto.Risk
-
 abstract class Check {
     abstract val id: String
     abstract val name: String

@@ -1,4 +1,4 @@
-package edu.ntnu.tobiasth.securitydashboard.service.dto
+package edu.ntnu.tobiasth.securitydashboard.check
 
 enum class Risk {
     DISABLED,

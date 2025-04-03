@@ -3,10 +3,10 @@ package edu.ntnu.tobiasth.securitydashboard
 import edu.ntnu.tobiasth.securitydashboard.persistence.DisabledCheck
 import edu.ntnu.tobiasth.securitydashboard.service.HomeAssistantService
 import edu.ntnu.tobiasth.securitydashboard.service.ReportService
-import edu.ntnu.tobiasth.securitydashboard.service.dto.CheckReport
-import edu.ntnu.tobiasth.securitydashboard.service.dto.Risk
-import edu.ntnu.tobiasth.securitydashboard.util.LimitedSizeList
+import edu.ntnu.tobiasth.securitydashboard.persistence.Report
+import edu.ntnu.tobiasth.securitydashboard.check.Risk
 import io.quarkus.logging.Log
+import io.quarkus.panache.common.Page
 import io.quarkus.scheduler.Scheduled
 import jakarta.transaction.Transactional
 import jakarta.ws.rs.GET
@@ -19,40 +19,55 @@ class MainResource(
     private val reportService: ReportService,
     private val haService: HomeAssistantService
 ) {
-    private val reports: LimitedSizeList<CheckReport> = LimitedSizeList(2)
-
     @Scheduled(every="{OPTION_SCHEDULE_INTERVAL}")
+    @Transactional
     fun scheduledReportGenerate() {
+        val maxReportCount = 5
+        val reportCount = Report.count()
+        if (reportCount > maxReportCount) {
+            Log.info("Deleting ${reportCount - maxReportCount} old report(s)...")
+            val reportsToKeep = Report.find("order by timestamp desc").page(Page.ofSize(maxReportCount)).list()
+            Report.delete("timestamp < ?1", reportsToKeep.last().timestamp)
+        }
+
         Log.info("Generating report according to schedule...")
         val newReport = reportService.generate()
+        val latestOldReport = findLatestOldReport()
 
-        // If an older report exists, compare it to the new one and notify the user if relevant.
-        if (reports.isNotEmpty()) {
-            val oldReport = reports[reports.size - 1]
-            val newMediumHighRisks = newReport.results.filter { listOf(Risk.HIGH, Risk.MODERATE).contains(it.risk) && !oldReport.results.contains(it)}
+        if (latestOldReport != null) {
+            Log.debug("Timestamps of old reports: ${Report.listAll().map { it.timestamp }.joinToString()}")
+            Log.debug("Latest old report has timestamp: ${latestOldReport.timestamp}")
+            val newMediumHighRisks = newReport.results.filter { listOf(Risk.HIGH, Risk.MODERATE).contains(it.risk) && !latestOldReport.results.contains(it)}
             if (newMediumHighRisks.isNotEmpty()) {
+                Log.info("Notifying user about new risks...")
                 haService.createNotification("The latest scheduled report discovered ${newMediumHighRisks.size} new moderate or high risk${if (newMediumHighRisks.size > 1) "s" else ""}. Visit the Cybersecurity Dashboard to keep Home Assistant secure.")
             }
         }
 
-        reports.add(newReport)
+        newReport.persistAndFlush()
     }
 
     @GET
     @Path("/report")
-    fun getReport(): CheckReport {
-        if (reports.isEmpty()) {
+    @Transactional
+    fun getReport(): Report {
+        val latestOldReport = findLatestOldReport()
+        if (latestOldReport == null) {
             Log.info("Generating report since none are available...")
-            reports.add(reportService.generate())
+            val newReport = reportService.generate()
+            newReport.persistAndFlush()
+            return newReport
         }
-        return reports[reports.size - 1]
+        Log.debug("Returning existing report...")
+        return latestOldReport
     }
 
     @POST
     @Path("/report/generate")
+    @Transactional
     fun postReportGenerate() {
         Log.info("Generating report since a new one was requested...")
-        reports.add(reportService.generate())
+        reportService.generate().persistAndFlush()
     }
 
     @POST
@@ -68,4 +83,6 @@ class MainResource(
     } else {
         DisabledCheck(id).persist()
     }
+
+    fun findLatestOldReport() = Report.find("order by timestamp desc").firstResult()
 }

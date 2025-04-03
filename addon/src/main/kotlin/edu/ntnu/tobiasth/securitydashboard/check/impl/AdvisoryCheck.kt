@@ -1,9 +1,10 @@
-package edu.ntnu.tobiasth.securitydashboard.check
+package edu.ntnu.tobiasth.securitydashboard.check.impl
 
+import edu.ntnu.tobiasth.securitydashboard.check.Check
+import edu.ntnu.tobiasth.securitydashboard.check.Risk
 import edu.ntnu.tobiasth.securitydashboard.client.dto.github.RepositorySecurityAdvisory
 import edu.ntnu.tobiasth.securitydashboard.service.GitHubService
 import edu.ntnu.tobiasth.securitydashboard.service.HomeAssistantService
-import edu.ntnu.tobiasth.securitydashboard.service.dto.Risk
 import edu.ntnu.tobiasth.securitydashboard.util.VersionComparator
 import jakarta.enterprise.context.ApplicationScoped
 
