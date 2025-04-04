@@ -5,19 +5,19 @@ import {
     LockOpen,
     People,
 } from "@mui/icons-material"
-import { Box, Grid, Tab, Tabs } from "@mui/material"
+import { Grid, Tab, Tabs } from "@mui/material"
 import { Outlet, useLocation, useNavigate } from "react-router"
 
 function App() {
     const navigate = useNavigate()
     const { pathname } = useLocation()
     return (
-        <Grid container m={1}>
-            <Grid size="grow"></Grid>
-            <Grid size={{ xs: 12, sm: 10, md: 8, xl: 6 }} justifyItems="center">
+        <>
+            <Grid container justifyContent="center">
                 <Tabs
-                    centered
                     value={pathname}
+                    variant="scrollable"
+                    scrollButtons="auto"
                     onChange={(_, v) => navigate(v)}
                 >
                     <Tab label="Overview" icon={<Checklist />} value="/" />
@@ -30,12 +30,15 @@ function App() {
                     />
                     <Tab label="Learn" icon={<LocalLibrary />} value="/learn" />
                 </Tabs>
-                <Box mt={3}>
-                    <Outlet />
-                </Box>
             </Grid>
-            <Grid size="grow"></Grid>
-        </Grid>
+            <Grid container m={3}>
+                <Grid size="grow"></Grid>
+                <Grid size={{ xs: 12, sm: 10, md: 8, xl: 6 }}>
+                    <Outlet />
+                </Grid>
+                <Grid size="grow"></Grid>
+            </Grid>
+        </>
     )
 }
 
