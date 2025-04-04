@@ -82,7 +82,7 @@ export function ChecksTab() {
                                         : "high"}{" "}
                                     risk
                                     {data.tierAdvanceIn! > 1 ? "s" : ""} to
-                                    reach the next tier.
+                                    advance.
                                 </Typography>
                             )}
                             <Stack
