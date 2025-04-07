@@ -40,7 +40,7 @@ class LogsResource(
                 val time = split[1]
                 return@associateBy Instant.parse("${date}T${time}Z")
             } catch (e: Exception) {
-                Log.error("Unable to parse log entry: '$it'")
+                Log.debug("Unable to parse log entry: '$it'")
                 return@associateBy Instant.now()
             }
         }
