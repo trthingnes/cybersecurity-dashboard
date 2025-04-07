@@ -24,6 +24,16 @@ export type Risk = 'DISABLED' | 'UNKNOWN' | 'LOW' | 'MODERATE' | 'HIGH';
 
 export type Tier = 'GOLD' | 'SILVER' | 'BRONZE';
 
+export type GetApiLogsResponse = ({
+    [key: string]: Array<(string)>;
+});
+
+export type GetApiLogsError = unknown;
+
+export type GetApiLogsUnifiedResponse = (Array<(string)>);
+
+export type GetApiLogsUnifiedError = unknown;
+
 export type GetApiOverviewResponse = (Report);
 
 export type GetApiOverviewError = unknown;

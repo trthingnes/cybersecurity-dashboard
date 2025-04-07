@@ -2,7 +2,15 @@
 
 import { type Options } from "@hey-api/client-fetch";
 import { UseQueryResult } from "@tanstack/react-query";
-import { getApiOverview, postApiOverviewCheckByIdDisable, postApiOverviewCheckByIdEnable, postApiOverviewGenerate } from "../requests/services.gen";
+import { getApiLogs, getApiLogsUnified, getApiOverview, postApiOverviewCheckByIdDisable, postApiOverviewCheckByIdEnable, postApiOverviewGenerate } from "../requests/services.gen";
+export type GetApiLogsDefaultResponse = Awaited<ReturnType<typeof getApiLogs>>["data"];
+export type GetApiLogsQueryResult<TData = GetApiLogsDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const useGetApiLogsKey = "GetApiLogs";
+export const UseGetApiLogsKeyFn = (clientOptions: Options<unknown, true> = {}, queryKey?: Array<unknown>) => [useGetApiLogsKey, ...(queryKey ?? [clientOptions])];
+export type GetApiLogsUnifiedDefaultResponse = Awaited<ReturnType<typeof getApiLogsUnified>>["data"];
+export type GetApiLogsUnifiedQueryResult<TData = GetApiLogsUnifiedDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const useGetApiLogsUnifiedKey = "GetApiLogsUnified";
+export const UseGetApiLogsUnifiedKeyFn = (clientOptions: Options<unknown, true> = {}, queryKey?: Array<unknown>) => [useGetApiLogsUnifiedKey, ...(queryKey ?? [clientOptions])];
 export type GetApiOverviewDefaultResponse = Awaited<ReturnType<typeof getApiOverview>>["data"];
 export type GetApiOverviewQueryResult<TData = GetApiOverviewDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useGetApiOverviewKey = "GetApiOverview";

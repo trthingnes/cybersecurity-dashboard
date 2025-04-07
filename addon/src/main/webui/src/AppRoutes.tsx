@@ -4,11 +4,13 @@ import { Route, Routes } from "react-router"
 
 import App from "./App"
 import { ChecksTab } from "./tabs/ChecksTab"
+import { LogsTab } from "./tabs/LogsTab"
 
 export const AppRoutes = () => (
     <Routes>
         <Route path="*" element={<App />}>
             <Route index element={<ChecksTab />} />
+            <Route path="logs" element={<LogsTab />} />
             <Route
                 path="*"
                 element={
