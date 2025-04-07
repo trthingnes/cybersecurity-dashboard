@@ -9,17 +9,17 @@ import {
 import { useMemo, useState } from "react"
 
 import {
-    useGetApiReport,
-    usePostApiReportGenerate,
+    useGetApiOverview,
+    usePostApiOverviewGenerate,
 } from "../../openapi/queries"
 import { CheckResultCard } from "../components/CheckResultCard.tsx"
 import { CircularProgressWithTier } from "../components/CircularProgressWithTier.tsx"
 import { lowercase, sortResultsByRisk, splitResultsByRisk } from "../utils.ts"
 
 export function ChecksTab() {
-    const { data, isError, isPending, refetch } = useGetApiReport()
+    const { data, isError, isPending, refetch } = useGetApiOverview()
     const { mutateAsync: generate, isPending: isGenerating } =
-        usePostApiReportGenerate()
+    usePostApiOverviewGenerate()
     const update = () => generate({}).then(() => refetch())
     const [showMore, setShowMore] = useState(false)
     const updated = useMemo(

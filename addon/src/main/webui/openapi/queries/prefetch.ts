@@ -2,6 +2,6 @@
 
 import { type Options } from "@hey-api/client-fetch";
 import { type QueryClient } from "@tanstack/react-query";
-import { getApiReport } from "../requests/services.gen";
+import { getApiOverview } from "../requests/services.gen";
 import * as Common from "./common";
-export const prefetchUseGetApiReport = (queryClient: QueryClient, clientOptions: Options<unknown, true> = {}) => queryClient.prefetchQuery({ queryKey: Common.UseGetApiReportKeyFn(clientOptions), queryFn: () => getApiReport({ ...clientOptions }).then(response => response.data) });
+export const prefetchUseGetApiOverview = (queryClient: QueryClient, clientOptions: Options<unknown, true> = {}) => queryClient.prefetchQuery({ queryKey: Common.UseGetApiOverviewKeyFn(clientOptions), queryFn: () => getApiOverview({ ...clientOptions }).then(response => response.data) });
