@@ -32,7 +32,7 @@ class LogsResource(
         return logs.toSortedMap().values.toList()
     }
 
-    fun parse(entries: List<String>): Map<Instant, String> {
+    private fun parse(entries: List<String>): Map<Instant, String> {
          return entries.filter { it.isNotBlank() }.associateBy {
              try {
                 val split = it.split(" ")
