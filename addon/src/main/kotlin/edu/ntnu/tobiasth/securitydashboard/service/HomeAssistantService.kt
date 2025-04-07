@@ -14,9 +14,12 @@ class HomeAssistantService(
     fun getAvailableUpdates() = supervisor.getAvailableUpdates().data.availableUpdates
     fun getSystemInfo() = supervisor.getInfo().data
     fun getCoreInfo() = supervisor.getCoreInfo().data
+    fun getCoreLogs() = supervisor.getCoreLogs().split("\n")
     fun getSupervisorInfo() = supervisor.getSupervisorInfo().data
-    fun getInstalledAddons() = supervisor.getAddons().data.addons
+    fun getSupervisorLogs() = supervisor.getSupervisorLogs().split("\n")
     fun getAddonRepositories() = supervisor.getStoreRepositories().data
+    fun getInstalledAddons() = supervisor.getAddons().data.addons
+    fun getAddonLogs() = supervisor.getAddons().data.addons.associateTo(mutableMapOf()) { Pair(it.name, supervisor.getAddonLogs(it.slug).split("\n")) }
     fun getComponentNames() = core.getComponents()
     fun createNotification(message: String, title: String = "Cybersecurity Dashboard") = core.createNotification(Notification(title, message))
 }
