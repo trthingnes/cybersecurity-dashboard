@@ -14,8 +14,8 @@ import jakarta.ws.rs.POST
 import jakarta.ws.rs.Path
 import jakarta.ws.rs.PathParam
 
-@Path("/api")
-class MainResource(
+@Path("/api/overview")
+class OverviewResource(
     private val reportService: ReportService,
     private val haService: HomeAssistantService
 ) {
@@ -48,9 +48,8 @@ class MainResource(
     }
 
     @GET
-    @Path("/report")
     @Transactional
-    fun getReport(): Report {
+    fun get(): Report {
         val latestOldReport = findLatestOldReport()
         if (latestOldReport == null) {
             Log.info("Generating report since none are available...")
@@ -63,9 +62,9 @@ class MainResource(
     }
 
     @POST
-    @Path("/report/generate")
+    @Path("/generate")
     @Transactional
-    fun postReportGenerate() {
+    fun postGenerate() {
         Log.info("Generating report since a new one was requested...")
         reportService.generate().persistAndFlush()
     }

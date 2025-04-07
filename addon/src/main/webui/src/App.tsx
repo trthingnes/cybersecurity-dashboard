@@ -5,7 +5,7 @@ import {
     LockOpen,
     People,
 } from "@mui/icons-material"
-import { Grid, Tab, Tabs } from "@mui/material"
+import { Box, Grid, Tab, Tabs } from "@mui/material"
 import { Outlet, useLocation, useNavigate } from "react-router"
 
 function App() {
@@ -31,13 +31,9 @@ function App() {
                     <Tab label="Learn" icon={<LocalLibrary />} value="/learn" />
                 </Tabs>
             </Grid>
-            <Grid container m={3} mt={4}>
-                <Grid size="grow"></Grid>
-                <Grid size={{ xs: 12, sm: 10, md: 8, xl: 6 }}>
-                    <Outlet />
-                </Grid>
-                <Grid size="grow"></Grid>
-            </Grid>
+            <Box>
+                <Outlet />
+            </Box>
         </>
     )
 }

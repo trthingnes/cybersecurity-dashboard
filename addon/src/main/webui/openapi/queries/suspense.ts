@@ -2,7 +2,9 @@
 
 import { type Options } from "@hey-api/client-fetch";
 import { UseQueryOptions, useSuspenseQuery } from "@tanstack/react-query";
-import { getApiReport } from "../requests/services.gen";
-import { GetApiReportError } from "../requests/types.gen";
+import { getApiLogs, getApiLogsUnified, getApiOverview } from "../requests/services.gen";
+import { GetApiLogsError, GetApiLogsUnifiedError, GetApiOverviewError } from "../requests/types.gen";
 import * as Common from "./common";
-export const useGetApiReportSuspense = <TData = Common.GetApiReportDefaultResponse, TError = GetApiReportError, TQueryKey extends Array<unknown> = unknown[]>(clientOptions: Options<unknown, true> = {}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseGetApiReportKeyFn(clientOptions, queryKey), queryFn: () => getApiReport({ ...clientOptions }).then(response => response.data as TData) as TData, ...options });
+export const useGetApiLogsSuspense = <TData = Common.GetApiLogsDefaultResponse, TError = GetApiLogsError, TQueryKey extends Array<unknown> = unknown[]>(clientOptions: Options<unknown, true> = {}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseGetApiLogsKeyFn(clientOptions, queryKey), queryFn: () => getApiLogs({ ...clientOptions }).then(response => response.data as TData) as TData, ...options });
+export const useGetApiLogsUnifiedSuspense = <TData = Common.GetApiLogsUnifiedDefaultResponse, TError = GetApiLogsUnifiedError, TQueryKey extends Array<unknown> = unknown[]>(clientOptions: Options<unknown, true> = {}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseGetApiLogsUnifiedKeyFn(clientOptions, queryKey), queryFn: () => getApiLogsUnified({ ...clientOptions }).then(response => response.data as TData) as TData, ...options });
+export const useGetApiOverviewSuspense = <TData = Common.GetApiOverviewDefaultResponse, TError = GetApiOverviewError, TQueryKey extends Array<unknown> = unknown[]>(clientOptions: Options<unknown, true> = {}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseGetApiOverviewKeyFn(clientOptions, queryKey), queryFn: () => getApiOverview({ ...clientOptions }).then(response => response.data as TData) as TData, ...options });

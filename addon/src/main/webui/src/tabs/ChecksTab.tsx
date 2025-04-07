@@ -1,25 +1,27 @@
+import { Autorenew } from "@mui/icons-material"
 import {
     Alert,
     Box,
     Button,
     CircularProgress,
+    Grid,
     Stack,
     Typography,
 } from "@mui/material"
 import { useMemo, useState } from "react"
 
 import {
-    useGetApiReport,
-    usePostApiReportGenerate,
+    useGetApiOverview,
+    usePostApiOverviewGenerate,
 } from "../../openapi/queries"
 import { CheckResultCard } from "../components/CheckResultCard.tsx"
 import { CircularProgressWithTier } from "../components/CircularProgressWithTier.tsx"
 import { lowercase, sortResultsByRisk, splitResultsByRisk } from "../utils.ts"
 
 export function ChecksTab() {
-    const { data, isError, isPending, refetch } = useGetApiReport()
+    const { data, isError, isPending, refetch } = useGetApiOverview()
     const { mutateAsync: generate, isPending: isGenerating } =
-        usePostApiReportGenerate()
+        usePostApiOverviewGenerate()
     const update = () => generate({}).then(() => refetch())
     const [showMore, setShowMore] = useState(false)
     const updated = useMemo(
@@ -60,95 +62,101 @@ export function ChecksTab() {
     }
 
     return (
-        <>
-            {data && (
-                <Stack spacing={8} m="auto">
-                    <Stack spacing={4}>
-                        <Typography variant="h1" textAlign="center">
-                            Your instance's cybersecurity is{" "}
-                            {lowercase(data.tier)} tier
-                        </Typography>
-                        <CircularProgressWithTier
-                            size={200}
-                            tier={data.tier}
-                            value={Math.round(100 * data.tierCompletion!)}
-                        />
-                        <Stack spacing={1}>
-                            {data.tier != "GOLD" && (
-                                <Typography textAlign="center">
-                                    Address {data.tierAdvanceIn}{" "}
-                                    {data.tier == "SILVER"
-                                        ? "moderate"
-                                        : "high"}{" "}
-                                    risk
-                                    {data.tierAdvanceIn! > 1 ? "s" : ""} to
-                                    advance.
-                                </Typography>
-                            )}
-                            <Stack
-                                direction="row"
-                                spacing={2}
-                                alignItems="center"
-                                justifyContent="center"
-                                useFlexGap
-                                sx={{ flexWrap: "wrap" }}
-                            >
-                                <Button
-                                    variant="contained"
-                                    loading={isGenerating}
-                                    onClick={update}
-                                >
-                                    Check Now
-                                </Button>
-                                {updated && (
-                                    <Typography>
-                                        Last updated {updated.toLocaleString()}
+        <Grid container m={3} mt={4}>
+            <Grid size="grow"></Grid>
+            <Grid size={{ xs: 12, sm: 10, md: 8, xl: 6 }}>
+                {data && (
+                    <Stack spacing={8} m="auto">
+                        <Stack spacing={4}>
+                            <Typography variant="h1" textAlign="center">
+                                Your instance's cybersecurity is{" "}
+                                {lowercase(data.tier)} tier
+                            </Typography>
+                            <CircularProgressWithTier
+                                size={200}
+                                tier={data.tier}
+                                value={Math.round(100 * data.tierCompletion!)}
+                            />
+                            <Stack spacing={1}>
+                                {data.tier != "GOLD" && (
+                                    <Typography textAlign="center">
+                                        Address {data.tierAdvanceIn}{" "}
+                                        {data.tier == "SILVER"
+                                            ? "moderate"
+                                            : "high"}{" "}
+                                        risk
+                                        {data.tierAdvanceIn! > 1 ? "s" : ""} to
+                                        advance.
                                     </Typography>
                                 )}
+                                <Stack
+                                    direction="row"
+                                    spacing={2}
+                                    alignItems="center"
+                                    justifyContent="center"
+                                    useFlexGap
+                                    sx={{ flexWrap: "wrap" }}
+                                >
+                                    <Button
+                                        startIcon={<Autorenew />}
+                                        variant="contained"
+                                        loading={isGenerating}
+                                        onClick={update}
+                                    >
+                                        Check Now
+                                    </Button>
+                                    {updated && (
+                                        <Typography>
+                                            Last updated{" "}
+                                            {updated.toLocaleString()}
+                                        </Typography>
+                                    )}
+                                </Stack>
                             </Stack>
                         </Stack>
-                    </Stack>
-                    <Stack spacing={2}>
-                        <Typography variant="h2" textAlign="center">
-                            Potential risks to your system
-                        </Typography>
-                        {significantResults.length == 0 && (
-                            <Typography textAlign="center">
-                                There are no significant risks to display!
+                        <Stack spacing={2}>
+                            <Typography variant="h2" textAlign="center">
+                                Potential risks to your system
                             </Typography>
-                        )}
-                        {significantResults.length > 0 && (
-                            <Box>
-                                {significantResults.map((r) => (
-                                    <CheckResultCard
-                                        key={r.title}
-                                        result={r}
-                                        onChange={update}
-                                        isLoading={isGenerating}
-                                        sx={{ flexGrow: "grow" }}
-                                    />
-                                ))}
-                            </Box>
-                        )}
-                        <Button onClick={() => setShowMore(!showMore)}>
-                            {showMore ? "Show less" : "Show more"}
-                        </Button>
-                        {showMore && (
-                            <Box>
-                                {otherResults.map((r) => (
-                                    <CheckResultCard
-                                        key={r.title}
-                                        result={r}
-                                        onChange={update}
-                                        isLoading={isGenerating}
-                                        sx={{ flexGrow: "grow" }}
-                                    />
-                                ))}
-                            </Box>
-                        )}
+                            {significantResults.length == 0 && (
+                                <Typography textAlign="center">
+                                    There are no significant risks to display!
+                                </Typography>
+                            )}
+                            {significantResults.length > 0 && (
+                                <Box>
+                                    {significantResults.map((r) => (
+                                        <CheckResultCard
+                                            key={r.title}
+                                            result={r}
+                                            onChange={update}
+                                            isLoading={isGenerating}
+                                            sx={{ flexGrow: "grow" }}
+                                        />
+                                    ))}
+                                </Box>
+                            )}
+                            <Button onClick={() => setShowMore(!showMore)}>
+                                {showMore ? "Show less" : "Show more"}
+                            </Button>
+                            {showMore && (
+                                <Box>
+                                    {otherResults.map((r) => (
+                                        <CheckResultCard
+                                            key={r.title}
+                                            result={r}
+                                            onChange={update}
+                                            isLoading={isGenerating}
+                                            sx={{ flexGrow: "grow" }}
+                                        />
+                                    ))}
+                                </Box>
+                            )}
+                        </Stack>
                     </Stack>
-                </Stack>
-            )}
-        </>
+                )}
+            </Grid>
+            <Grid size="grow"></Grid>
+        </Grid>
     )
 }

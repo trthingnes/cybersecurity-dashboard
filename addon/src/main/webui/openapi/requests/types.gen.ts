@@ -24,30 +24,40 @@ export type Risk = 'DISABLED' | 'UNKNOWN' | 'LOW' | 'MODERATE' | 'HIGH';
 
 export type Tier = 'GOLD' | 'SILVER' | 'BRONZE';
 
-export type PostApiCheckByIdDisableData = {
+export type GetApiLogsResponse = ({
+    [key: string]: Array<(string)>;
+});
+
+export type GetApiLogsError = unknown;
+
+export type GetApiLogsUnifiedResponse = (Array<(string)>);
+
+export type GetApiLogsUnifiedError = unknown;
+
+export type GetApiOverviewResponse = (Report);
+
+export type GetApiOverviewError = unknown;
+
+export type PostApiOverviewCheckByIdDisableData = {
     path: {
         id: string;
     };
 };
 
-export type PostApiCheckByIdDisableResponse = (unknown);
+export type PostApiOverviewCheckByIdDisableResponse = (unknown);
 
-export type PostApiCheckByIdDisableError = unknown;
+export type PostApiOverviewCheckByIdDisableError = unknown;
 
-export type PostApiCheckByIdEnableData = {
+export type PostApiOverviewCheckByIdEnableData = {
     path: {
         id: string;
     };
 };
 
-export type PostApiCheckByIdEnableResponse = (number);
+export type PostApiOverviewCheckByIdEnableResponse = (number);
 
-export type PostApiCheckByIdEnableError = unknown;
+export type PostApiOverviewCheckByIdEnableError = unknown;
 
-export type GetApiReportResponse = (Report);
+export type PostApiOverviewGenerateResponse = (unknown);
 
-export type GetApiReportError = unknown;
-
-export type PostApiReportGenerateResponse = (unknown);
-
-export type PostApiReportGenerateError = unknown;
+export type PostApiOverviewGenerateError = unknown;
