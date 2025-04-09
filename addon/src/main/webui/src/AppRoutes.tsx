@@ -14,7 +14,7 @@ export const AppRoutes = () => (
             <Route
                 path="*"
                 element={
-                    <Typography variant="h1" textAlign="center">
+                    <Typography p={4} variant="h1" textAlign="center">
                         This page has not been added yet <ThumbDown />
                     </Typography>
                 }
