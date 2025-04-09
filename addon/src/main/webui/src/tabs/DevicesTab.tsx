@@ -42,7 +42,6 @@ export function DevicesTab() {
         media_player: <MusicVideo />,
         remote: <MusicVideo />,
         siren: <NotificationsActive />,
-        switch: <ToggleOn />,
         vacuum: <CleaningServices />,
         valve: <Plumbing />,
         water_heater: <HotTub />,

@@ -8,7 +8,7 @@ export function CommunityTab() {
                 <Stack spacing={8} m="auto">
                     <Stack spacing={6}>
                         <Typography variant="h1" textAlign="center">
-                            Information from other users of Home Assistant
+                            Information based on other users of Home Assistant
                             <Typography>This is a placeholder tab.</Typography>
                         </Typography>
                         <Stack spacing={1}>

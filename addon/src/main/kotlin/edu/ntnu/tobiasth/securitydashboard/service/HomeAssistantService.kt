@@ -18,7 +18,6 @@ val DEVICE_PREFIXES = arrayOf(
     "media_player",
     "remote",
     "siren",
-    "switch",
     "vacuum",
     "valve",
     "water_heater"
