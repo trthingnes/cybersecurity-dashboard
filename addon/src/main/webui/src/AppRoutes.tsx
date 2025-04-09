@@ -6,6 +6,7 @@ import App from "./App"
 import { ChecksTab } from "./tabs/ChecksTab"
 import { DevicesTab } from "./tabs/DevicesTab"
 import { LogsTab } from "./tabs/LogsTab"
+import { LearnTab } from "./tabs/LearnTab"
 
 export const AppRoutes = () => (
     <Routes>
@@ -13,6 +14,7 @@ export const AppRoutes = () => (
             <Route index element={<ChecksTab />} />
             <Route path="devices" element={<DevicesTab />} />
             <Route path="logs" element={<LogsTab />} />
+            <Route path="learn" element={<LearnTab />} />
             <Route
                 path="*"
                 element={
