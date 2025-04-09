@@ -1,6 +1,8 @@
 import {
+    BroadcastOnHome,
     Checklist,
     Description,
+    Devices,
     LocalLibrary,
     LockOpen,
     People,
@@ -22,6 +24,7 @@ function App() {
                 >
                     <Tab label="Overview" icon={<Checklist />} value="/" />
                     <Tab label="Logs" icon={<Description />} value="/logs" />
+                    <Tab label="Devices" icon={<BroadcastOnHome />} value="/devices" />
                     <Tab label="Access" icon={<LockOpen />} value="/access" />
                     <Tab
                         label="Community"

@@ -48,7 +48,7 @@ export function LogsTab() {
                                 Unified logs for your instance
                             </Typography>
                             <Paper>
-                                <Box p={2}>
+                                <Stack p={2}>
                                     {data.map((entry, i) => (
                                         <Typography
                                             textOverflow="ellipsis"
@@ -64,12 +64,12 @@ export function LogsTab() {
                                         loading={isRefetching}
                                         onClick={() => refetch()}
                                         sx={{
-                                            marginTop: "1rem",
+                                            marginTop: "1rem"
                                         }}
                                     >
                                         Refetch logs
                                     </Button>
-                                </Box>
+                                </Stack>
                             </Paper>
                         </Stack>
                     </Stack>
