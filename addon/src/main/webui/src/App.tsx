@@ -23,8 +23,8 @@ function App() {
                     onChange={(_, v) => navigate(v)}
                 >
                     <Tab label="Overview" icon={<Checklist />} value="/" />
-                    <Tab label="Logs" icon={<Description />} value="/logs" />
                     <Tab label="Devices" icon={<BroadcastOnHome />} value="/devices" />
+                    <Tab label="Logs" icon={<Description />} value="/logs" />
                     <Tab label="Access" icon={<LockOpen />} value="/access" />
                     <Tab
                         label="Community"

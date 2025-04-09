@@ -1,6 +1,7 @@
 package edu.ntnu.tobiasth.securitydashboard.client
 
 import edu.ntnu.tobiasth.securitydashboard.client.dto.core.Notification
+import edu.ntnu.tobiasth.securitydashboard.client.dto.core.State
 import jakarta.ws.rs.GET
 import jakarta.ws.rs.POST
 import jakarta.ws.rs.Path
@@ -13,6 +14,10 @@ interface CoreClient {
     @GET
     @Path("/components")
     fun getComponents(): List<String>
+
+    @GET
+    @Path("/states")
+    fun getStates(): List<State>
 
     @POST
     @Path("/services/persistent_notification/create")

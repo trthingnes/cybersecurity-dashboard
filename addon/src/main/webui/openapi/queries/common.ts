@@ -2,7 +2,11 @@
 
 import { type Options } from "@hey-api/client-fetch";
 import { UseQueryResult } from "@tanstack/react-query";
-import { getApiLogs, getApiLogsUnified, getApiOverview, postApiOverviewCheckByIdDisable, postApiOverviewCheckByIdEnable, postApiOverviewGenerate } from "../requests/services.gen";
+import { getApiDevices, getApiLogs, getApiLogsUnified, getApiOverview, postApiOverviewCheckByIdDisable, postApiOverviewCheckByIdEnable, postApiOverviewGenerate } from "../requests/services.gen";
+export type GetApiDevicesDefaultResponse = Awaited<ReturnType<typeof getApiDevices>>["data"];
+export type GetApiDevicesQueryResult<TData = GetApiDevicesDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const useGetApiDevicesKey = "GetApiDevices";
+export const UseGetApiDevicesKeyFn = (clientOptions: Options<unknown, true> = {}, queryKey?: Array<unknown>) => [useGetApiDevicesKey, ...(queryKey ?? [clientOptions])];
 export type GetApiLogsDefaultResponse = Awaited<ReturnType<typeof getApiLogs>>["data"];
 export type GetApiLogsQueryResult<TData = GetApiLogsDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useGetApiLogsKey = "GetApiLogs";

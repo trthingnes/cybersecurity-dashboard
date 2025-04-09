@@ -45,7 +45,8 @@ export function LogsTab() {
                     <Stack spacing={8} m="auto">
                         <Stack spacing={4}>
                             <Typography variant="h1" textAlign="center">
-                                Unified logs for your instance
+                                Unified logs from Home Assistant Core,
+                                Supervisor, and Add-ons
                             </Typography>
                             <Paper>
                                 <Stack p={2}>
@@ -64,7 +65,7 @@ export function LogsTab() {
                                         loading={isRefetching}
                                         onClick={() => refetch()}
                                         sx={{
-                                            marginTop: "1rem"
+                                            marginTop: "1rem",
                                         }}
                                     >
                                         Refetch logs
