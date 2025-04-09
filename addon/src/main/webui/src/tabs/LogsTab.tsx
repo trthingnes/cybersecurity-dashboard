@@ -50,7 +50,13 @@ export function LogsTab() {
                             <Paper>
                                 <Box p={2}>
                                     {data.map((entry, i) => (
-                                        <Typography key={i}>{entry}</Typography>
+                                        <Typography
+                                            textOverflow="ellipsis"
+                                            overflow="hidden"
+                                            key={i}
+                                        >
+                                            {entry}
+                                        </Typography>
                                     ))}
                                     <Button
                                         startIcon={<Autorenew />}
