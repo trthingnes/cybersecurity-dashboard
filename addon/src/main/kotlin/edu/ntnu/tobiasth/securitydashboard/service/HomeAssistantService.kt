@@ -6,6 +6,24 @@ import edu.ntnu.tobiasth.securitydashboard.client.dto.core.Notification
 import jakarta.enterprise.context.ApplicationScoped
 import org.eclipse.microprofile.rest.client.inject.RestClient
 
+val DEVICE_PREFIXES = arrayOf(
+    "alarm_control_panel",
+    "camera",
+    "climate",
+    "cover",
+    "fan",
+    "humidifier",
+    "light",
+    "lock",
+    "media_player",
+    "remote",
+    "siren",
+    "switch",
+    "vacuum",
+    "valve",
+    "water_heater"
+)
+
 @ApplicationScoped
 class HomeAssistantService(
     @RestClient val supervisor: SupervisorClient,
@@ -19,7 +37,15 @@ class HomeAssistantService(
     fun getSupervisorLogs() = supervisor.getSupervisorLogs().split("\n")
     fun getAddonRepositories() = supervisor.getStoreRepositories().data
     fun getInstalledAddons() = supervisor.getAddons().data.addons
-    fun getAddonLogs() = supervisor.getAddons().data.addons.associateTo(mutableMapOf()) { Pair(it.name, supervisor.getAddonLogs(it.slug).split("\n")) }
+    fun getAddonLogs() = supervisor.getAddons().data.addons.associateTo(mutableMapOf()) {
+        Pair(
+            it.name,
+            supervisor.getAddonLogs(it.slug).split("\n")
+        )
+    }
+
     fun getComponentNames() = core.getComponents()
-    fun createNotification(message: String, title: String = "Cybersecurity Dashboard") = core.createNotification(Notification(title, message))
+    fun getDeviceStates() = core.getStates().filter { DEVICE_PREFIXES.any { prefix -> it.entityId.startsWith(prefix) } }
+    fun createNotification(message: String, title: String = "Cybersecurity Dashboard") =
+        core.createNotification(Notification(title, message))
 }

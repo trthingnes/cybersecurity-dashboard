@@ -45,12 +45,18 @@ export function LogsTab() {
                     <Stack spacing={8} m="auto">
                         <Stack spacing={4}>
                             <Typography variant="h1" textAlign="center">
-                                Unified logs for your instance
+                                Unified logs from your Home Assistant
                             </Typography>
                             <Paper>
-                                <Box p={2}>
+                                <Stack p={2}>
                                     {data.map((entry, i) => (
-                                        <Typography key={i}>{entry}</Typography>
+                                        <Typography
+                                            textOverflow="ellipsis"
+                                            overflow="hidden"
+                                            key={i}
+                                        >
+                                            {entry}
+                                        </Typography>
                                     ))}
                                     <Button
                                         startIcon={<Autorenew />}
@@ -63,7 +69,7 @@ export function LogsTab() {
                                     >
                                         Refetch logs
                                     </Button>
-                                </Box>
+                                </Stack>
                             </Paper>
                         </Stack>
                     </Stack>
