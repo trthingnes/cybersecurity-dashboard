@@ -45,8 +45,7 @@ export function LogsTab() {
                     <Stack spacing={8} m="auto">
                         <Stack spacing={4}>
                             <Typography variant="h1" textAlign="center">
-                                Unified logs from Home Assistant Core,
-                                Supervisor, and Add-ons
+                                Unified logs from your Home Assistant
                             </Typography>
                             <Paper>
                                 <Stack p={2}>

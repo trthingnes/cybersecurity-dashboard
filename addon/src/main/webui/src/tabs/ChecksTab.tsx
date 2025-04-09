@@ -69,7 +69,7 @@ export function ChecksTab() {
                     <Stack spacing={8} m="auto">
                         <Stack spacing={4}>
                             <Typography variant="h1" textAlign="center">
-                                Your instance's cybersecurity is{" "}
+                                Your Home Assistant's cybersecurity is{" "}
                                 {lowercase(data.tier)} tier
                             </Typography>
                             <CircularProgressWithTier

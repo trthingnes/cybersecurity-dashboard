@@ -18,6 +18,7 @@ export function LearnTab() {
                     <Stack spacing={4}>
                         <Typography variant="h1" textAlign="center">
                             Learn about cybersecurity in Home Assistant
+                            <Typography>This is a placeholder tab.</Typography>
                         </Typography>
                         <Grid container spacing={2}>
                             {Array.from({ length: 10 }, (_, i) => i + 1).map(
@@ -33,7 +34,7 @@ export function LearnTab() {
                                                     variant="h5"
                                                     component="div"
                                                 >
-                                                    Article {number}
+                                                    Post {number}
                                                 </Typography>
                                                 <Typography
                                                     variant="body2"

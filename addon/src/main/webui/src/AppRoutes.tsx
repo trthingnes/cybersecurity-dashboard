@@ -3,10 +3,12 @@ import { Typography } from "@mui/material"
 import { Route, Routes } from "react-router"
 
 import App from "./App"
+import { AccessTab } from "./tabs/AccessTab"
 import { ChecksTab } from "./tabs/ChecksTab"
+import { CommunityTab } from "./tabs/CommunityTab"
 import { DevicesTab } from "./tabs/DevicesTab"
-import { LogsTab } from "./tabs/LogsTab"
 import { LearnTab } from "./tabs/LearnTab"
+import { LogsTab } from "./tabs/LogsTab"
 
 export const AppRoutes = () => (
     <Routes>
@@ -14,6 +16,8 @@ export const AppRoutes = () => (
             <Route index element={<ChecksTab />} />
             <Route path="devices" element={<DevicesTab />} />
             <Route path="logs" element={<LogsTab />} />
+            <Route path="access" element={<AccessTab />} />
+            <Route path="community" element={<CommunityTab />} />
             <Route path="learn" element={<LearnTab />} />
             <Route
                 path="*"
