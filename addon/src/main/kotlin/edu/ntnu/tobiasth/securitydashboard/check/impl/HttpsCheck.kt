@@ -40,14 +40,14 @@ class HttpsCheck(
         }
 
         if (instanceUrl.host == "localhost") {
-            yield(result(Risk.LOW, "Home Assistant is configured for local access only."))
+            yield(result(Risk.NONE, "Home Assistant is configured for local access only."))
             return
         }
 
         if (response?.handshake == null) {
             yield(result(Risk.HIGH, "Home Assistant is not secured with HTTPS."))
         } else {
-            yield(result(Risk.LOW, "Home Assistant is secured with HTTPS."))
+            yield(result(Risk.NONE, "Home Assistant is secured with HTTPS."))
         }
     }
 }

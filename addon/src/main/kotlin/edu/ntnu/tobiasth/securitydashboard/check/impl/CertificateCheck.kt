@@ -32,7 +32,7 @@ class CertificateCheck(
         }
 
         if (instanceUrl.host == "localhost") {
-            yield(result(Risk.LOW, "Home Assistant is configured for local access only."))
+            yield(result(Risk.NONE, "Home Assistant is configured for local access only."))
             return
         }
 
@@ -71,6 +71,6 @@ class CertificateCheck(
             return
         }
 
-        yield(result(Risk.LOW, "Home Assistant certificate is valid and signed by CA."))
+        yield(result(Risk.NONE, "Home Assistant certificate is valid and signed by CA."))
     }
 }

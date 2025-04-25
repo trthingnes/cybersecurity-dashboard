@@ -24,12 +24,12 @@ class ProxyCheck(
         if (instanceUrl == null) {
             yield(result(Risk.UNKNOWN, "Instance URL has not been configured."))
         } else if (instanceUrl.host == "localhost") {
-            yield(result(Risk.LOW, "Home Assistant is configured for local access only."))
+            yield(result(Risk.NONE, "Home Assistant is configured for local access only."))
         } else {
             val publicIp = ipService.getPublicIP()
             if (InetAddress.getAllByName(instanceUrl.host).any { it.hostAddress == publicIp }) {
                 yield(result(Risk.HIGH, "Home Assistant is accessed directly."))
-            } else yield(result(Risk.LOW, "Home Assistant is accessed through a proxy."))
+            } else yield(result(Risk.NONE, "Home Assistant is accessed through a proxy."))
         }
     }
 }

@@ -18,11 +18,11 @@ class UpdateCheck(
     override fun check() {
         val updates = haService.getAvailableUpdates()
         if (updates.isEmpty()) {
-            yield(result(Risk.LOW, "Home Assistant is up-to-date."))
+            yield(result(Risk.NONE, "Home Assistant is up-to-date."))
         } else {
             yield(
                 result(
-                    Risk.MODERATE, "System updates are available: ${
+                    Risk.LOW, "System updates are available: ${
                     updates.joinToString {
                         when (it.updateType) {
                             AvailableUpdates.UpdateType.OS -> "Home Assistant OS (${it.versionLatest})"

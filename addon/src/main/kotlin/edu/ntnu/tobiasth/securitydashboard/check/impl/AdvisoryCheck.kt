@@ -34,7 +34,7 @@ class AdvisoryCheck(
             coreVersion
         )
         if (coreAdvisories.isEmpty()) {
-            yield(result("Advisories for Home Assistant Core", Risk.LOW, "Core $coreVersion has no reported vulnerabilities."))
+            yield(result("Advisories for Home Assistant Core", Risk.NONE, "Core $coreVersion has no reported vulnerabilities."))
         } else {
             yield(result(
                 "Advisories for Home Assistant Core",
@@ -54,7 +54,7 @@ class AdvisoryCheck(
             supervisorVersion
         )
         if (supervisorAdvisories.isEmpty()) {
-            yield(result("Advisories for Home Assistant Supervisor", Risk.LOW, "Supervisor $supervisorVersion has no reported vulnerabilities."))
+            yield(result("Advisories for Home Assistant Supervisor", Risk.NONE, "Supervisor $supervisorVersion has no reported vulnerabilities."))
         } else {
             yield(result(
                 "Advisories for Home Assistant Supervisor",
@@ -80,7 +80,7 @@ class AdvisoryCheck(
                 yield(
                     result(
                         "Advisories for '${it.name}' add-on",
-                        Risk.LOW,
+                        Risk.NONE,
                         "${it.name} ${it.version} has no reported vulnerabilities."
                     )
                 )
