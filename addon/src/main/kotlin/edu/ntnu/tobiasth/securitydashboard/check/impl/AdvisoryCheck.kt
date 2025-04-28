@@ -18,7 +18,7 @@ class AdvisoryCheck(
     override val name = "Security Advisories"
     override val description = "Paying attention to publicly reported vulnerabilities for Home Assistant components can help you mitigate risks to your system."
     override val mitigation = "The easiest way to patch vulnerabilities is to keep components up-to-date. If this does not work, workarounds may be available in the vulnerability report."
-    override val keywords = listOf("advisories", "CVE")
+    override val keywords = listOf("Advisories", "CVE")
 
     override fun check() {
         if (!githubService.isAvailable()) {

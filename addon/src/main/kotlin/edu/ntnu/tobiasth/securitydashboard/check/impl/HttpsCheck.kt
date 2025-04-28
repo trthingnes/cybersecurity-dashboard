@@ -18,7 +18,7 @@ class HttpsCheck(
     override val name = "Remote Access Encryption"
     override val description = "It's recommended to ensure internet traffic to and from your home is encrypted and secure by using a valid HTTPS certificate."
     override val mitigation = "Use a service like Let's Encrypt, Cloudflare, or Tailscale to issue a valid HTTPS certificate and force HTTPS communication."
-    override val keywords = listOf("remote access", "HTTPS")
+    override val keywords = listOf("Remote Access", "HTTPS")
 
     val client = OkHttpClient()
 

@@ -17,7 +17,7 @@ class ProxyCheck(
     override val name = "Remote Access Proxy"
     override val description = "It's recommended to remotely access Home Assistant through a reverse proxy, i.e. another server, due to the risks of exposing ports in a home network."
     override val mitigation = "Only allow connections from the local network, or expose Home Assistant through a reverse proxy using Home Assistant Cloud, Cloudflare, or similar services."
-    override val keywords = listOf("remote access")
+    override val keywords = listOf("Remote Access")
 
     override fun check() {
         val instanceUrl = optionsService.instanceUrl.orElse(null)?.let { URI(it).toURL() }

@@ -40,13 +40,14 @@ class ReportService {
                         it.name,
                         "Unable to complete check.",
                         it.description,
-                        it.mitigation
+                        it.mitigation,
+                        listOf()
                     )
                 )
             }
         }
         results.addAll(disabledCheck.map {
-            CheckResult(it.id, Risk.DISABLED, it.name, "Check is manually disabled.", it.description, it.mitigation)
+            CheckResult(it.id, Risk.DISABLED, it.name, "Check is manually disabled.", it.description, it.mitigation, listOf())
         })
 
         val completion = 1F - results.count { it.risk.isSignificant() }.toFloat() / results.count()
