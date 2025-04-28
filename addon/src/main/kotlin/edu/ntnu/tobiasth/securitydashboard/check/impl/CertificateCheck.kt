@@ -16,10 +16,9 @@ class CertificateCheck(
 ) : Check() {
     override val id = "cert-check"
     override val name = "Remote Access Certificate"
-    override val description =
-        "To ensure that information about your home is not transferred in an insecure way over the internet it's important to use a valid trusted HTTPS certificate."
-    override val mitigation =
-        "Home Assistant should be setup to not allow HTTP remote connections, and should provide clients with a valid trusted certificate for HTTPS. There are many ways to achieve this, like using Let's Encrypt (Certbot) or connecting to Home Assistant through a proxy that enables HTTPS by default."
+    override val description = "It's recommended to ensure internet traffic to and from your home is encrypted and secure by using a valid HTTPS certificate."
+    override val mitigation = "Use a service like Let's Encrypt, Cloudflare, or Tailscale to issue a valid HTTPS certificate and force HTTPS communication."
+    override val keywords = listOf("Remote Access", "HTTPS")
 
     val client = OkHttpClient()
 
@@ -32,7 +31,7 @@ class CertificateCheck(
         }
 
         if (instanceUrl.host == "localhost") {
-            yield(result(Risk.LOW, "Home Assistant is configured for local access only."))
+            yield(result(Risk.NONE, "Home Assistant is configured for local access only."))
             return
         }
 
@@ -71,6 +70,6 @@ class CertificateCheck(
             return
         }
 
-        yield(result(Risk.LOW, "Home Assistant certificate is valid and signed by CA."))
+        yield(result(Risk.NONE, "Home Assistant certificate is valid and signed by CA."))
     }
 }

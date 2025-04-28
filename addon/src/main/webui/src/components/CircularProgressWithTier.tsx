@@ -39,11 +39,16 @@ export function CircularProgressWithTier(
                     justifyContent: "center",
                 }}
             >
-                <WorkspacePremium
-                    htmlColor={getHtmlColorByTier(props.tier)}
-                    sx={{ fontSize: props.size * 0.5 }}
-                />
-                <Typography>{Math.round(props.value)}%</Typography>
+                {props.tier != "NONE" && (
+                    <WorkspacePremium
+                        htmlColor={getHtmlColorByTier(props.tier)}
+                        sx={{ fontSize: props.size * 0.5 }}
+                    />
+                )}
+
+                <Typography fontSize={props.tier == "NONE" ? "2rem" : "1rem"}>
+                    {Math.round(props.value)}%
+                </Typography>
             </Stack>
         </Box>
     )

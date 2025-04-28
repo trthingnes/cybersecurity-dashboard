@@ -13,6 +13,8 @@ class CheckResult() {
     lateinit var description: String
     @Column(length = 512)
     lateinit var mitigation: String
+    lateinit var keywords: List<String>
+
 
     constructor(
         id: String,
@@ -20,7 +22,8 @@ class CheckResult() {
         title: String,
         summary: String,
         description: String,
-        mitigation: String
+        mitigation: String,
+        keywords: List<String>
     ) : this() {
         this.id = id
         this.risk = risk
@@ -28,6 +31,7 @@ class CheckResult() {
         this.summary = summary
         this.description = description
         this.mitigation = mitigation
+        this.keywords = keywords
     }
 
     override fun equals(other: Any?): Boolean {

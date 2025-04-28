@@ -11,11 +11,12 @@ class SupportCheck(
 ) : Check() {
     override val id = "support-check"
     override val name = "Hardware Support"
-    override val description = "Home Assistant provides official support for a wide range of hardware. To ensure the security of the instance it is recommended to use supported hardware, since hardware specific vulnerabilities in unsupported hardware will likely not get fixed."
-    override val mitigation = "To be sure that hardware specific vulnerabilities will be patched, consider using hardware that is supported by Home Assistant. The installation page has more up-to-date information on supported hardware."
-
+    override val description = "To ensure system security it is recommended to use officially supported hardware, since hardware-specific vulnerabilities in unsupported hardware will likely not be fixed."
+    override val mitigation = "Use hardware officially supported by Home Assistant. The official installation page has up-to-date information on supported hardware."
+    override val keywords = listOf("Hardware")
+    
     override fun check() = when (haService.getSystemInfo().supported) {
-        true -> yield(result(Risk.LOW, "Hardware is officially supported."))
-        false -> yield(result(Risk.MODERATE, "Hardware is not officially supported."))
+        true -> yield(result(Risk.NONE, "Hardware is officially supported."))
+        false -> yield(result(Risk.LOW, "Hardware is not officially supported."))
     }
 }

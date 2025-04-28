@@ -18,6 +18,8 @@ class ReportService {
     @Suppress("CdiInjectionPointsInspection")
     private lateinit var checks: MutableList<Check>
 
+    val bronzeTierThreshold = 2
+
     fun generate(): Report {
         val disabledCheckIds = DisabledCheck.listAll().map { it.checkId }
         val enabledChecks = checks.filter { !disabledCheckIds.contains(it.id) }
@@ -38,46 +40,40 @@ class ReportService {
                         it.name,
                         "Unable to complete check.",
                         it.description,
-                        it.mitigation
+                        it.mitigation,
+                        listOf()
                     )
                 )
             }
         }
         results.addAll(disabledCheck.map {
-            CheckResult(it.id, Risk.DISABLED, it.name, "Check is manually disabled.", it.description, it.mitigation)
+            CheckResult(it.id, Risk.DISABLED, it.name, "Check is manually disabled.", it.description, it.mitigation, listOf())
         })
 
+        val completion = 1F - results.count { it.risk.isSignificant() }.toFloat() / results.count()
         val tier = getTier(results)
-        val completion = getTierCompletion(tier, results)
+        val tierAdvanceIn = getTierAdvanceIn(results, tier)
 
         return Report(
             Instant.now(),
             results,
+            completion,
             tier,
-            completion.first,
-            completion.second
+            tierAdvanceIn,
         )
     }
 
-    fun getTier(results: List<CheckResult>): Report.Tier {
-        return if (results.any { it.risk == Risk.HIGH }) Report.Tier.BRONZE
-        else if (results.any { it.risk == Risk.MODERATE }) Report.Tier.SILVER
+    private fun getTier(results: List<CheckResult>): Report.Tier {
+        return if (results.any { it.risk.isHigh() }) Report.Tier.NONE
+        else if (results.count { it.risk.isSignificant() } > bronzeTierThreshold) Report.Tier.BRONZE
+        else if (results.any { it.risk.isSignificant() }) Report.Tier.SILVER
         else Report.Tier.GOLD
     }
 
-    fun getTierCompletion(tier: Report.Tier, results: List<CheckResult>) = when (tier) {
-        Report.Tier.BRONZE -> {
-            val completed = results.count { it.risk == Risk.LOW }
-            val required = completed + results.count { it.risk == Risk.HIGH }
-            Pair(completed / required.toFloat(), required - completed)
-        }
-
-        Report.Tier.SILVER -> {
-            val completed = results.count { it.risk == Risk.LOW }
-            val required = completed + results.count { it.risk == Risk.MODERATE }
-            Pair(completed / required.toFloat(), required - completed)
-        }
-
-        Report.Tier.GOLD -> Pair(1.0F, 0)
+    private fun getTierAdvanceIn(results: List<CheckResult>, tier: Report.Tier) = when (tier) {
+        Report.Tier.NONE -> results.count { it.risk.isHigh() }
+        Report.Tier.BRONZE -> results.count { it.risk.isSignificant()} - bronzeTierThreshold
+        Report.Tier.SILVER -> results.count { it.risk.isSignificant() }
+        Report.Tier.GOLD -> 0
     }
 }

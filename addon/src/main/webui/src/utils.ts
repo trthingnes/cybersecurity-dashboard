@@ -20,19 +20,19 @@ export function sortResultsByRisk(a: CheckResult, b: CheckResult) {
     return 0
 }
 
+export const significantRisks = ["HIGH", "MODERATE", "LOW"]
 export function splitResultsByRisk(results: CheckResult[]) {
     return {
         significantResults: results.filter((r) =>
-            ["HIGH", "MODERATE"].includes(r.risk)
+            significantRisks.includes(r.risk)
         ),
-        otherResults: results.filter(
-            (r) => !["HIGH", "MODERATE"].includes(r.risk)
-        ),
+        otherResults: results.filter((r) => !significantRisks.includes(r.risk)),
     }
 }
 
 export function getColorByRisk(risk: Risk) {
-    if (risk === "LOW") return "success"
+    if (risk === "NONE") return "success"
+    if (risk === "LOW") return "warning"
     if (risk === "MODERATE") return "warning"
     if (risk === "HIGH") return "error"
 
@@ -40,7 +40,9 @@ export function getColorByRisk(risk: Risk) {
 }
 
 export function getHtmlColorByTier(tier: Tier) {
-    if (tier == "GOLD") return "gold"
-    if (tier == "SILVER") return "silver"
+    if (tier == "GOLD") return "#D4AF37"
+    if (tier == "SILVER") return "#C0C0C0"
     if (tier == "BRONZE") return "#CD7F32"
+
+    return "white"
 }

@@ -70,23 +70,25 @@ export function ChecksTab() {
                         <Stack spacing={4}>
                             <Typography variant="h1" textAlign="center">
                                 Your Home Assistant's cybersecurity is{" "}
-                                {lowercase(data.tier)} tier
+                                {data.tier == "NONE" ? (
+                                    "untiered"
+                                ) : (
+                                    <>{lowercase(data.tier)} tier</>
+                                )}
                             </Typography>
                             <CircularProgressWithTier
                                 size={200}
                                 tier={data.tier}
-                                value={Math.round(100 * data.tierCompletion!)}
+                                value={Math.round(100 * data.completion!)}
                             />
-                            <Stack spacing={1}>
+                            <Stack spacing={2}>
                                 {data.tier != "GOLD" && (
                                     <Typography textAlign="center">
-                                        Address {data.tierAdvanceIn}{" "}
-                                        {data.tier == "SILVER"
-                                            ? "moderate"
-                                            : "high"}{" "}
-                                        risk
+                                        Mitigate {data.tierAdvanceIn}{" "}
+                                        {data.tier == "NONE" ? "high" : ""} risk
                                         {data.tierAdvanceIn! > 1 ? "s" : ""} to
-                                        advance.
+                                        improve your instance's cybersecurity
+                                        tier.
                                     </Typography>
                                 )}
                                 <Stack
@@ -116,11 +118,11 @@ export function ChecksTab() {
                         </Stack>
                         <Stack spacing={2}>
                             <Typography variant="h2" textAlign="center">
-                                Potential risks to your system
+                                Results to consider
                             </Typography>
                             {significantResults.length == 0 && (
                                 <Typography textAlign="center">
-                                    There are no significant risks to display!
+                                    There are no results to consider!
                                 </Typography>
                             )}
                             {significantResults.length > 0 && (
@@ -137,7 +139,9 @@ export function ChecksTab() {
                                 </Box>
                             )}
                             <Button onClick={() => setShowMore(!showMore)}>
-                                {showMore ? "Show less" : "Show more"}
+                                {showMore
+                                    ? "Hide remaining results"
+                                    : "Show remaining results"}
                             </Button>
                             {showMore && (
                                 <Box>

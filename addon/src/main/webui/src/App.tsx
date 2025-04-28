@@ -3,8 +3,6 @@ import {
     Checklist,
     Description,
     LocalLibrary,
-    LockOpen,
-    People,
 } from "@mui/icons-material"
 import { Box, Grid, Tab, Tabs } from "@mui/material"
 import { Outlet, useLocation, useNavigate } from "react-router"
@@ -28,13 +26,15 @@ function App() {
                         value="/devices"
                     />
                     <Tab label="Logs" icon={<Description />} value="/logs" />
+                    <Tab label="Learn" icon={<LocalLibrary />} value="/learn" />
+                    {/*
                     <Tab label="Access" icon={<LockOpen />} value="/access" />
                     <Tab
                         label="Community"
                         icon={<People />}
                         value="/community"
                     />
-                    <Tab label="Learn" icon={<LocalLibrary />} value="/learn" />
+                    */}
                 </Tabs>
             </Grid>
             <Box>

@@ -11,6 +11,7 @@ export type CheckResult = {
     summary: string;
     description: string;
     mitigation: string;
+    keywords: Array<(string)>;
 };
 
 export type Instant = string;
@@ -19,12 +20,12 @@ export type Report = {
     id?: (number) | null;
     timestamp: Instant;
     results: Array<CheckResult>;
+    completion?: number;
     tier: Tier;
-    tierCompletion?: number;
     tierAdvanceIn?: number;
 };
 
-export type Risk = 'DISABLED' | 'UNKNOWN' | 'LOW' | 'MODERATE' | 'HIGH';
+export type Risk = 'DISABLED' | 'UNKNOWN' | 'NONE' | 'LOW' | 'MODERATE' | 'HIGH';
 
 export type State = {
     entity_id: string;
@@ -38,7 +39,7 @@ export type State = {
     };
 };
 
-export type Tier = 'GOLD' | 'SILVER' | 'BRONZE';
+export type Tier = 'GOLD' | 'SILVER' | 'BRONZE' | 'NONE';
 
 export type GetApiDevicesResponse = (Array<State>);
 

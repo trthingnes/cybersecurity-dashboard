@@ -11,7 +11,7 @@ export const AttributesSchema = {
 
 export const CheckResultSchema = {
     type: 'object',
-    required: ['id', 'risk', 'title', 'summary', 'description', 'mitigation'],
+    required: ['id', 'risk', 'title', 'summary', 'description', 'mitigation', 'keywords'],
     properties: {
         id: {
             type: 'string'
@@ -30,6 +30,12 @@ export const CheckResultSchema = {
         },
         mitigation: {
             type: 'string'
+        },
+        keywords: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
         }
     }
 } as const;
@@ -57,12 +63,12 @@ export const ReportSchema = {
                 '$ref': '#/components/schemas/CheckResult'
             }
         },
-        tier: {
-            '$ref': '#/components/schemas/Tier'
-        },
-        tierCompletion: {
+        completion: {
             type: 'number',
             format: 'float'
+        },
+        tier: {
+            '$ref': '#/components/schemas/Tier'
         },
         tierAdvanceIn: {
             type: 'integer',
@@ -73,7 +79,7 @@ export const ReportSchema = {
 
 export const RiskSchema = {
     type: 'string',
-    enum: ['DISABLED', 'UNKNOWN', 'LOW', 'MODERATE', 'HIGH']
+    enum: ['DISABLED', 'UNKNOWN', 'NONE', 'LOW', 'MODERATE', 'HIGH']
 } as const;
 
 export const StateSchema = {
@@ -109,5 +115,5 @@ export const StateSchema = {
 
 export const TierSchema = {
     type: 'string',
-    enum: ['GOLD', 'SILVER', 'BRONZE']
+    enum: ['GOLD', 'SILVER', 'BRONZE', 'NONE']
 } as const;

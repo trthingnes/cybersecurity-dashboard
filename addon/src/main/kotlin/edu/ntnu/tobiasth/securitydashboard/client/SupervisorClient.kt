@@ -36,6 +36,10 @@ interface SupervisorClient {
     fun getAvailableUpdates(): Result<AvailableUpdates>
 
     @GET
+    @Path("/backups/info")
+    fun getBackupsInfo(): Result<Backups>
+
+    @GET
     @Path("/core/info")
     fun getCoreInfo(): Result<CoreInfo>
 

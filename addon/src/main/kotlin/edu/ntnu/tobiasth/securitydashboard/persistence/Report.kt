@@ -20,10 +20,10 @@ class Report() : PanacheEntity() {
     final lateinit var results: List<CheckResult>
 
     @Column(nullable = false, unique = false)
-    final lateinit var tier: Tier
+    final var completion: Float = 1.0F
 
     @Column(nullable = false, unique = false)
-    final var tierCompletion: Float = 1.0F
+    final lateinit var tier: Tier
 
     @Column(nullable = false, unique = false)
     final var tierAdvanceIn: Int = 0
@@ -31,20 +31,21 @@ class Report() : PanacheEntity() {
     constructor(
         timestamp: Instant,
         results: List<CheckResult>,
+        completion: Float,
         tier: Tier,
-        tierCompletion: Float,
         tierAdvanceIn: Int
     ) : this() {
         this.timestamp = timestamp
         this.results = results
+        this.completion = completion
         this.tier = tier
-        this.tierCompletion = tierCompletion
         this.tierAdvanceIn = tierAdvanceIn
     }
 
     enum class Tier {
         GOLD,
         SILVER,
-        BRONZE
+        BRONZE,
+        NONE
     }
 }

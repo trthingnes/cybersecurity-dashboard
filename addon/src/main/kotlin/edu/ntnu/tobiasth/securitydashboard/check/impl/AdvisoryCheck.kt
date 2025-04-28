@@ -10,14 +10,15 @@ import jakarta.enterprise.context.ApplicationScoped
 
 @ApplicationScoped
 class AdvisoryCheck(
-    private val homeAssistantService: HomeAssistantService,
+    private val haService: HomeAssistantService,
     private val githubService: GitHubService,
     private val versionComparator: VersionComparator
 ) : Check() {
     override val id = "advisory-check"
     override val name = "Security Advisories"
-    override val description = "Some software vulnerabilities get reported publicly to allow users to understand how to mitigate the risks to their system. By looking for security advisories one can ensure that Home Assistant is not running components with known unpatched vulnerabilities."
-    override val mitigation = "The easiest way to avoid unpatched vulnerabilities is to keep components up-to-date. However, this is not always an option as it requires the maintainer of the component to release an update that patches the vulnerability. If there are no updates available, an alternative is to uninstall the component or look for workarounds for the vulnerability by searching for the vulnerability ID online."
+    override val description = "Paying attention to publicly reported vulnerabilities for Home Assistant components can help you mitigate risks to your system."
+    override val mitigation = "The easiest way to patch vulnerabilities is to keep components up-to-date. If this does not work, workarounds may be available in the vulnerability report."
+    override val keywords = listOf("Advisories", "CVE")
 
     override fun check() {
         if (!githubService.isAvailable()) {
@@ -26,7 +27,7 @@ class AdvisoryCheck(
         }
 
         // Check core supervisor advisories and yield result
-        val coreVersion = homeAssistantService.getCoreInfo().version
+        val coreVersion = haService.getCoreInfo().version
         val coreAdvisories = githubService.getActiveSecurityAdvisories(
             "home-assistant",
             "core",
@@ -34,7 +35,7 @@ class AdvisoryCheck(
             coreVersion
         )
         if (coreAdvisories.isEmpty()) {
-            yield(result("Advisories for Home Assistant Core", Risk.LOW, "Core $coreVersion has no reported vulnerabilities."))
+            yield(result("Advisories for Home Assistant Core", Risk.NONE, "Core $coreVersion has no reported vulnerabilities."))
         } else {
             yield(result(
                 "Advisories for Home Assistant Core",
@@ -46,7 +47,7 @@ class AdvisoryCheck(
         }
 
         // Check supervisor advisories and yield result
-        val supervisorVersion = homeAssistantService.getSupervisorInfo().version
+        val supervisorVersion = haService.getSupervisorInfo().version
         val supervisorAdvisories = githubService.getActiveSecurityAdvisories(
             "home-assistant",
             "core",
@@ -54,7 +55,7 @@ class AdvisoryCheck(
             supervisorVersion
         )
         if (supervisorAdvisories.isEmpty()) {
-            yield(result("Advisories for Home Assistant Supervisor", Risk.LOW, "Supervisor $supervisorVersion has no reported vulnerabilities."))
+            yield(result("Advisories for Home Assistant Supervisor", Risk.NONE, "Supervisor $supervisorVersion has no reported vulnerabilities."))
         } else {
             yield(result(
                 "Advisories for Home Assistant Supervisor",
@@ -66,8 +67,8 @@ class AdvisoryCheck(
         }
 
         // Check add-on advisories and yield results
-        val activeAddons = homeAssistantService.getInstalledAddons()
-        val activeRepositories = homeAssistantService.getAddonRepositories()
+        val activeAddons = haService.getInstalledAddons()
+        val activeRepositories = haService.getAddonRepositories()
             .filter { r -> activeAddons.any { a -> a.repository == r.slug } }
             .associateBy { it.slug }
         activeAddons.forEach {
@@ -80,7 +81,7 @@ class AdvisoryCheck(
                 yield(
                     result(
                         "Advisories for '${it.name}' add-on",
-                        Risk.LOW,
+                        Risk.NONE,
                         "${it.name} ${it.version} has no reported vulnerabilities."
                     )
                 )
