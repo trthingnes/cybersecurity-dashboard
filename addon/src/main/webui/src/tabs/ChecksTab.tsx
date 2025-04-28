@@ -118,11 +118,11 @@ export function ChecksTab() {
                         </Stack>
                         <Stack spacing={2}>
                             <Typography variant="h2" textAlign="center">
-                                Potential risks to your system
+                                Results to consider
                             </Typography>
                             {significantResults.length == 0 && (
                                 <Typography textAlign="center">
-                                    There are no significant risks to display!
+                                    There are no results to consider!
                                 </Typography>
                             )}
                             {significantResults.length > 0 && (
@@ -139,7 +139,9 @@ export function ChecksTab() {
                                 </Box>
                             )}
                             <Button onClick={() => setShowMore(!showMore)}>
-                                {showMore ? "Show less" : "Show more"}
+                                {showMore
+                                    ? "Hide remaining results"
+                                    : "Show remaining results"}
                             </Button>
                             {showMore && (
                                 <Box>
