@@ -96,7 +96,6 @@ export function CheckResultCard({
                                 : "Disable check"}
                         </Button>
                     </Stack>
-
                     <Stack
                         direction="row"
                         spacing={1}
@@ -115,7 +114,7 @@ export function CheckResultCard({
                             sx={{ minWidth: "max-content" }}
                             onClick={() => {
                                 navigate(
-                                    `/learn?keywords=${result.keywords.join(",")}`
+                                    `/learn?keywords=${result.keywords.join("&keywords=")}`
                                 )
                             }}
                             endIcon={<LocalLibrary />}
