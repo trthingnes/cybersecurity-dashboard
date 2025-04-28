@@ -16,10 +16,18 @@ import {
 import {
     Alert,
     Box,
+    Button,
+    Chip,
     CircularProgress,
     Grid,
     Paper,
     Stack,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
     Typography,
     capitalize,
 } from "@mui/material"
@@ -79,29 +87,92 @@ export function DevicesTab() {
                                 Assistant
                             </Typography>
                             <Grid container spacing={2}>
-                                {data.map((device) => (
+                                {data.map((device, i) => (
                                     <Grid
                                         size={{ xs: 12, sm: 6, md: 4, lg: 3 }}
                                         key={device.entity_id}
                                     >
-                                        <Paper>
-                                            <Stack p={1} alignItems="center">
-                                                {
-                                                    // @ts-expect-error Using string to index object.
-                                                    icons[
-                                                        device.entity_id.split(
-                                                            "."
-                                                        )[0]
-                                                    ]
-                                                }
-                                                <Typography variant="body1">
-                                                    {device.attributes
-                                                        .friendly_name ??
-                                                        device.entity_id}
-                                                </Typography>
-                                                <Typography variant="body2">
-                                                    {capitalize(device.state)}
-                                                </Typography>
+                                        <Paper sx={{ position: "relative" }}>
+                                            {i < 3 && (
+                                                <Chip
+                                                    color="success"
+                                                    label="New"
+                                                    sx={{
+                                                        position: "absolute",
+                                                        top: "1rem",
+                                                        right: "1rem",
+                                                    }}
+                                                />
+                                            )}
+                                            {i == 7 && (
+                                                <Chip
+                                                    color="warning"
+                                                    label="Unused"
+                                                    sx={{
+                                                        position: "absolute",
+                                                        top: "1rem",
+                                                        right: "1rem",
+                                                    }}
+                                                />
+                                            )}
+                                            <Stack
+                                                spacing={1}
+                                                alignItems="center"
+                                                p={2}
+                                            >
+                                                <>
+                                                    {
+                                                        // @ts-expect-error Using string to index object.
+                                                        icons[
+                                                            device.entity_id.split(
+                                                                "."
+                                                            )[0]
+                                                        ]
+                                                    }
+                                                    <Typography variant="body1">
+                                                        {device.attributes
+                                                            .friendly_name ??
+                                                            device.entity_id}
+                                                    </Typography>
+                                                </>
+                                                <TableContainer>
+                                                    <Table size="small">
+                                                        <TableRow>
+                                                            <TableCell variant="head">
+                                                                Integration
+                                                            </TableCell>
+                                                            <TableCell>
+                                                                Demo
+                                                            </TableCell>
+                                                        </TableRow>
+                                                        <TableRow>
+                                                            <TableCell variant="head">
+                                                                Device Model
+                                                            </TableCell>
+                                                            <TableCell>
+                                                                Unknown
+                                                            </TableCell>
+                                                        </TableRow>
+                                                        <TableRow>
+                                                            <TableCell variant="head">
+                                                                Installed
+                                                                Firmware
+                                                            </TableCell>
+                                                            <TableCell>
+                                                                Unknown
+                                                            </TableCell>
+                                                        </TableRow>
+                                                        <TableRow>
+                                                            <TableCell variant="head">
+                                                                Latest Firmware
+                                                            </TableCell>
+                                                            <TableCell>
+                                                                Unknown
+                                                            </TableCell>
+                                                        </TableRow>
+                                                    </Table>
+                                                </TableContainer>
+                                                <Button>View device</Button>
                                             </Stack>
                                         </Paper>
                                     </Grid>
