@@ -11,6 +11,7 @@ export type CheckResult = {
     summary: string;
     description: string;
     mitigation: string;
+    keywords: Array<(string)>;
 };
 
 export type Instant = string;

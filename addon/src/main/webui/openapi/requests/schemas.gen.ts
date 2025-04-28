@@ -11,7 +11,7 @@ export const AttributesSchema = {
 
 export const CheckResultSchema = {
     type: 'object',
-    required: ['id', 'risk', 'title', 'summary', 'description', 'mitigation'],
+    required: ['id', 'risk', 'title', 'summary', 'description', 'mitigation', 'keywords'],
     properties: {
         id: {
             type: 'string'
@@ -30,6 +30,12 @@ export const CheckResultSchema = {
         },
         mitigation: {
             type: 'string'
+        },
+        keywords: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
         }
     }
 } as const;

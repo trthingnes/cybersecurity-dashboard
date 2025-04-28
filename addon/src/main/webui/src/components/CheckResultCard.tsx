@@ -1,4 +1,4 @@
-import { ExpandMore } from "@mui/icons-material"
+import { ExpandMore, LocalLibrary, SearchOff } from "@mui/icons-material"
 import {
     Accordion,
     AccordionDetails,
@@ -13,6 +13,7 @@ import {
     Typography,
 } from "@mui/material"
 import { useMemo } from "react"
+import { useNavigate } from "react-router"
 
 import {
     usePostApiOverviewCheckByIdDisable,
@@ -31,6 +32,7 @@ export function CheckResultCard({
     readonly onChange: () => void
     readonly isLoading: boolean
 } & PaperProps) {
+    const navigate = useNavigate()
     const { mutateAsync: disable } = usePostApiOverviewCheckByIdDisable()
     const { mutateAsync: enable } = usePostApiOverviewCheckByIdEnable()
     const isDisabled = useMemo(() => result.risk === "DISABLED", [result])
@@ -87,6 +89,7 @@ export function CheckResultCard({
                                     : disable(mutateOptions)
                                 ).then(() => onChange())
                             }}
+                            endIcon={<SearchOff />}
                         >
                             {result.risk === "DISABLED"
                                 ? "Enable check"
@@ -94,14 +97,32 @@ export function CheckResultCard({
                         </Button>
                     </Stack>
 
-                    {["HIGH", "MODERATE"].includes(result.risk) && (
-                        <>
-                            <Typography variant="h6" component="h3" mt={2}>
+                    <Stack
+                        direction="row"
+                        spacing={1}
+                        mt={2}
+                        alignItems="center"
+                        justifyContent="space-between"
+                    >
+                        <Box>
+                            <Typography variant="h6" component="h3">
                                 Mitigation
                             </Typography>
                             <Typography>{result.mitigation}</Typography>
-                        </>
-                    )}
+                        </Box>
+                        <Button
+                            variant="outlined"
+                            sx={{ minWidth: "max-content" }}
+                            onClick={() => {
+                                navigate(
+                                    `/learn?keywords=${result.keywords.join(",")}`
+                                )
+                            }}
+                            endIcon={<LocalLibrary />}
+                        >
+                            Learn more
+                        </Button>
+                    </Stack>
                 </AccordionDetails>
             </Accordion>
         </Paper>

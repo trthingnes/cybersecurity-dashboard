@@ -13,7 +13,8 @@ class SupportCheck(
     override val name = "Hardware Support"
     override val description = "To ensure system security it is recommended to use officially supported hardware, since hardware-specific vulnerabilities in unsupported hardware will likely not be fixed."
     override val mitigation = "Use hardware officially supported by Home Assistant. The official installation page has up-to-date information on supported hardware."
-
+    override val keywords = listOf("hardware")
+    
     override fun check() = when (haService.getSystemInfo().supported) {
         true -> yield(result(Risk.NONE, "Hardware is officially supported."))
         false -> yield(result(Risk.LOW, "Hardware is not officially supported."))

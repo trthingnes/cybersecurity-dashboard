@@ -13,6 +13,7 @@ class HacsCheck(
     override val name = "Home Assistant Community Store"
     override val description = "Home Assistant Community Store (HACS) provides custom components that receive less scrutiny than official components. It is important to understand the potential cybersecurity and stability implications of custom components."
     override val mitigation = "If you're unsure about the potential cybersecurity and stability implications of using custom components, they should be avoided. However, if you understand and accept the risk, this check can be disabled."
+    override val keywords = listOf("hacs", "third-party components")
 
     override fun check() = if (haService.getComponentNames().contains("hacs")) {
         yield(result(Risk.LOW, "HACS is installed."))

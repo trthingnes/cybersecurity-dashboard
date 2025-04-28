@@ -14,6 +14,7 @@ class UpdateCheck(
     override val name = "Software Updates"
     override val description = "Ensuring Home Assistant components and add-ons are up-to-date is a simple way to mitigate risks to the system."
     override val mitigation = "Use the built-in update service to update the listed components."
+    override val keywords = listOf("updates")
 
     override fun check() {
         val updates = haService.getAvailableUpdates()
