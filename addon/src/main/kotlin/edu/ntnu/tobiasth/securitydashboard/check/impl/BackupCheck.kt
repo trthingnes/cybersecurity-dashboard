@@ -11,8 +11,8 @@ class BackupCheck(
 ) : Check() {
     override val id = "backups-check"
     override val name = "Backups"
-    override val description = "It's recommended to have backups of your Home Assistant data in two different physical locations in case of serious system failures."
-    override val mitigation = "Home Assistant has a built-in backup service that is easy to use and supports multiple storage options."
+    override val description = "It's recommended back Home Assistant up to two different physical locations in case of serious system failures."
+    override val mitigation = "Use the built-in backup service to schedule and run backups using your preferred storage integration."
 
     override fun check() {
         val backupsInfo = haService.getBackupsInfo()

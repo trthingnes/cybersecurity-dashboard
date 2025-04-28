@@ -16,8 +16,8 @@ class HttpsCheck(
 ) : Check() {
     override val id = "https-check"
     override val name = "Remote Access Encryption"
-    override val description = "To ensure that information about your home is not transferred in a clear text over the internet, it is important to ensure that Home Assistant only allows encrypted remote connections."
-    override val mitigation = "Home Assistant should be setup to not allow HTTP remote connections, and should provide clients with a valid certificate for HTTPS. There are many ways to achieve this, like using Let's Encrypt (Certbot) or connecting to Home Assistant through a proxy that enables HTTPS by default."
+    override val description = "It's recommended to ensure internet traffic to and from your home is encrypted and secure by using a valid HTTPS certificate."
+    override val mitigation = "Use a service like Let's Encrypt, Cloudflare, or Tailscale to issue a valid HTTPS certificate and force HTTPS communication."
 
     val client = OkHttpClient()
 
