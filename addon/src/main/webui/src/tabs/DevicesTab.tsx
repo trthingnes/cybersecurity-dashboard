@@ -23,13 +23,10 @@ import {
     Paper,
     Stack,
     Table,
-    TableBody,
     TableCell,
     TableContainer,
-    TableHead,
     TableRow,
     Typography,
-    capitalize,
 } from "@mui/material"
 
 import { useGetApiDevices } from "../../openapi/queries"
