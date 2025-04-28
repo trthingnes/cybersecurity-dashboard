@@ -10,7 +10,7 @@ import jakarta.enterprise.context.ApplicationScoped
 
 @ApplicationScoped
 class AdvisoryCheck(
-    private val homeAssistantService: HomeAssistantService,
+    private val haService: HomeAssistantService,
     private val githubService: GitHubService,
     private val versionComparator: VersionComparator
 ) : Check() {
@@ -26,7 +26,7 @@ class AdvisoryCheck(
         }
 
         // Check core supervisor advisories and yield result
-        val coreVersion = homeAssistantService.getCoreInfo().version
+        val coreVersion = haService.getCoreInfo().version
         val coreAdvisories = githubService.getActiveSecurityAdvisories(
             "home-assistant",
             "core",
@@ -46,7 +46,7 @@ class AdvisoryCheck(
         }
 
         // Check supervisor advisories and yield result
-        val supervisorVersion = homeAssistantService.getSupervisorInfo().version
+        val supervisorVersion = haService.getSupervisorInfo().version
         val supervisorAdvisories = githubService.getActiveSecurityAdvisories(
             "home-assistant",
             "core",
@@ -66,8 +66,8 @@ class AdvisoryCheck(
         }
 
         // Check add-on advisories and yield results
-        val activeAddons = homeAssistantService.getInstalledAddons()
-        val activeRepositories = homeAssistantService.getAddonRepositories()
+        val activeAddons = haService.getInstalledAddons()
+        val activeRepositories = haService.getAddonRepositories()
             .filter { r -> activeAddons.any { a -> a.repository == r.slug } }
             .associateBy { it.slug }
         activeAddons.forEach {
